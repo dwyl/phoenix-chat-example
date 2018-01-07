@@ -10,14 +10,14 @@ Chat apps are the "Hello World" of "real time" example apps. <br />
 
 Most example apps show a few basics and then ignore "the rest" ... <br />
 So "_beginners_" are often left "_lost_" or "_confused_" as to
-what they should _do_ or learn _next_!
-Very _few_ tutorials consider Testing,
-Deployment, Documentation or other "Enhancements" which are
-all part of the "Real World" of building and running apps;
-so those are topics we _will_ cover to "_fill in the gaps_".
+what they should _do_ or learn _next_! <br />
+Very _few_ tutorials consider **Testing,
+Deployment, Documentation** or _other_ "**Enhancements**" which are
+all part of the "***Real World***" of building and running apps;
+so those are topics we **_will_ cover** to "_fill in the gaps_".
 
 We wrote this is tutorial to be _easiest_ way to learn about Phoenix,
-Ecto and "Channles" with a _practical_ example you can follow.
+Ecto and "Channels" with a _practical_ example you can follow.
 
 
 ## What?
@@ -124,10 +124,11 @@ type the following command to create the app.
 ```sh
 mix phx.new chat
 ```
-That will create the directory structure and files. <br />
+That will create the directory structure and project files. <br />
 
-When asked to "Fetch and install dependencies? [Yn]",<br />
-Type "y" in your terminal,
+
+When asked to "***Fetch and install dependencies***? [Yn]",<br />
+Type `y` (_the "Y" key_) in your terminal,
 followed by the `[Enter]` / `[Return]` key.
 
 You should see: <br />
