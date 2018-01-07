@@ -140,6 +140,10 @@ followed by the `[Enter]` / `[Return]` key.
 You should see: <br />
 ![fetch-and-install-dependencies](https://user-images.githubusercontent.com/194400/34833220-d219221c-f6e6-11e7-88d6-87aa4c3054e4.png)
 
+Change directory into the `chat` directory by running the suggested command:
+```sh
+cd chat
+```
 
 ## 2. Create the (WebSocket) "Channel"
 
@@ -196,17 +200,17 @@ and _copy-paste_ (_or type_) the following code:
 </div>
 ```
 
-This is the _basic_ form we will use to input Chat messages.
+This is the _basic_ form we will use to input Chat messages. <br />
 The classes e.g: `"form-control"` and `"col-xs-3"`
-are Bootstrap CSS classes to _style_ the form.
+are Bootstrap CSS classes to _style_ the form. <br />
 Phoenix includes Bootstrap by default so you can get up-and-running
-with your App/Idea/"MVP" as quickly as possible! <br />
+with your App/Idea/"MVP"! <br />
 If you are unfamiliar with Bootstrap UI,
 read: https://getbootstrap.com/docs/3.3 <br />
 and if you _specifically_ want to understand the Bootstrap _forms_,
 see: https://getbootstrap.com/docs/3.3/css/#forms
 
-Your file `index.html.eex` template file should look like this:
+Your `index.html.eex` template file should look like this:
 [`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
 
 
@@ -243,7 +247,7 @@ var msg = document.getElementById('msg');            // message input field
 // "listen" for the [Enter] keypress event to send a message:
 msg.addEventListener('keypress', function (event) {
   if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
-    channel.push('shout', { // send the message to the server
+    channel.push('shout', { // send the message to the server on "shout" channel
       name: name.value,     // get value of "name" of person sending the message
       message: msg.value    // get message text (value) from msg input field.
     });
@@ -253,7 +257,7 @@ msg.addEventListener('keypress', function (event) {
 ```
 
 > Take a moment to read the JavaScript code
-and confirm your understanding of what it's doing.
+and confirm your understanding of what it's doing. <br />
 Hopefully the in-line comments are self-explanatory,
 but if _anything_ is unclear, please ask!
 
@@ -272,11 +276,19 @@ Run the following terminal command:
 mix phx.server
 ```
 
-> _Note it will take a few seconds to **compile** but then you should see:_
+> _**Note**: it will take a few seconds to **compile** but then you should see:_
 
 ![server-running](https://user-images.githubusercontent.com/194400/35188430-22de4d9c-fe2d-11e7-82d3-85e0a0482e17.png)
 
-Open the Chat web app in two separate browser windows: http://localhost:4000
+The line:
+```sh
+[info] Running ChatWeb.Endpoint with Cowboy using http://0.0.0.0:4000
+```
+tells us that our code compiled (_as expected_) and the Chat App
+is running on TCP Port `4000`!
+
+**Open** the Chat web app in
+**two _separate_ browser windows**: http://localhost:4000 <br />
 (_if your machine only has one browser try using one "incognito" tab_)
 
 You should be able to send messages between the two browser windows: <br />
@@ -284,23 +296,23 @@ You should be able to send messages between the two browser windows: <br />
 
 Congratulations! You have a _working_ (_basic_) Chat App written in Phoenix!
 
-# Storing Chat Data
+# Storing Chat Message Data/History
 
-If we didn't want to _save_ the chat history,
-we could
+If we didn't _want_ to _save_ the chat history,
+we could just _deploy_ this App _immediately_
+and we'd be done! <br />
 
+> In fact, it could be a "_use-case_" / "_feature_"
+to have "_ephemeral_" chat without _any_ history ...
+> see: http://www.psstchat.com/
+![psst-chat](https://user-images.githubusercontent.com/194400/35284714-6e338596-0053-11e8-998a-83b917ec90ae.png)
+> but we are _assuming_ that _most_ chat apps save history
+> so that `new` people joining the "channel" can see the history
+> and people who are briefly "absent" can "catch up" on the history.
 
-## 7. Create/Configure Database
+## 6. Create/Configure Database
 
-Follow the steps/instructions given in your terminal:
-
-Change into the project directory if you haven't already.
-
-```sh
-cd chat
-```
-> Note: if you cloned this project from GitHub instead creating it from scratch,
-> run: `cd phoenix-chat-example` instead. The rest is the same.
+Create the database to store the chat history data:
 
 ```sh
 mix ecto.create
@@ -310,7 +322,7 @@ You should see:
 The database for Chat.Repo has been created
 ```
 
-## 8. Generate Database Schema to Store Chat History
+## 7. Generate Database Schema to Store Chat History
 
 Run the following command in your terminal:
 ```sh
@@ -336,17 +348,15 @@ Let's break down that command for clarity:
 The `creating lib/chat/message.ex` file is the "schema"
 for our Message database table.
 
-And the `creating priv/repo/migrations/20180107074333_create_messages.exs` file
-is the "_migration_" that _creates_ the database table in our chose database.
-
-#### 6.1 Confirm Your PostgreSQL Configuration
-
+Additionally a migration file is created, e.g:
+`creating priv/repo/migrations/20180107074333_create_messages.exs`
+The "_migration_" actually _creates_ the database table in our database.
 
 
 
-#### 6.2 Run the Ecto Migration
+### 8. Run the Ecto Migration (_Create The Database Table_)
 
-In your terminal run the following command to create the Message
+In your terminal run the following command to create the `messages` table:
 
 ```sh
 mix ecto.migrate
@@ -360,15 +370,16 @@ Generated chat app
 [info] == Migrated in 0.0s
 ```
 
-#### 6.3 Review the Messages Table Schema
+#### 8.1 Review the Messages Table Schema
 
-If you open your PostgreSQL GUI (_we use `Postico`_)
+If you open your PostgreSQL GUI<sup>1</sup> (_we use `Postico`_)
 you will see that the messages table has been created:
 
 ![messages-table-schema-postico](https://user-images.githubusercontent.com/194400/34839040-2c6fcd0e-f6f8-11e7-807f-eb5e81b4192b.png)
 
+<sup>1</sup>:
 
-### 7. Save Messages to Database
+### 9. Insert Messages to Database
 
 Open the `lib/chat_web/channels/chat_room_channel.ex` file
 and inside the function `def handle_in("shout", payload, socket) do`
@@ -386,7 +397,7 @@ def handle_in("shout", payload, socket) do
 end
 ```
 
-### 8. Load Existing Messages
+### 10. Load Existing Messages (_When Someone Joins the Chat_)
 
 Open the `lib/chat/message.ex` file and add a new function to it:
 ```elixir
@@ -401,7 +412,7 @@ It uses Ecto's `all` function to fetch all records from the database.
 and limit is the maximum number of records to fetch.
 
 
-### 9. Send Existing Messages to the Client when they Join
+### 11. Send Existing Messages to the Client when they Join
 
 In the `/lib/chat_web/channels/chat_room_channel.ex` file create a new function:
 ```elixir
@@ -415,7 +426,7 @@ def handle_info(:after_join, socket) do
 end
 ```
 
-and at the top of the file in the `join` function,
+and at the top of the file update the `join` function to the following:
 
 ```elixir
 def join("chat_room:lobby", payload, socket) do
@@ -428,6 +439,21 @@ def join("chat_room:lobby", payload, socket) do
 end
 ```
 
+## 12. _Checkpoint_: Our Chat App Saves Messages!! (_Try it_!)
+
+Start the Phoenix server (_if it is not already running_):
+```sh
+mix phx.server
+```
+
+_This_ time when you open two browser windows and start "chatting",
+the chat (message) history is _saved_!
+
+This means you can _refresh_ the browser
+_or_ join in a different browser and you will still see the history.
+
+
+
 
 ### X. Testing!
 
@@ -435,9 +461,7 @@ https://hexdocs.pm/phoenix/testing_channels.html
 
 ### X. Start Server
 
-```sh
-mix phx.server
-```
+
 
 
 To start your Phoenix server:
