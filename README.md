@@ -118,16 +118,109 @@ This will create a couple of files:<br />
 
 And inform you that you need to copy-paste a piece of code into your app: <br />
 ```sh
-Add the channel to your `lib/chat_web/channels/user_socket.ex` handler, for example:
+Add the channel to your `/lib/chat_web/channels/user_socket.ex` handler, for example:
 
     channel "chat_room:lobby", ChatWeb.ChatRoomChannel
 ```
-Cope that line
-Open the file called `lib/chat_web/channels/user_socket.ex`
-and paste it
+Copy that line,
+Open the file called `/lib/chat_web/channels/user_socket.ex`
+and paste it it
 
 
-### 3. Start Server
+### 4. Update Template File
+
+Open the file:
+`/lib/chat_web/templates/layout/app.html.eex`
+and add the following code:
+
+
+
+### 5. Import Scocket in App.js
+
+Open:
+`/assets/js/app.js`
+and uncomment the line:
+```js
+import socket from "./socket"
+```
+with the line _uncommented_ our app will import the `socket.js` file
+which will give us WebSocket functionality.
+
+
+### 6. Generate Database Schema to Store Chat History
+
+Run the following command in your terminal:
+```sh
+mix phx.gen.schema Message messages name:string message:string
+```
+You should see the following output:
+```sh
+* creating lib/chat/message.ex
+* creating priv/repo/migrations/20180107074333_create_messages.exs
+
+Remember to update your repository by running migrations:
+
+    $ mix ecto.migrate
+```
+
+Let's break down that command for clarity:
++ `mix phx.gen.schema` - the mix command to create a new schema (database table)
++ `Message` - the singular name for record in our messages "collection"
++ `messages` - the name of the collection (_or database table_)
++ `name:string` - the name of the person sending a message, stored as a `string`.
++ `message:string` - the message sent by the person, also stored as a `string`.
+
+The `creating lib/chat/message.ex` file is the "schema"
+for our Message database table.
+
+And the `creating priv/repo/migrations/20180107074333_create_messages.exs` file
+is the "_migration_" that _creates_ the database table in our chose database.
+
+#### 6.1 Run the Ecto Migration
+
+In your terminal run the following command to create the Message
+
+```sh
+mix ecto.migrate
+```
+You should see the following in your terminal:
+```sh
+Compiling 1 file (.ex)
+Generated chat app
+[info] == Running Chat.Repo.Migrations.CreateMessages.change/0 forward
+[info] create table messages
+[info] == Migrated in 0.0s
+```
+
+#### 6.2 Review the Messages Table Schema
+
+If you open your PostgreSQL GUI (_we use `Postico`_)
+you will see that the messages table has been created:
+
+![messages-table-schema-postico](https://user-images.githubusercontent.com/194400/34839040-2c6fcd0e-f6f8-11e7-807f-eb5e81b4192b.png)
+
+
+#### 7. Save Messages to Database
+
+Open the `lib/chat_web/channels/chat_room_channel.ex` file
+and inside the function `def handle_in("shout", payload, socket) do`
+add the following line:
+```elixir
+Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert  
+```
+
+So that your function ends up looking like this:
+```elixir
+def handle_in("shout", payload, socket) do
+  Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert  
+  broadcast socket, "shout", payload
+  {:noreply, socket}
+end
+```
+
+
+
+### X. Start Server
 
 ```sh
 mix phx.server

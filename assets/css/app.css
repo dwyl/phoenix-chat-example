@@ -1,1 +1,9 @@
 /* This file is for your main application css. */
+
+#message-list {
+    border: 1px solid #000;
+    height: 500px;
+    padding: 10px;
+    overflow: scroll;
+    margin-bottom: 10px;
+}

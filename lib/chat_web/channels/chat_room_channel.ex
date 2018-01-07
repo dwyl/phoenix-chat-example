@@ -18,6 +18,7 @@ defmodule ChatWeb.ChatRoomChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (chat_room:lobby).
   def handle_in("shout", payload, socket) do
+    Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert  
     broadcast socket, "shout", payload
     {:noreply, socket}
   end
