@@ -14,11 +14,6 @@
   <body>
     <div class="container">
       <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <img src="https://i.imgur.com/omw27gW.png" style="height:80px; margin-top: -20px">
-          </ul>
-        </nav>
         <span class="logo"></span>
       </header>
 
