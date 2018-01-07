@@ -1,11 +1,11 @@
-<div id='message-list' class='row'>
-</div>
+<!-- The list of messages will appear here: -->
+<ul id='msg-list' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
 
-<div class='row form-group'>
-  <div class='col-md-3'>
-    <input type='text' id='name' class='form-control' placeholder='Name' />
+<div class="row">
+  <div class="col-xs-3">
+    <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
   </div>
-  <div class='col-md-9'>
-    <input type='text' id='msg' class='form-control' placeholder='Message' />
+  <div class="col-xs-9">
+    <input type="text" id="msg" class="form-control" placeholder="Your Message">
   </div>
 </div>

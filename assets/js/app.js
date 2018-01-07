@@ -20,33 +20,33 @@ import "phoenix_html"
 
 import socket from "./socket"
 
-let channel = socket.channel('chat_room:lobby', {});
-let list = $('#message-list');
-let message = $('#msg');
-let name = $('#name');
+var channel = socket.channel('chat_room:lobby', {});
+var msg = document.getElementById('msg');
+var name = document.getElementById('name');
+var ul = document.getElementById('msg-list');
 
-message.on('keypress', event => {
-    if (event.keyCode == 13) {
-        channel.push('shout', {
-            name: name.val(),
-            message: message.val()
-        });
-        message.val('');
-    }
+// "listen" for the [Enter] keypress event to send a message:
+msg.addEventListener('keypress', function (event) {
+  if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
+    channel.push('shout', { // send the message to the server
+      name: name.value,
+      message: msg.value
+    });
+    msg.value = ''; // reset the message input field for next message.
+  }
 });
 
-channel.on('shout', payload => {
-    list.append(`<b>${payload.name || 'new_user'}:</b> ${payload.message}<br>`);
-    list.prop({
-        scrollTop: list.prop('scrollHeight')
-    });
+// listen to the 'shout'
+channel.on('shout', function (payload) {
+  var li = document.createElement("li"); // creaet new list item DOM element
+  li.innerHTML = '<b>' + (payload.name || 'guest') + '</b>: ' + payload.message;
+  ul.appendChild(li); // append to list
 });
 
-channel
-    .join()
-    .receive('ok', resp => {
-        console.log('Joined successfully', resp);
-    })
-    .receive('error', resp => {
-        console.log('Unable to join', resp);
-    });
+channel.join()
+  .receive('ok', resp => {
+    console.log('Joined successfully', resp);
+  })
+  .receive('error', resp => {
+    console.log('Unable to join', resp);
+  });
