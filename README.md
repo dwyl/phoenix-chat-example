@@ -212,37 +212,36 @@ which will give us WebSocket functionality.
 Then add the following JavaScript ("Client") code:
 
 ```js
-var channel = socket.channel('chat_room:lobby', {}); // connect to chat room
+var channel = socket.channel('chat_room:lobby', {});
 var msg = document.getElementById('msg');
 var name = document.getElementById('name');
 var ul = document.getElementById('msg-list');
 
 // "listen" for the [Enter] keypress event to send a message:
 msg.addEventListener('keypress', function (event) {
-  if (event.keyCode == 13 && msg.value.length > 0) {
-      channel.push('shout', {
-          name: name.value,
-          message: msg.value
-      });
-      msg.value = ''; // reset the message input field for next message.
+  if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
+    channel.push('shout', { // send the message to the server
+      name: name.value,
+      message: msg.value
+    });
+    msg.value = ''; // reset the message input field for next message.
   }
 });
 
 // listen to the 'shout'
 channel.on('shout', function (payload) {
-  var li = document.createElement("li"); // creaet new list item
+  var li = document.createElement("li"); // creaet new list item DOM element
   li.innerHTML = '<b>' + (payload.name || 'guest') + '</b>: ' + payload.message;
   ul.appendChild(li); // append to list
 });
 
-channel
-    .join()
-    .receive('ok', resp => {
-        console.log('Joined successfully', resp);
-    })
-    .receive('error', resp => {
-        console.log('Unable to join', resp);
-    });
+channel.join()
+  .receive('ok', resp => {
+    console.log('Joined successfully', resp);
+  })
+  .receive('error', resp => {
+    console.log('Unable to join', resp);
+  });
 ```
 
 
