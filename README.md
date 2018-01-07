@@ -85,17 +85,17 @@ brew install elixir
 ```
 
 2. **Phoenix** framework **installed**.
-  see: https://hexdocs.pm/phoenix/installation.html
-  <br />
+  see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 ```
+
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
-see: https://github.com/dwyl/learn-postgresql#installation
+see: [https://github.com/dwyl/**learn-postgresql#installation**](https://github.com/dwyl/learn-postgresql#installation)
 
 4. Basic **Elixir Syntax** knowledge will help, <br />
-see: [https://github.com/dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir/)
+see: [https://github.com/dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir)
 
 5. Basic **JavaScript** knowledge is _advantageous_
 (_but not essential as the "front-end" code
