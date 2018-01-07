@@ -200,7 +200,7 @@ you will see that the messages table has been created:
 ![messages-table-schema-postico](https://user-images.githubusercontent.com/194400/34839040-2c6fcd0e-f6f8-11e7-807f-eb5e81b4192b.png)
 
 
-#### 7. Save Messages to Database
+### 7. Save Messages to Database
 
 Open the `lib/chat_web/channels/chat_room_channel.ex` file
 and inside the function `def handle_in("shout", payload, socket) do`
@@ -218,7 +218,47 @@ def handle_in("shout", payload, socket) do
 end
 ```
 
+### 8. Load Existing Messages
 
+Open the `lib/chat/message.ex` file and add a new function to it:
+```elixir
+def get_messages(limit \\ 20) do
+  Chat.Repo.all(Message, limit: limit)
+end
+```
+This function accepts a single parameter `limit` to only return a fixed/maximum
+number of records.
+It uses Ecto's `all` function to fetch all records from the database.
+`Message` is the name of the schema/table we want to get records for,
+and limit is the maximum number of records to fetch.
+
+
+### 9. Send Existing Messages to the Client when they Join
+
+In the `/lib/chat_web/channels/chat_room_channel.ex` file create a new function:
+```elixir
+def handle_info(:after_join, socket) do
+  Chat.Message.get_messages()
+  |> Enum.each(fn msg -> push(socket, "shout", %{
+      name: msg.name,
+      message: msg.message,
+    }) end)
+  {:noreply, socket} # :noreply
+end
+```
+
+and at the top of the file in the `join` function,
+
+```elixir
+def join("chat_room:lobby", payload, socket) do
+  if authorized?(payload) do
+    send(self(), :after_join)
+    {:ok, socket}
+  else
+    {:error, %{reason: "unauthorized"}}
+  end
+end
+```
 
 ### X. Start Server
 

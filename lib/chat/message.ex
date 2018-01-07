@@ -17,4 +17,8 @@ defmodule Chat.Message do
     |> cast(attrs, [:name, :message])
     |> validate_required([:name, :message])
   end
+
+  def get_messages(limit \\ 20) do
+    Chat.Repo.all(Message, limit: limit)
+  end
 end
