@@ -130,7 +130,7 @@ When asked to "Fetch and install dependencies? [Yn]",<br />
 Type "y" in your terminal,
 followed by the `[Enter]` / `[Return]` key.
 
-You should see:
+You should see: <br />
 ![fetch-and-install-dependencies](https://user-images.githubusercontent.com/194400/34833220-d219221c-f6e6-11e7-88d6-87aa4c3054e4.png)
 
 
@@ -165,12 +165,14 @@ to:
 channel "chat_room:lobby", ChatWeb.ChatRoomChannel
 ```
 Example:
-[user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/b9c1d4f719e9ebbd5580dd0941bec8bac50030bf/lib/chat_web/channels/user_socket.ex#L5)
+[user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/channels/user_socket.ex#L5)
 
 
 ## 3. Update the Template File (UI)
 
-Open the the `/lib/chat_web/templates/page/index.html.eex` file <br />
+Open the the
+[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex)
+file <br />
 and _copy-paste_ (_or type_) the following code:
 
 ```html
@@ -197,11 +199,14 @@ read: https://getbootstrap.com/docs/3.3 <br />
 and if you _specifically_ want to understand the Bootstrap _forms_,
 see: https://getbootstrap.com/docs/3.3/css/#forms
 
+Your file `index.html.eex` template file should look like this:
+[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
+
 
 ## 4. Update the "Client" code in App.js
 
 Open:
-`/assets/js/app.js`
+[`/assets/js/app.js`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/assets/js/app.js#L21-L48)
 and uncomment the line:
 ```js
 import socket from "./socket"
@@ -217,7 +222,7 @@ var channel = socket.channel('chat_room:lobby', {}); // connect to chat "room"
 channel.on('shout', function (payload) { // listen to the 'shout' event
   var li = document.createElement("li"); // creaet new list item DOM element
   var name = payload.name || 'guest';    // get name from payload or set default
-  li.innerHTML = '<b>' + name + '</b>: ' + payload.message;
+  li.innerHTML = '<b>' + name + '</b>: ' + payload.message; // set li contents
   ul.appendChild(li);                    // append to list
 });
 
@@ -239,6 +244,15 @@ msg.addEventListener('keypress', function (event) {
   }
 });
 ```
+
+> Take a moment to read the JavaScript code
+and confirm your understanding of what it's doing.
+Hopefully the in-line comments are self-explanatory,
+but if _anything_ is unclear, please ask!
+
+At this point your `app.js` file should look like this:
+[`/assets/js/app.js`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/assets/js/app.js#L21-L48)
+
 
 
 ## 5. _Checkpoint_: Our Chat App Already Works! _Try it_!
