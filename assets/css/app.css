@@ -1,9 +1,9 @@
 /* This file is for your main application css. */
 
 #msg-list {
-  border: 1px solid #000;
-  height: 500px;
+  /* border: 1px solid #000;
+  height: 200px;
   padding: 10px;
   overflow: scroll;
-  margin-bottom: 10px;
+  margin: 10px; */
 }

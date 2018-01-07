@@ -3,12 +3,15 @@
 A Step-by-Step Tutorial for building, testing
 and _deploying_ a Chat app in Phoenix!
 
+<!-- Table of Contents Here...?
+see: https://github.com/nelsonic/phoenix-chat-example/issues/1 -->
+
 
 ## Why?
 
 Chat apps are the "Hello World" of "real time" example apps. <br />
 
-Most example apps show a few basics and then ignore "the rest" ... <br />
+_Most_ example apps show a few basics and then _ignore_ "_the rest_" ... <br />
 So "_beginners_" are often left "_lost_" or "_confused_" as to
 what they should _do_ or learn _next_! <br />
 Very _few_ tutorials consider **Testing,
@@ -16,20 +19,22 @@ Deployment, Documentation** or _other_ "**Enhancements**" which are
 all part of the "***Real World***" of building and running apps;
 so those are topics we **_will_ cover** to "_fill in the gaps_".
 
-We wrote this is tutorial to be _easiest_ way to learn about Phoenix,
-Ecto and "Channels" with a _practical_ example you can follow.
+We wrote _this_ tutorial to be _easiest_ way to learn about Phoenix,
+Ecto and "Channels" with a _practical_ example _anyone_ can follow.
 
 
 ## What?
 
 A simple step-by-step tutorial showing you how to:
 
-+ Create a Phoenix App from scratch (_using the `phx.new` "generator" command_)
++ Create a Phoenix App from scratch (_using the `mix phx.new chat` "generator" command_)
 + Add a "Channel" so your app can communicate over "WebSockets".
-+ Implement a _basic_ "front-end" in "plain" JavaScript to interact with Phoenix.
++ Implement a _basic_ "front-end" in "_plain_" JavaScript
+(_ES5 without any libraries_) to interact with Phoenix
+(_send/receive messages via WebSockets_)
 + Add a simple "Ecto" schema to define the Database Table (_to store messages_)
 + Write the "CRUD" to save message/sender data to a database table.
-+ Test that everything is working.
++ Test that everything is working as expected.
 + Deploy to Heroku so people can try out your creation!
 
 _Initially_, we _deliberately_ skip over configuration files,
@@ -51,11 +56,12 @@ but if think we "_skipped a step_"
 or  you feel "_stuck_" for any reason,
 or have _any_ questions, please open an issue on GitHub! <br />
 Both the @dwyl and Phoenix communities are super beginner-friendly,
-so don't be afraid/shy. By asking questions, you are helping everyone
-that is or might be stuck with the same thing!
+so don't be afraid/shy. <br />
+Also, by asking questions, you are helping everyone
+that is or might be stuck with the _same_ thing!
 + **Chat App _specific_** questions:
 https://github.com/nelsonic/phoenix-chat-example
-+ _General_ Learning Phoenix questions:
++ **General** Learning Phoenix questions:
 https://github.com/dwyl/learn-phoenix-framework/issues
 
 
@@ -103,7 +109,7 @@ You should see something like:
 ```sh
 Erlang/OTP 20 [erts-9.2] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
-Elixir 1.5.3
+Elixir 1.6.0 (compiled with OTP 20)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -118,8 +124,8 @@ Phoenix v1.3.0
 
 ## 1. Create The App
 
-In your terminal on localhost,
-type the following command to create the app.
+In your terminal program on your localhost,
+type the following command to create the app:
 
 ```sh
 mix phx.new chat
@@ -266,8 +272,17 @@ Run the following terminal command:
 mix phx.server
 ```
 
+> _Note it will take a few seconds to **compile** but then you should see:_
 
+![server-running](https://user-images.githubusercontent.com/194400/35188430-22de4d9c-fe2d-11e7-82d3-85e0a0482e17.png)
 
+Open the Chat web app in two separate browser windows: http://localhost:4000
+(_if your machine only has one browser try using one "incognito" tab_)
+
+You should be able to send messages between the two browser windows: <br />
+![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/194400/35188398-9998e10a-fe2c-11e7-9f69-2a3dfbae754d.gif)
+
+Congratulations! You have a _working_ (_basic_) Chat App written in Phoenix!
 
 # Storing Chat Data
 
