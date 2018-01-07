@@ -28,15 +28,16 @@ Ecto and "Channels" with a _practical_ example _anyone_ can follow.
 
 A simple step-by-step tutorial showing you how to:
 
-+ Create a Phoenix App from scratch (_using the `mix phx.new chat` "generator" command_)
++ Create a Phoenix App from scratch
+(_using the `mix phx.new chat` "generator" command_)
 + Add a "Channel" so your app can communicate over "WebSockets".
 + Implement a _basic_ "front-end" in "_plain_" JavaScript
 (_ES5 without any libraries_) to interact with Phoenix
 (_send/receive messages via WebSockets_)
 + Add a simple "Ecto" schema to define the Database Table (_to store messages_)
-+ Write the "CRUD" to save message/sender data to a database table.
++ Write the functions ("CRUD") to save message/sender data to a database table.
 + Test that everything is working as expected.
-+ Deploy to Heroku so people can try out your creation!
++ Deploy to Heroku so you can _show_ people your creation!
 
 _Initially_, we _deliberately_ skip over configuration files
 and "_Phoenix Internals_"
@@ -94,8 +95,9 @@ mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
 see: [https://github.com/dwyl/**learn-postgresql#installation**](https://github.com/dwyl/learn-postgresql#installation)
 
-4. Basic **Elixir Syntax** knowledge will help, <br />
-see: [https://github.com/dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir)
+4. Basic **Elixir Syntax** knowledge will help,<br />
+please see:
+[https://github.com/dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir)
 
 5. Basic **JavaScript** knowledge is _advantageous_
 (_but not essential as the "front-end" code
@@ -103,9 +105,10 @@ is quite basic and well-commented_).
 see: https://github.com/iteles/Javascript-the-Good-Parts-notes
 
 
-### Check You Have Everything _Before_ Starting
+### _Check_ You Have Everything _Before_ Starting
 
-Check you have the latest version of Elixir:
+Check you have the _latest version_ of **Elixir**
+(_run the following command in your terminal_):
 ```sh
 elixir -v
 ```
@@ -126,8 +129,23 @@ You should see:
 Phoenix v1.3.0
 ```
 
+_Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
+run the following command:
+```sh
+lsof -i :5432
+```
+You should see output _similar_ to the following:
+```sh
+COMMAND  PID  USER   FD  TYPE DEVICE                  SIZE/OFF NODE NAME
+postgres 529 Nelson  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
+postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
+```
+This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
+(_the default port_)
 
-## 1. Create The App
+With all those "pre-flight checks" performed, let's get _going_!
+
+## 1. _Create_ The _App_
 
 In your terminal program on your localhost,
 type the following command to create the app:
@@ -150,7 +168,19 @@ Change directory into the `chat` directory by running the suggested command:
 cd chat
 ```
 
-## 2. Create the (WebSocket) "Channel"
+> _**Note**: at this point there is already an "App"
+it just does not **do** anything (yet) ... <br />
+you **can** run `mix phx.server`
+in your terminal <br />
+and open [http://localhost:4000](http://localhost:4000)
+in your browser <br />
+and you will see is the `default`
+"Welcome to Phoenix" homepage:_ <br />
+![welcome-to-phoenix](https://user-images.githubusercontent.com/194400/36354251-65e095c0-14c9-11e8-98e4-9d91c98c9b8e.png)
+
+Let's continue to the _interesting_ part!
+
+## 2. _Create_ the (WebSocket) "_Channel_"
 
 Generate the (WebSocket) channel to be used in the chat app:
 
@@ -158,12 +188,12 @@ Generate the (WebSocket) channel to be used in the chat app:
 mix phx.gen.channel Room
 ```
 
-This will create a couple of files:<br />
+This will create **two files**:<br />
 ```sh
 * creating lib/chat_web/channels/room_channel.ex
 * creating test/chat_web/channels/room_channel_test.exs
 ```
-the `room_channel.ex` file handles receiving/sending messages
+The `room_channel.ex` file handles receiving/sending messages
 and the `room_channel_test.exs` tests basic interaction with the channel.
 (_Don't worry about this yet, we will look at the test file in step 14 below_!)
 
@@ -185,6 +215,10 @@ channel "room:lobby", ChatWeb.RoomChannel
 ```
 Example:
 [user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/channels/user_socket.ex#L5)
+
+> For more detail on Phoenix Channels,
+(_we highly recommend you_) read:
+https://hexdocs.pm/phoenix/channels.html
 
 
 ## 3. Update the Template File (UI)
@@ -469,6 +503,7 @@ _or_ join in a different browser and you will still see the history.
 <!-- insert GIF of chat with history here -->
 
 <br />
+
 # Testing our App (_Automated Testing_)
 
 Automated testing is one of the _best_ ways to ensure reliability
@@ -512,7 +547,7 @@ returns an "HTML response" which contains the words: "**Welcome to Phoenix!**"
 Since we changed the code in
 [`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex)
 (_in section 3, above_),
-the page no longer contains the words "***Welcome to Phoenix!***".
+the page no longer contains the string " ***Welcome to Phoenix!*** ".
 
 ### 13.1 Fix The Failing Test
 
@@ -550,34 +585,131 @@ we can re-run the tests with the **`mix test`** command:
 It's worth taking a moment (_or as long as you need_!)
 to _understand_ what is going on in the
 [`/room_channel_test.exs`](https://github.com/nelsonic/phoenix-chat-example/blob/master/test/chat_web/channels/room_channel_test.exs)
-file. _Open_ it if you have not already.
+file. _Open_ it if you have not already, read the test descriptions & code.
+
+> For a bit of _context_ we recommend reading:
+[https://hexdocs.pm/phoenix/**testing_channels**.html](https://hexdocs.pm/phoenix/testing_channels.html)
+
+### 14.1 _Analyse_ a Test
+
+Let's take a look at the _first_ test in
+[/test/chat_web/channels/room_channel_test.exs#L14-L17](https://github.com/nelsonic/phoenix-chat-example/blob/f3823e64d9f9826db67f5cdf228ea5c974ad59fa/test/chat_web/channels/room_channel_test.exs#L14-L17):
+
+```elixir
+test "ping replies with status ok", %{socket: socket} do
+  ref = push socket, "ping", %{"hello" => "there"}
+  assert_reply ref, :ok, %{"hello" => "there"}
+end
+```
+The test get's the `socket` from the `setup` function (_on line 6 of the file_)
+and assigns the result of calling the `push` function to a variable `ref`
+`push` merely _pushes_ a message (_the map `%{"hello" => "there"}`_)
+on the `socket` to the `"ping"` ***topic***.
+
+The [`handle_in`](https://github.com/nelsonic/phoenix-chat-example/blob/f3823e64d9f9826db67f5cdf228ea5c974ad59fa/lib/chat_web/channels/room_channel.ex#L13-L17)
+function clause which handles the `"ping"` topic:
+
+```elixir
+def handle_in("ping", payload, socket) do
+  {:reply, {:ok, payload}, socket}
+end
+```
+Simply _replies_ with the payload you send it,
+therefore in our _test_ we can use the `assert_reply` Macro
+to assert that the `ref` is equal to `:ok, %{"hello" => "there"}`
+
+> _**Note**: if you have questions or need **any** help
+understanding the other tests, please open an issue on GitHub
+we are happy to expand this further! <br />
+(_we are just trying to keep this tutorial reasonably "brief"
+so beginners are not "overwhelmed" by anything...)_
+
+<br />
+
+## 15. What is _Not_ Tested?
+
+_Often_ we can learn a _lot_ about an application (_or API_)
+from reading the tests and seeing where the "gaps" in testing are.
+
+_Thankfully_ we can achieve this with only a couple of steps:
+
+### 15.1 Add `excoveralls` as a (Development) Dependency to `mix.exs`
+
+Open your `mix.exs` file and find the "deps" function:
+```elixir
+defp deps do
+```
+
+Add the following line to the end of the List:
+```elixir
+{:excoveralls, "~> 0.7.0", only: [:test, :dev]}, # tracking test coverage
+```
+Additionally, find the `def project do` section (_towards the top of `mix.exs`_)
+and add the following lines to the List:
+```elixir
+test_coverage: [tool: ExCoveralls],
+preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test,
+  "coveralls.post": :test, "coveralls.html": :test]
+```
+
+_Then_, ***install*** the dependency on `excoveralls`
+we just added to `mix.exs`:
+```sh
+mix deps.get
+```
+You should see:
+```sh
+Resolving Hex dependencies...
+Dependency resolution completed:
+* Getting excoveralls (Hex package)
+```
+
+### 15.2 Create a _New File_ Called `coveralls.json`
+
+In the "root" (_base directory_) of the Chat project,
+create a new file called `coveralls.json` and _copy-paste_ the following:
+
+```json
+{
+  "coverage_options": {
+    "minimum_coverage": 100
+  },
+  "skip_files": [
+    "test/"
+  ]
+}
+```
+This file is quite basic, it instructs the `coveralls` app
+to require a **`minimum_coverage`** of **100%**
+(_i.e. **everything is tested**<sup>1</sup>_)
+and to _ignore_ the files in the `test/` directory for coverage checking.
+
+> <small>_<sup>1</sup>We believe that **investing**
+a little **time up-front** to write tests for **all** our **code**
+is **worth it** to have **fewer bugs** later. <br />
+**Bugs** are **expensive**, **tests** are **cheap**
+and **confidence**/**reliability** is **priceless**_. </small>
 
 
-## 15. Writing our _Own_ Tests!
+### 15.3 Run the Tests with Coverage Checking
 
 
+To run the tests with coverage, copy-paste the following command
+into your terminal:
 
+```elixir
+MIX_ENV=test mix do coveralls.json
+```
+You should see:
+![phoenix-chat-coverage](https://user-images.githubusercontent.com/194400/36356461-435c4dde-14ea-11e8-9e48-3ea49f55b1e7.png)
 
-https://hexdocs.pm/phoenix/testing_channels.html
+As we can se here
 
+To **view** the coverage in a web browser run the following:
 
-<!--
-To start your Phoenix server:
-
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
-
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
--->
-
-
-
-
-
-
+```elixir
+MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
+```
 
 
 
@@ -608,3 +740,7 @@ therefore we decided to write a quick version for Phoenix 1.3 :-)
 ## Recommended Reading / Learning
 
 + ExUnit docs: https://hexdocs.pm/ex_unit/ExUnit.html
++ Testing Phoenix Channels:
+https://quickleft.com/blog/testing-phoenix-websockets
++ Phoenix WebSockets Under a Microscope:
+https://zorbash.com/post/phoenix-websockets-under-a-microscope
