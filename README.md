@@ -1,45 +1,98 @@
 # Phoenix Chat Example
 
-A Step-by-Step Tutorial for building, testing and deploying a Chat app in Phoenix!
+A Step-by-Step Tutorial for building, testing
+and _deploying_ a Chat app in Phoenix!
+
 
 ## Why?
 
-Chat apps are the "Hello World" of "real time" examples.
+Chat apps are the "Hello World" of "real time" example apps. <br />
+
+Most example apps show a few basics and then ignore "the rest" ... <br />
+So "_beginners_" are often left "_lost_" or "_confused_" as to
+what they should _do_ or learn _next_!
+Very _few_ tutorials consider Testing,
+Deployment, Documentation or other "Enhancements" which are
+all part of the "Real World" of building and running apps;
+so those are topics we _will_ cover to "_fill in the gaps_".
+
+We wrote this is tutorial to be _easiest_ way to learn about Phoenix,
+Ecto and "Channles" with a _practical_ example you can follow.
+
 
 ## What?
 
-A simple step-by-step tutorial showing you
+A simple step-by-step tutorial showing you how to:
 
-This example is meant to be as beginner friendly as possible.
++ Create a Phoenix App from scratch (_using the `phx.new` "generator" command_)
++ Add a "Channel" so your app can communicate over "WebSockets".
++ Implement a _basic_ "front-end" in "plain" JavaScript to interact with Phoenix.
++ Add a simple "Ecto" schema to define the Database Table (_to store messages_)
++ Write the "CRUD" to save message/sender data to a database table.
++ Test that everything is working.
++ Deploy to Heroku so people can try out your creation!
 
-## How?
+_Initially_, we _deliberately_ skip over configuration files,
+"_Phoenix Internals_" and other
+because you _don't_ need to know about them to get _started_.
+But don't worry, we will return to them when _needed_.
+We favour "_just-in-time_" (_when you need it_) learning
+as it's _immediately_ obvious and _practical_ ***why***
+we are learning something.
+
+
+## Who?
+
+This example is for ***complete beginners***
+as a "***My First Phoenix***" App. <br />
+
+We try to _assume_ as little as possible,
+but if think we "_skipped a step_"
+or  you feel "_stuck_" for any reason,
+or have _any_ questions, please open an issue on GitHub! <br />
+Both the @dwyl and Phoenix communities are super beginner-friendly,
+so don't be afraid/shy. By asking questions, you are helping everyone
+that is or might be stuck with the same thing!
++ **Chat App _specific_** questions:
+https://github.com/nelsonic/phoenix-chat-example
++ _General_ Learning Phoenix questions:
+https://github.com/dwyl/learn-phoenix-framework/issues
+
+
+# How?
 
 These instructions show you how to _create_ the Chat app
 _from scratch_.
 
 If you prefer to _run_ the existing/sample app,
-scroll down to the "Run On Localhost" section instead.
+scroll down to the "Clone Repo and Run on Localhost" section instead.
 
-### 0. Pre-requisites
 
-+ Install Elixir & Erlang on your local machine.
+## 0. Pre-requisites (_Before you Start_)
+
+1. **Elixir _Installed_** on your **local machine**. <br />
 see: https://github.com/dwyl/learn-elixir#installation
+<br />
 e.g:
 ```sh
 brew install elixir
 ```
-+ Basic Elixir Syntax knowledge will help,
-see: https://elixir-lang.org/getting-started/introduction.html
-+ Phoenix installed.
+2. **Phoenix** framework **installed**.
 see: https://hexdocs.pm/phoenix/installation.html
+<br />
 e.g:
 ```sh
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 ```
-+ PostgreSQL installed.
-https://github.com/dwyl/learn-postgresql#installation
+3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
+see: https://github.com/dwyl/learn-postgresql#installation
+4. Basic **Elixir Syntax** knowledge will help, <br />
+see: https://elixir-lang.org/getting-started/introduction.html
+5. Basic **JavaScript** knowledge is advantageous. <br />
+see: https://github.com/iteles/Javascript-the-Good-Parts-notes
 
-#### Check You Have Everything _Before_ Starting
+
+### Check You Have Everything _Before_ Starting
 
 Check you have the latest version of Elixir:
 ```sh
@@ -53,7 +106,7 @@ Erlang/OTP 20 [erts-9.2] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:
 Elixir 1.5.3
 ```
 
-Check you have the latest version Phoenix:
+Check you have the **latest** version of **Phoenix**:
 ```sh
 mix phx.new -v
 ```
@@ -63,7 +116,7 @@ Phoenix v1.3.0
 ```
 
 
-### 1. Create App
+## 1. Create The App
 
 In your terminal on localhost,
 type the following command to create the app.
@@ -81,28 +134,7 @@ You should see:
 ![fetch-and-install-dependencies](https://user-images.githubusercontent.com/194400/34833220-d219221c-f6e6-11e7-88d6-87aa4c3054e4.png)
 
 
-
-### 2. Create/Configure Database
-
-Follow the steps/instructions given in your terminal:
-
-Change into the project directory if you haven't already.
-
-```sh
-cd chat
-```
-> Note: if you cloned this project from GitHub instead creating it from scratch,
-> run: `cd phoenix-chat-example` instead. The rest is the same.
-
-```sh
-mix ecto.create
-```
-You should see:
-```sh
-The database for Chat.Repo has been created
-```
-
-### 3. Create the "Channel"
+## 2. Create the (WebSocket) "Channel"
 
 Generate the (WebSocket) channel to be used in the chat app:
 
@@ -122,20 +154,51 @@ Add the channel to your `/lib/chat_web/channels/user_socket.ex` handler, for exa
 
     channel "chat_room:lobby", ChatWeb.ChatRoomChannel
 ```
-Copy that line,
-Open the file called `/lib/chat_web/channels/user_socket.ex`
-and paste it it
+
+Open the file called `/lib/chat_web/channels/user_socket.ex` <br >
+and change the line:
+```elixir
+# channel "room:*", ChatWeb.RoomChannel
+```
+to:
+```elixir
+channel "chat_room:lobby", ChatWeb.ChatRoomChannel
+```
+Example:
+[user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/b9c1d4f719e9ebbd5580dd0941bec8bac50030bf/lib/chat_web/channels/user_socket.ex#L5)
 
 
-### 4. Update Template File
+## 3. Update the Template File (UI)
 
-Open the file:
-`/lib/chat_web/templates/layout/app.html.eex`
-and add the following code:
+Open the the `/lib/chat_web/templates/page/index.html.eex` file <br />
+and _copy-paste_ (_or type_) the following code:
+
+```html
+<!-- The list of messages will appear here: -->
+<ul id='msg-list' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
+
+<div class="row">
+  <div class="col-xs-3">
+    <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
+  </div>
+  <div class="col-xs-9">
+    <input type="text" id="msg" class="form-control" placeholder="Your Message">
+  </div>
+</div>
+```
+
+This is the _basic_ form we will use to input Chat messages.
+The classes e.g: `"form-control"` and `"col-xs-3"`
+are Bootstrap CSS classes to _style_ the form.
+Phoenix includes Bootstrap by default so you can get up-and-running
+with your App/Idea/"MVP" as quickly as possible! <br />
+If you are unfamiliar with Bootstrap UI,
+read: https://getbootstrap.com/docs/3.3 <br />
+and if you _specifically_ want to understand the Bootstrap _forms_,
+see: https://getbootstrap.com/docs/3.3/css/#forms
 
 
-
-### 5. Import Scocket in App.js
+## 4. Update the "Client" code in App.js
 
 Open:
 `/assets/js/app.js`
@@ -146,8 +209,83 @@ import socket from "./socket"
 with the line _uncommented_ our app will import the `socket.js` file
 which will give us WebSocket functionality.
 
+Then add the following JavaScript ("Client") code:
 
-### 6. Generate Database Schema to Store Chat History
+```js
+var channel = socket.channel('chat_room:lobby', {}); // connect to chat room
+var msg = document.getElementById('msg');
+var name = document.getElementById('name');
+var ul = document.getElementById('msg-list');
+
+// "listen" for the [Enter] keypress event to send a message:
+msg.addEventListener('keypress', function (event) {
+  if (event.keyCode == 13 && msg.value.length > 0) {
+      channel.push('shout', {
+          name: name.value,
+          message: msg.value
+      });
+      msg.value = ''; // reset the message input field for next message.
+  }
+});
+
+// listen to the 'shout'
+channel.on('shout', function (payload) {
+  var li = document.createElement("li"); // creaet new list item
+  li.innerHTML = '<b>' + (payload.name || 'guest') + '</b>: ' + payload.message;
+  ul.appendChild(li); // append to list
+});
+
+channel
+    .join()
+    .receive('ok', resp => {
+        console.log('Joined successfully', resp);
+    })
+    .receive('error', resp => {
+        console.log('Unable to join', resp);
+    });
+```
+
+
+## 5. _Checkpoint_: Our Chat App Already Works! _Try it_!
+
+At this point our Chat App already "works"!
+Try it!
+
+Run the following terminal command:
+```sh
+mix phx.server
+```
+
+
+
+
+# Storing Chat Data
+
+If we didn't want to _save_ the chat history,
+we could
+
+
+## 7. Create/Configure Database
+
+Follow the steps/instructions given in your terminal:
+
+Change into the project directory if you haven't already.
+
+```sh
+cd chat
+```
+> Note: if you cloned this project from GitHub instead creating it from scratch,
+> run: `cd phoenix-chat-example` instead. The rest is the same.
+
+```sh
+mix ecto.create
+```
+You should see:
+```sh
+The database for Chat.Repo has been created
+```
+
+## 8. Generate Database Schema to Store Chat History
 
 Run the following command in your terminal:
 ```sh
@@ -176,7 +314,12 @@ for our Message database table.
 And the `creating priv/repo/migrations/20180107074333_create_messages.exs` file
 is the "_migration_" that _creates_ the database table in our chose database.
 
-#### 6.1 Run the Ecto Migration
+#### 6.1 Confirm Your PostgreSQL Configuration
+
+
+
+
+#### 6.2 Run the Ecto Migration
 
 In your terminal run the following command to create the Message
 
@@ -192,7 +335,7 @@ Generated chat app
 [info] == Migrated in 0.0s
 ```
 
-#### 6.2 Review the Messages Table Schema
+#### 6.3 Review the Messages Table Schema
 
 If you open your PostgreSQL GUI (_we use `Postico`_)
 you will see that the messages table has been created:
@@ -259,6 +402,11 @@ def join("chat_room:lobby", payload, socket) do
   end
 end
 ```
+
+
+### X. Testing!
+
+https://hexdocs.pm/phoenix/testing_channels.html
 
 ### X. Start Server
 
