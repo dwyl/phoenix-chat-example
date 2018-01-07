@@ -79,25 +79,24 @@ scroll down to the "Clone Repo and Run on Localhost" section instead.
 1. **Elixir _Installed_** on your **local machine**. <br />
 see: https://github.com/dwyl/learn-elixir#installation
 <br />
-e.g:
-
+e.g: <br />
 ```sh
 brew install elixir
 ```
 2. **Phoenix** framework **installed**.
 see: https://hexdocs.pm/phoenix/installation.html
 <br />
-e.g:
-
+e.g: <br />
 ```sh
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 ```
-
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
 see: https://github.com/dwyl/learn-postgresql#installation
 4. Basic **Elixir Syntax** knowledge will help, <br />
 see: https://elixir-lang.org/getting-started/introduction.html
-5. Basic **JavaScript** knowledge is advantageous. <br />
+5. Basic **JavaScript** knowledge is advantageous
+(_but not essential as the "front-end" code
+is quite basic and well-commented_).
 see: https://github.com/iteles/Javascript-the-Good-Parts-notes
 
 
@@ -380,7 +379,7 @@ you will see that the messages table has been created:
 
 ![messages-table-schema-postico](https://user-images.githubusercontent.com/194400/34839040-2c6fcd0e-f6f8-11e7-807f-eb5e81b4192b.png)
 
-<sup>1</sup>:We use ["Postico"](https://eggerapps.at/postico/),
+<sup>1</sup> We use ["Postico"](https://eggerapps.at/postico/),
 but _many_ other GUIs exist
 e.g: https://www.pgadmin.org
 
@@ -457,18 +456,78 @@ the chat (message) history is _saved_!
 This means you can _refresh_ the browser
 _or_ join in a different browser and you will still see the history.
 
+<!-- insert GIF of chat with history here -->
+
+# Testing our App (Automated Testing)
+
+Automated testing is one of the _best_ ways to ensure reliability
+in your web applications.
+
+Testing in Phoenix is fast (_tests run in parallel!_)
+and easy to get started!
+The `ExUnit` testing framework is _built-in_
+so there aren't an "decisions/debates"
+about which framework or style to use.
+
+If you have never seen or written a test with `ExUnit`,
+don't fear, the syntax should be _familiar_ if you have
+written _any_ sort of automated test in the past.
+
+> _**Note**: If you are completely new to Automated Testing
+or "Test Driven Development" (TDD), we recommend reading/following
+the "absolute basic" tutorial:_ https://github.com/dwyl/learn-tdd
+
+### 13. Run the Default Tests
+
+When ever you create a new Phoenix app
+or add a new feature (_like a channel_),
+Phoenix _generates_ a new test for you.
+
+We _run_ the tests using the **`mix test`** command:
+
+![one-failing-test](https://user-images.githubusercontent.com/194400/35329453-d2549d86-00f7-11e8-9176-2cd14a258abe.png)
+
+In this case _one_ of the tests fails. (_7 tests, **1 failure**_)
+
+The "**stacktrace**" informs us that location of the failing test is:
+`test/chat_web/controllers/page_controller_test.exs:4`
+And that the "assertion" is:
+```elixir
+assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+```
+In _English_ this means we are asserting that the "homepage"
+returns an "HTML response" which contains the words: "**Welcome to Phoenix!**"
+
+Since we changed the code in
+[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex)
+(_in section 3, above_),
+the page no longer contains the words "***Welcome to Phoenix!***".
+
+We have _two_ options:
+1. **Add** the text "**Welcome to Phoenix!**" back into `page/index.html.eex`
+2. ***Update*** the assertion to something that _is_ on the page e.g:
+"**msg-list**".
+
+Both are _valid_ approaches, however we _prefer_ the second option because
+it "_reflects the reality_" rather than "_altering reality_"
+to match the exiting assertion. <br />
+Let's make the update now. Open the
+[`test/chat_web/controllers/page_controller_test.exs`](https://github.com/nelsonic/phoenix-chat-example/blob/f9cf59e8282a5c0756d7c6be91f3b5926430fd3b/test/chat_web/controllers/page_controller_test.exs)
+file and change line **6** to:
+
+```elixir
+assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+```
 
 
 
-### X. Testing!
+
+
 
 https://hexdocs.pm/phoenix/testing_channels.html
 
-### X. Start Server
 
-
-
-
+<!--
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
@@ -476,9 +535,27 @@ To start your Phoenix server:
   * Install Node.js dependencies with `cd assets && npm install`
   * Start Phoenix endpoint with `mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -494,10 +571,6 @@ see: https://github.com/chrismccord/phoenix_chat_example/issues/40
 therefore we decided to write a quick version for Phoenix 1.3 :-)
 
 
-## Learn more
+## Recommended Reading / Learning
 
-* Official website: http://www.phoenixframework.org/
-* Guides: http://phoenixframework.org/docs/overview
-* Docs: https://hexdocs.pm/phoenix
-* Mailing list: http://groups.google.com/group/phoenix-talk
-* Source: https://github.com/phoenixframework/phoenix
++ ExUnit docs: https://hexdocs.pm/ex_unit/ExUnit.html
