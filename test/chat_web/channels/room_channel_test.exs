@@ -1,13 +1,13 @@
-defmodule ChatWeb.ChatRoomChannelTest do
+defmodule ChatWeb.RoomChannelTest do
   use ChatWeb.ChannelCase
 
-  alias ChatWeb.ChatRoomChannel
+  alias ChatWeb.RoomChannel
 
   setup do
     {:ok, _, socket} =
       socket("user_id", %{some: :assign})
-      |> subscribe_and_join(ChatRoomChannel, "chat_room:lobby")
-    IO.inspect socket
+      |> subscribe_and_join(RoomChannel, "room:lobby")
+
     {:ok, socket: socket}
   end
 
@@ -16,7 +16,7 @@ defmodule ChatWeb.ChatRoomChannelTest do
     assert_reply ref, :ok, %{"hello" => "there"}
   end
 
-  test "shout broadcasts to chat_room:lobby", %{socket: socket} do
+  test "shout broadcasts to room:lobby", %{socket: socket} do
     push socket, "shout", %{"hello" => "all"}
     assert_broadcast "shout", %{"hello" => "all"}
   end
