@@ -81,6 +81,7 @@ You should see:
 ![fetch-and-install-dependencies](https://user-images.githubusercontent.com/194400/34833220-d219221c-f6e6-11e7-88d6-87aa4c3054e4.png)
 
 
+
 ### 2. Create/Configure Database
 
 Follow the steps/instructions given in your terminal:
@@ -123,7 +124,8 @@ Add the channel to your `lib/chat_web/channels/user_socket.ex` handler, for exam
 ```
 Cope that line
 Open the file called `lib/chat_web/channels/user_socket.ex`
-and
+and paste it
+
 
 ### 3. Start Server
 
