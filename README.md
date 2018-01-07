@@ -80,21 +80,24 @@ scroll down to the "Clone Repo and Run on Localhost" section instead.
 1. **Elixir _Installed_** on your **local machine**. <br />
   see: https://github.com/dwyl/learn-elixir#installation <br />
   e.g: <br />
-  ```sh
-  brew install elixir
-  ```
+```
+brew install elixir
+```
+
 2. **Phoenix** framework **installed**.
   see: https://hexdocs.pm/phoenix/installation.html
   <br />
   e.g: <br />
-  ```sh
-  mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
-  ```
+```
+mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
+```
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
 see: https://github.com/dwyl/learn-postgresql#installation
+
 4. Basic **Elixir Syntax** knowledge will help, <br />
-see: https://elixir-lang.org/getting-started/introduction.html
-5. Basic **JavaScript** knowledge is advantageous
+see: [https://github.com/dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir/)
+
+5. Basic **JavaScript** knowledge is _advantageous_
 (_but not essential as the "front-end" code
 is quite basic and well-commented_).
 see: https://github.com/iteles/Javascript-the-Good-Parts-notes
@@ -359,7 +362,7 @@ The "_migration_" actually _creates_ the database table in our database.
 
 
 
-### 8. Run the Ecto Migration (_Create The Database Table_)
+## 8. Run the Ecto Migration (_Create The Database Table_)
 
 In your terminal run the following command to create the `messages` table:
 
@@ -375,7 +378,7 @@ Generated chat app
 [info] == Migrated in 0.0s
 ```
 
-#### 8.1 Review the Messages Table Schema
+### 8.1 Review the Messages Table Schema
 
 If you open your PostgreSQL GUI (_e.g: [pgadmin](https://www.pgadmin.org)_)
 you will see that the messages table has been created
@@ -390,7 +393,7 @@ on the `messages` table and selecting "properties":
 
 
 
-### 9. Insert Messages into Database
+## 9. Insert Messages into Database
 
 Open the `lib/chat_web/channels/room_channel.ex` file
 and inside the function `def handle_in("shout", payload, socket) do`
@@ -408,7 +411,7 @@ def handle_in("shout", payload, socket) do
 end
 ```
 
-### 10. Load Existing Messages (_When Someone Joins the Chat_)
+## 10. Load _Existing_ Messages (_When Someone Joins the Chat_)
 
 Open the `lib/chat/message.ex` file and add a new function to it:
 ```elixir
@@ -423,7 +426,7 @@ It uses Ecto's `all` function to fetch all records from the database.
 and limit is the maximum number of records to fetch.
 
 
-### 11. Send Existing Messages to the Client when they Join
+## 11. Send Existing Messages to the Client when they Join
 
 In the `/lib/chat_web/channels/room_channel.ex` file create a new function:
 ```elixir
@@ -485,9 +488,9 @@ written _any_ sort of automated test in the past.
 or "Test Driven Development" (TDD), we recommend reading/following
 the "absolute basic" tutorial:_ https://github.com/dwyl/learn-tdd
 
-### 13. Run the Default/Generated Tests
+## 13. Run the Default/Generated Tests
 
-When ever you create a new Phoenix app
+Whenever you create a new Phoenix app
 or add a new feature (_like a channel_),
 Phoenix _generates_ a new test for you.
 
@@ -511,7 +514,7 @@ Since we changed the code in
 (_in section 3, above_),
 the page no longer contains the words "***Welcome to Phoenix!***".
 
-#### 13.1 Fix The Failing Test
+### 13.1 Fix The Failing Test
 
 We have _two_ options:
 1. **Add** the text "**Welcome to Phoenix!**" back into `page/index.html.eex`
@@ -535,14 +538,14 @@ where our message history is bing displayed.
 Your `page_controller_test.exs` file should now look like this:
 [`/test/chat_web/controllers/page_controller_test.exs#L6`](https://github.com/nelsonic/phoenix-chat-example/blob/c2abfa05df178f71f615eae363b7475788c96b43/test/chat_web/controllers/page_controller_test.exs#L6)
 
-#### 13.2 Re-Run The Test(s)
+### 13.2 Re-Run The Test(s)
 
 Now that we have _updated_ the assertion,
 we can re-run the tests with the **`mix test`** command:
 
 ![tests-pass](https://user-images.githubusercontent.com/194400/35342629-6dcc7c3e-0120-11e8-89dc-5f07e81b32ff.png)
 
-### 14. Understanding The Channel Tests
+## 14. Understanding The Channel Tests
 
 It's worth taking a moment (_or as long as you need_!)
 to _understand_ what is going on in the
@@ -550,7 +553,7 @@ to _understand_ what is going on in the
 file. _Open_ it if you have not already.
 
 
-### 15. Writing our _Own_ Tests!
+## 15. Writing our _Own_ Tests!
 
 
 
