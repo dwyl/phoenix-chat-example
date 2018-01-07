@@ -80,6 +80,7 @@ scroll down to the "Clone Repo and Run on Localhost" section instead.
 see: https://github.com/dwyl/learn-elixir#installation
 <br />
 e.g:
+
 ```sh
 brew install elixir
 ```
@@ -87,9 +88,11 @@ brew install elixir
 see: https://hexdocs.pm/phoenix/installation.html
 <br />
 e.g:
+
 ```sh
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 ```
+
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
 see: https://github.com/dwyl/learn-postgresql#installation
 4. Basic **Elixir Syntax** knowledge will help, <br />
@@ -372,12 +375,14 @@ Generated chat app
 
 #### 8.1 Review the Messages Table Schema
 
-If you open your PostgreSQL GUI<sup>1</sup> (_we use `Postico`_)
+If you open your PostgreSQL GUI<sup>1</sup>
 you will see that the messages table has been created:
 
 ![messages-table-schema-postico](https://user-images.githubusercontent.com/194400/34839040-2c6fcd0e-f6f8-11e7-807f-eb5e81b4192b.png)
 
-<sup>1</sup>:
+<sup>1</sup>:We use ["Postico"](https://eggerapps.at/postico/),
+but _many_ other GUIs exist
+e.g: https://www.pgadmin.org
 
 ### 9. Insert Messages to Database
 
