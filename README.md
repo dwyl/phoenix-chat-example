@@ -19,8 +19,9 @@ Deployment, Documentation** or _other_ "**Enhancements**" which are
 all part of the "***Real World***" of building and running apps;
 so those are topics we **_will_ cover** to "_fill in the gaps_".
 
-We wrote _this_ tutorial to be _easiest_ way to learn about Phoenix,
+We wrote _this_ tutorial to be _easiest_ way to learn Phoenix,
 Ecto and "Channels" with a _practical_ example _anyone_ can follow.
+
 
 
 ## What?
@@ -37,9 +38,9 @@ A simple step-by-step tutorial showing you how to:
 + Test that everything is working as expected.
 + Deploy to Heroku so people can try out your creation!
 
-_Initially_, we _deliberately_ skip over configuration files,
-"_Phoenix Internals_" and other
-because you _don't_ need to know about them to get _started_.
+_Initially_, we _deliberately_ skip over configuration files
+and "_Phoenix Internals_"
+because you (_beginners_) _don't need_ to know about them to get _started_.
 But don't worry, we will return to them when _needed_.
 We favour "_just-in-time_" (_when you need it_) learning
 as it's _immediately_ obvious and _practical_ ***why***
@@ -69,27 +70,26 @@ https://github.com/dwyl/learn-phoenix-framework/issues
 
 These instructions show you how to _create_ the Chat app
 _from scratch_.
-
+<!--
 If you prefer to _run_ the existing/sample app,
 scroll down to the "Clone Repo and Run on Localhost" section instead.
-
+-->
 
 ## 0. Pre-requisites (_Before you Start_)
 
 1. **Elixir _Installed_** on your **local machine**. <br />
-see: https://github.com/dwyl/learn-elixir#installation
-<br />
-e.g: <br />
-```sh
-brew install elixir
-```
+  see: https://github.com/dwyl/learn-elixir#installation <br />
+  e.g: <br />
+  ```sh
+  brew install elixir
+  ```
 2. **Phoenix** framework **installed**.
-see: https://hexdocs.pm/phoenix/installation.html
-<br />
-e.g: <br />
-```sh
-mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
-```
+  see: https://hexdocs.pm/phoenix/installation.html
+  <br />
+  e.g: <br />
+  ```sh
+  mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
+  ```
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
 see: https://github.com/dwyl/learn-postgresql#installation
 4. Basic **Elixir Syntax** knowledge will help, <br />
@@ -152,20 +152,23 @@ cd chat
 Generate the (WebSocket) channel to be used in the chat app:
 
 ```sh
-mix phx.gen.channel chat_room
+mix phx.gen.channel Room
 ```
 
 This will create a couple of files:<br />
 ```sh
-* creating lib/chat_web/channels/chat_room_channel.ex
-* creating test/chat_web/channels/chat_room_channel_test.exs
+* creating lib/chat_web/channels/room_channel.ex
+* creating test/chat_web/channels/room_channel_test.exs
 ```
+the `room_channel.ex` file handles receiving/sending messages
+and the `room_channel_test.exs` tests basic interaction with the channel.
+(_Don't worry about this yet, we will look at the test file in step 14 below_!)
 
-And inform you that you need to copy-paste a piece of code into your app: <br />
+We are informed that we need to update a piece of code into your app: <br />
 ```sh
 Add the channel to your `/lib/chat_web/channels/user_socket.ex` handler, for example:
 
-    channel "chat_room:lobby", ChatWeb.ChatRoomChannel
+    channel "room:lobby", ChatWeb.RoomChannel
 ```
 
 Open the file called `/lib/chat_web/channels/user_socket.ex` <br >
@@ -175,7 +178,7 @@ and change the line:
 ```
 to:
 ```elixir
-channel "chat_room:lobby", ChatWeb.ChatRoomChannel
+channel "room:lobby", ChatWeb.RoomChannel
 ```
 Example:
 [user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/channels/user_socket.ex#L5)
@@ -230,7 +233,7 @@ which will give us WebSocket functionality.
 Then add the following JavaScript ("Client") code:
 
 ```js
-var channel = socket.channel('chat_room:lobby', {}); // connect to chat "room"
+var channel = socket.channel('room:lobby', {}); // connect to chat "room"
 
 channel.on('shout', function (payload) { // listen to the 'shout' event
   var li = document.createElement("li"); // creaet new list item DOM element
@@ -374,18 +377,22 @@ Generated chat app
 
 #### 8.1 Review the Messages Table Schema
 
-If you open your PostgreSQL GUI<sup>1</sup>
-you will see that the messages table has been created:
+If you open your PostgreSQL GUI (_e.g: [pgadmin](https://www.pgadmin.org)_)
+you will see that the messages table has been created
+in the `chat_dev` database:
 
-![messages-table-schema-postico](https://user-images.githubusercontent.com/194400/34839040-2c6fcd0e-f6f8-11e7-807f-eb5e81b4192b.png)
+![pgadmin-messages-table](https://user-images.githubusercontent.com/194400/35624169-deaa7fd4-0696-11e8-8dd0-584eba3a2037.png)
 
-<sup>1</sup> We use ["Postico"](https://eggerapps.at/postico/),
-but _many_ other GUIs exist
-e.g: https://www.pgadmin.org
+You can view the table schema by "_right-clicking_" (_`ctrl + click` on Mac_)
+on the `messages` table and selecting "properties":
 
-### 9. Insert Messages to Database
+![pgadmin-messages-schema-columns-view](https://user-images.githubusercontent.com/194400/35623295-c3a4df5c-0693-11e8-8484-199c2bcab458.png)
 
-Open the `lib/chat_web/channels/chat_room_channel.ex` file
+
+
+### 9. Insert Messages into Database
+
+Open the `lib/chat_web/channels/room_channel.ex` file
 and inside the function `def handle_in("shout", payload, socket) do`
 add the following line:
 ```elixir
@@ -418,7 +425,7 @@ and limit is the maximum number of records to fetch.
 
 ### 11. Send Existing Messages to the Client when they Join
 
-In the `/lib/chat_web/channels/chat_room_channel.ex` file create a new function:
+In the `/lib/chat_web/channels/room_channel.ex` file create a new function:
 ```elixir
 def handle_info(:after_join, socket) do
   Chat.Message.get_messages()
@@ -433,7 +440,7 @@ end
 and at the top of the file update the `join` function to the following:
 
 ```elixir
-def join("chat_room:lobby", payload, socket) do
+def join("room:lobby", payload, socket) do
   if authorized?(payload) do
     send(self(), :after_join)
     {:ok, socket}
@@ -458,7 +465,8 @@ _or_ join in a different browser and you will still see the history.
 
 <!-- insert GIF of chat with history here -->
 
-# Testing our App (Automated Testing)
+<br />
+# Testing our App (_Automated Testing_)
 
 Automated testing is one of the _best_ ways to ensure reliability
 in your web applications.
@@ -477,7 +485,7 @@ written _any_ sort of automated test in the past.
 or "Test Driven Development" (TDD), we recommend reading/following
 the "absolute basic" tutorial:_ https://github.com/dwyl/learn-tdd
 
-### 13. Run the Default Tests
+### 13. Run the Default/Generated Tests
 
 When ever you create a new Phoenix app
 or add a new feature (_like a channel_),
@@ -503,6 +511,8 @@ Since we changed the code in
 (_in section 3, above_),
 the page no longer contains the words "***Welcome to Phoenix!***".
 
+#### 13.1 Fix The Failing Test
+
 We have _two_ options:
 1. **Add** the text "**Welcome to Phoenix!**" back into `page/index.html.eex`
 2. ***Update*** the assertion to something that _is_ on the page e.g:
@@ -516,10 +526,31 @@ Let's make the update now. Open the
 file and change line **6** to:
 
 ```elixir
-assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+assert html_response(conn, 200) =~ "msg-list"
 ```
+We know that `"msg-list"` is _on_ the page
+because that's the `id` of the `<ul>`
+where our message history is bing displayed.
+
+Your `page_controller_test.exs` file should now look like this:
+[`/test/chat_web/controllers/page_controller_test.exs#L6`](https://github.com/nelsonic/phoenix-chat-example/blob/c2abfa05df178f71f615eae363b7475788c96b43/test/chat_web/controllers/page_controller_test.exs#L6)
+
+#### 13.2 Re-Run The Test(s)
+
+Now that we have _updated_ the assertion,
+we can re-run the tests with the **`mix test`** command:
+
+![tests-pass](https://user-images.githubusercontent.com/194400/35342629-6dcc7c3e-0120-11e8-89dc-5f07e81b32ff.png)
+
+### 14. Understanding The Channel Tests
+
+It's worth taking a moment (_or as long as you need_!)
+to _understand_ what is going on in the
+[`/room_channel_test.exs`](https://github.com/nelsonic/phoenix-chat-example/blob/master/test/chat_web/channels/room_channel_test.exs)
+file. _Open_ it if you have not already.
 
 
+### 15. Writing our _Own_ Tests!
 
 
 

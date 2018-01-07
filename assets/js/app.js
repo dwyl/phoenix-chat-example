@@ -20,7 +20,7 @@ import "phoenix_html"
 
 import socket from "./socket"
 
-var channel = socket.channel('chat_room:lobby', {}); // connect to chat "room"
+var channel = socket.channel('room:lobby', {}); // connect to chat "room"
 
 channel.on('shout', function (payload) { // listen to the 'shout' event
   var li = document.createElement("li"); // creaet new list item DOM element

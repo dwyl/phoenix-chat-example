@@ -7,7 +7,7 @@ defmodule ChatWeb.ChatRoomChannelTest do
     {:ok, _, socket} =
       socket("user_id", %{some: :assign})
       |> subscribe_and_join(ChatRoomChannel, "chat_room:lobby")
-
+    IO.inspect socket
     {:ok, socket: socket}
   end
 
