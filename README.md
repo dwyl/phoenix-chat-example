@@ -1,5 +1,7 @@
 # Phoenix Chat Example
 
+[![Build Status](https://travis-ci.org/dwyl/phoenix-chat-example.svg?branch=master)](https://travis-ci.org/dwyl/phoenix-chat-example)
+
 A Step-by-Step Tutorial for building, testing
 and _deploying_ a Chat app in Phoenix!
 
@@ -28,16 +30,18 @@ Ecto and "Channels" with a _practical_ example _anyone_ can follow.
 
 A simple step-by-step tutorial showing you how to:
 
-+ Create a Phoenix App from scratch
++ **Create** a **Phoenix App** from _scratch_
 (_using the `mix phx.new chat` "generator" command_)
-+ Add a "Channel" so your app can communicate over "WebSockets".
-+ Implement a _basic_ "front-end" in "_plain_" JavaScript
++ Add a "Channel" so your app can communicate over "**WebSockets**".
++ Implement a _basic_ "***front-end***" in "_plain_" JavaScript
 (_ES5 without any libraries_) to interact with Phoenix
 (_send/receive messages via WebSockets_)
-+ Add a simple "Ecto" schema to define the Database Table (_to store messages_)
-+ Write the functions ("CRUD") to save message/sender data to a database table.
-+ Test that everything is working as expected.
-+ Deploy to Heroku so you can _show_ people your creation!
++ Add a simple "**Ecto**" **schema** to define
+the **Database Table** (_to store messages_)
++ **Write** the functions ("CRUD") to _save_
+message/sender data to a database table.
++ **Test** that everything is working as expected.
++ ***Deploy*** to Heroku so you can _show_ people your creation!
 
 _Initially_, we _deliberately_ skip over configuration files
 and "_Phoenix Internals_"
@@ -56,8 +60,9 @@ as a "***My First Phoenix***" App. <br />
 We try to _assume_ as little as possible,
 but if think we "_skipped a step_"
 or  you feel "_stuck_" for any reason,
-or have _any_ questions, please open an issue on GitHub! <br />
-Both the @dwyl and Phoenix communities are super beginner-friendly,
+or have _any_ questions (_related to this example_),
+please open an issue on GitHub! <br />
+Both the @dwyl and Phoenix communities are _super **beginner-friendly**_,
 so don't be afraid/shy. <br />
 Also, by asking questions, you are helping everyone
 that is or might be stuck with the _same_ thing!
@@ -67,7 +72,7 @@ https://github.com/nelsonic/phoenix-chat-example
 https://github.com/dwyl/learn-phoenix-framework/issues
 
 
-# How?
+# _How_?
 
 These instructions show you how to _create_ the Chat app
 _from scratch_.
