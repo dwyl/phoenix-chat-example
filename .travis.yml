@@ -1,0 +1,9 @@
+language: elixir
+elixir: # Latest version of Elixir
+  - 1.6
+addons: # ensure that Travis-CI provisions a DB for our test:
+  postgresql: '9.5'
+env:
+  - MIX_ENV=test
+script: # run the tests:
+  - mix test
