@@ -722,8 +722,10 @@ the coverage threshold in `coveralls.json` form `100` to `50`
 for this command to work because it's expecting 100% coverage._</small>
 
 
+
 <!-- I think I'm at a point where I need to take a "Detour"
 to write up my **Definitive** thoughts on "Test Coverage" once-and-for-all! -->
+
 
 
 
@@ -756,6 +758,10 @@ env:
 script: # run the tests:
   - mix test
 ```
+
+You will need to _enable_ your project on Travis-CI for the buld to run.
+Please see: https://github.com/dwyl/learn-travis#getting-started
+
 
 
 # Deployment!
