@@ -506,8 +506,13 @@ _or_ join in a different browser and you will still see the history.
 
 # Testing our App (_Automated Testing_)
 
-Automated testing is one of the _best_ ways to ensure reliability
+Automated testing is one of the _best_ ways to ensure _reliability_
 in your web applications.
+
+> _**Note**: If you are completely new to Automated Testing
+or "Test Driven Development" ("TDD"),
+we recommend reading/following the "basic" tutorial:_
+[github.com/dwyl/**learn-tdd**](https://github.com/dwyl/learn-tdd)
 
 Testing in Phoenix is fast (_tests run in parallel!_)
 and easy to get started!
@@ -518,10 +523,6 @@ about which framework or style to use.
 If you have never seen or written a test with `ExUnit`,
 don't fear, the syntax should be _familiar_ if you have
 written _any_ sort of automated test in the past.
-
-> _**Note**: If you are completely new to Automated Testing
-or "Test Driven Development" (TDD), we recommend reading/following
-the "absolute basic" tutorial:_ https://github.com/dwyl/learn-tdd
 
 ## 13. Run the Default/Generated Tests
 
@@ -620,7 +621,7 @@ to assert that the `ref` is equal to `:ok, %{"hello" => "there"}`
 
 > _**Note**: if you have questions or need **any** help
 understanding the other tests, please open an issue on GitHub
-we are happy to expand this further! <br />
+we are happy to expand this further!_ <br />
 (_we are just trying to keep this tutorial reasonably "brief"
 so beginners are not "overwhelmed" by anything...)_
 
@@ -662,6 +663,7 @@ You should see:
 Resolving Hex dependencies...
 Dependency resolution completed:
 * Getting excoveralls (Hex package)
+... etc.
 ```
 
 ### 15.2 Create a _New File_ Called `coveralls.json`
@@ -693,23 +695,70 @@ and **confidence**/**reliability** is **priceless**_. </small>
 
 ### 15.3 Run the Tests with Coverage Checking
 
-
 To run the tests with coverage, copy-paste the following command
 into your terminal:
 
 ```elixir
 MIX_ENV=test mix do coveralls.json
 ```
-You should see:
+You should see: <br />
 ![phoenix-chat-coverage](https://user-images.githubusercontent.com/194400/36356461-435c4dde-14ea-11e8-9e48-3ea49f55b1e7.png)
 
-As we can se here
+As we can se here, only **59.3%** of lines of code in `/lib`
+are being "covered" by the tests we have written.
 
 To **view** the coverage in a web browser run the following:
 
 ```elixir
 MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 ```
+<br />
+This will open the Coverage Report (HTML) in your default Web Browser: <br />
+![coverage-report-59 3-percent](https://user-images.githubusercontent.com/194400/36425359-7637adfc-163e-11e8-9c9f-3c4fcbcded32.png)
+
+
+> <small>_**Note**: you will need to **temporarily** lower
+the coverage threshold in `coveralls.json` form `100` to `50`
+for this command to work because it's expecting 100% coverage._</small>
+
+
+<!-- I think I'm at a point where I need to take a "Detour"
+to write up my **Definitive** thoughts on "Test Coverage" once-and-for-all! -->
+
+
+
+# Continuous Integration
+
+Continuous integration lets you _automate_ running the tests
+to check that your app is working as _expected_ (_before deploying_).
+This prevents accidentally "_breaking_" your app.
+
+_Thankfully_ the steps are quite simple.
+
+> _If you are `new` to Continuous Integration, or need a refresher,
+we wrote a step-by-step tutorial for it!
+see_:
+[github.com/dwyl/**learn-travis**](https://github.com/dwyl/learn-travis)
+
+The Elixir-specific section is:
+https://github.com/dwyl/learn-travis#elixir-lang
+
+We only need to add `.travis.yml` file to the project
+with the following lines:
+```yml
+language: elixir
+elixir: # Latest version of Elixir
+  - 1.6
+addons: # ensure that Travis-CI provisions a DB for our test:
+  postgresql: '9.5'
+env:
+  - MIX_ENV=test
+script: # run the tests:
+  - mix test
+```
+
+
+# Deployment!
 
 
 
@@ -719,11 +768,7 @@ MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 
 
 
-
-
-
-
-
+<br /> <br />
 
 
 ## Inspiration
