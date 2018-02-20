@@ -714,6 +714,7 @@ MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 ```
 <br />
 This will open the Coverage Report (HTML) in your default Web Browser: <br />
+
 ![coverage-report-59 3-percent](https://user-images.githubusercontent.com/194400/36425359-7637adfc-163e-11e8-9c9f-3c4fcbcded32.png)
 
 
@@ -759,7 +760,8 @@ script: # run the tests:
   - mix test
 ```
 
-You will need to _enable_ your project on Travis-CI for the buld to run.
+You will need to _enable_ your project on Travis-CI
+for the build to run. <br />
 Please see: https://github.com/dwyl/learn-travis#getting-started
 
 
