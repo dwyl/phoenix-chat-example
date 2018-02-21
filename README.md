@@ -733,7 +733,7 @@ for this command to work because it's expecting 100% coverage._</small>
 to write up my **Definitive** thoughts on "Test Coverage" once-and-for-all! -->
 
 
-
+<br />
 
 # Continuous Integration
 
@@ -769,16 +769,31 @@ You will need to _enable_ your project on Travis-CI
 for the build to run. <br />
 Please see: https://github.com/dwyl/learn-travis#getting-started
 
-
+<br />
 
 # Deployment!
 
-Work-in-progress: https://github.com/dwyl/learn-heroku/pull/18
+Deployment to Heroku takes a few minutes,
+but has a few "steps",
+therefore we have created a _separate_
+guide for it:
+ [elixir-phoenix-app-deployment.md](https://github.com/dwyl/learn-heroku/blob/master/elixir-phoenix-app-deployment.md)
+
+Once you have _deployed_ you will will be able
+to view/use your app in any Web/Mobile Browser.
+
+e.g: https://phxchat.herokuapp.com <br />
+![phxchat](https://user-images.githubusercontent.com/194400/36480000-9c6fe768-1702-11e8-86d6-c8703883096c.png)
+
+<br />
 
 
+![thats-all-folks](https://user-images.githubusercontent.com/194400/36492991-6bc5dd42-1726-11e8-9d7b-a11c44d786a0.jpg)
 
+<br />
 
-
+_Want **more**_? ***Ask***!
+_Please share your thoughts on GitHub_: https://github.com/dwyl/phoenix-chat-example/issues
 
 
 <br /> <br />
