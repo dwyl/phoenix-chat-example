@@ -16,7 +16,8 @@ use Mix.Config
 config :chat, ChatWeb.Endpoint,
   load_from_system_env: true,
   url: [scheme: "https", host: "phxchat.herokuapp.com",
-    port: System.get_env("PORT")], # Heroku Supplies the TCP Port
+    port: 443]
+    # port: System.get_env("PORT")], # Heroku Supplies the TCP Port
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
