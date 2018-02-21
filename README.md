@@ -773,7 +773,7 @@ Please see: https://github.com/dwyl/learn-travis#getting-started
 
 # Deployment!
 
-
+Work-in-progress: https://github.com/dwyl/learn-heroku/pull/18
 
 
 
