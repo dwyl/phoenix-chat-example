@@ -4,8 +4,8 @@ defmodule Chat.Mixfile do
   def project do
     [
       app: :chat,
-      version: "0.0.1",
-      elixir: "~> 1.4",
+      version: "1.0.0",
+      elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -47,6 +47,8 @@ defmodule Chat.Mixfile do
 
       # The rest of the dependendencies are for testing/reporting
       {:excoveralls, "~> 0.7.0", only: [:test, :dev]}, # tracking test coverage
+      {:inch_ex, "~> 0.5.6", only: :docs},             # documentation
+      {:pre_commit, "~> 0.2.4", only: :dev}  # github.com/dwyl/learn-pre-commit
     ]
   end
 
@@ -60,7 +62,9 @@ defmodule Chat.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      "test": ["ecto.create --quiet", "ecto.migrate", "test"],
+      "cover": ["coveralls.json"],
+      "cover.html": ["coveralls.html"]
     ]
   end
 end
