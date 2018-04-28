@@ -1,8 +1,16 @@
 # Phoenix Chat Example
 
-[![Build Status](https://travis-ci.org/dwyl/phoenix-chat-example.svg?branch=master)](https://travis-ci.org/dwyl/phoenix-chat-example)
+![phoenix-chat-logo_medium](https://user-images.githubusercontent.com/194400/39373424-75bd06c6-4a3f-11e8-93f7-35ced2376270.png)
 
-A Step-by-Step Tutorial for building, testing
+
+[![Build Status](https://img.shields.io/travis/dwyl/phoenix-chat-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/phoenix-chat-example)
+<!-- [![Inline docs](http://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](http://inch-ci.org/github/dwyl/phoenix-chat-example) -->
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/phoenix-chat-example/master.svg?style=flat-square)](http://codecov.io/github/dwyl/phoenix-chat-example?branch=master)
+<!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
+[![HitCount](http://hits.dwyl.io/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
+
+
+A ***step-by-step tutorial*** for building, testing
 and _deploying_ a Chat app in Phoenix!
 
 <!-- Table of Contents Here...?
@@ -733,12 +741,14 @@ for this command to work because it's expecting 100% coverage._</small>
 to write up my **Definitive** thoughts on "Test Coverage" once-and-for-all! -->
 
 
+
+
 <br />
 
 # Continuous Integration
 
 Continuous integration lets you _automate_ running the tests
-to check that your app is working as _expected_ (_before deploying_).
+to check/confirm that your app is working as _expected_ (_before deploying_).
 This prevents accidentally "_breaking_" your app.
 
 _Thankfully_ the steps are quite simple.
