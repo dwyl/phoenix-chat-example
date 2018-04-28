@@ -4,10 +4,11 @@
 
 
 [![Build Status](https://img.shields.io/travis/dwyl/phoenix-chat-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/phoenix-chat-example)
-<!-- [![Inline docs](http://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](http://inch-ci.org/github/dwyl/phoenix-chat-example) -->
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/phoenix-chat-example/master.svg?style=flat-square)](http://codecov.io/github/dwyl/phoenix-chat-example?branch=master)
-<!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
 [![HitCount](http://hits.dwyl.io/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
+Try it: https://phxchat.herokuapp.com
+<!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
+<!-- [![Inline docs](http://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](http://inch-ci.org/github/dwyl/phoenix-chat-example) -->
 
 
 A ***step-by-step tutorial*** for building, testing
