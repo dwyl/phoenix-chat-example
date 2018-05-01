@@ -18,7 +18,7 @@ defmodule Chat.Message do
     |> validate_required([:name, :message])
   end
 
-  def get_messages(limit \\ 20) do
+  def get_messages(limit \\ 10) do
     Chat.Repo.all(Message, limit: limit)
   end
 end

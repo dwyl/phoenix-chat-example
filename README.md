@@ -1,6 +1,6 @@
 # Phoenix Chat Example
 
-![phoenix-chat-logo_medium](https://user-images.githubusercontent.com/194400/39373424-75bd06c6-4a3f-11e8-93f7-35ced2376270.png)
+![phoenix-chat-logo](https://user-images.githubusercontent.com/194400/39481553-c448aa1c-4d63-11e8-9389-47789833a96e.png)
 
 
 [![Build Status](https://img.shields.io/travis/dwyl/phoenix-chat-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/phoenix-chat-example)

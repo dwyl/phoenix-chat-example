@@ -1,7 +1,9 @@
 <!-- The list of messages will appear here: -->
-<ul id="msg-list" class="row"
-  style="list-style: none; min-height:200px; border: 1px solid #e5e5e5;
-margin: 10px; padding: 10px;"> <!-- don't worry, "in-line styles" are temp! -->
+<ul id="msg-list" class="row" style="list-style: none; min-height:200px;
+  border: 1px solid #e5e5e5; margin: 10px; padding: 10px;">
+  <%= for m <- @messages do %>
+    <li id="<%= m.id %>"><b> <%= m.name %> </b> <%= m.message %> </li>
+  <% end %>
 </ul>
 
 <div class="row">
