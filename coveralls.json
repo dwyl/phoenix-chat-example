@@ -4,6 +4,6 @@
   },
   "skip_files": [
     "test/",
-    "lib/encryption_web.ex"
+    "lib/chat_web.ex"
   ]
 }
