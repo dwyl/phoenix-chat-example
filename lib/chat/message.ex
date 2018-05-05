@@ -3,7 +3,6 @@ defmodule Chat.Message do
   import Ecto.Changeset
   alias Chat.Message
 
-
   schema "messages" do
     field :message, :string
     field :name, :string
