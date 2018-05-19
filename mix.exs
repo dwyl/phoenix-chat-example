@@ -6,14 +6,18 @@ defmodule Chat.Mixfile do
       app: :chat,
       version: "1.0.0",
       elixir: "~> 1.6",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test,
-        "coveralls.post": :test, "coveralls.html": :test]
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -29,7 +33,7 @@ defmodule Chat.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -46,9 +50,12 @@ defmodule Chat.Mixfile do
       {:cowboy, "~> 1.0"},
 
       # The rest of the dependendencies are for testing/reporting
-      {:excoveralls, "~> 0.7.0", only: [:test, :dev]}, # tracking test coverage
-      {:inch_ex, "~> 0.5.6", only: :docs},             # documentation
-      {:pre_commit, "~> 0.2.4", only: :dev}  # github.com/dwyl/learn-pre-commit
+      # tracking test coverage
+      {:excoveralls, "~> 0.7.0", only: [:test, :dev]},
+      # documentation
+      {:inch_ex, "~> 0.5.6", only: :docs},
+      # github.com/dwyl/learn-pre-commit
+      {:pre_commit, "~> 0.2.4", only: :dev}
     ]
   end
 
@@ -62,8 +69,8 @@ defmodule Chat.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"],
-      "cover": ["coveralls.json"],
+      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      cover: ["coveralls.json"],
       "cover.html": ["coveralls.html"]
     ]
   end

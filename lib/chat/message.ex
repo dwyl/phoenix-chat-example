@@ -4,8 +4,8 @@ defmodule Chat.Message do
   alias Chat.Message
 
   schema "messages" do
-    field :message, :string
-    field :name, :string
+    field(:message, :string)
+    field(:name, :string)
 
     timestamps()
   end

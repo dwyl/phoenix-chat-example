@@ -6,16 +6,14 @@
 use Mix.Config
 
 # General application configuration
-config :chat,
-  ecto_repos: [Chat.Repo]
+config :chat, ecto_repos: [Chat.Repo]
 
 # Configures the endpoint
 config :chat, ChatWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "iH1ZNacvXr4Q9Qe7zn1s8HeDc6Dw1Oz0jKAhYGjenFqm7jAJhoXHzjbRypftyTOW",
   render_errors: [view: ChatWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Chat.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Chat.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -24,4 +22,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"
