@@ -464,7 +464,7 @@ end
 Open the `lib/chat/message.ex` file and add a new function to it:
 ```elixir
 def get_messages(limit \\ 20) do
-  Chat.Repo.all(Message, limit: limit)
+  Chat.Repo.all(Chat.Message, limit: limit)
 end
 ```
 This function accepts a single parameter `limit` to only return a fixed/maximum
