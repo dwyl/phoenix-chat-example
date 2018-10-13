@@ -18,6 +18,6 @@ defmodule Chat.Message do
   end
 
   def get_messages(limit \\ 10) do
-    Chat.Repo.all(Message, limit: limit)
+    Chat.Repo.all(Chat.Message, limit: limit)
   end
 end
