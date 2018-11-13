@@ -828,7 +828,7 @@ https://github.com/chrismccord/phoenix_chat_example
 At the time of writing Chris' example is still
 [Phoenix 1.2](https://github.com/chrismccord/phoenix_chat_example/blob/31f0c5f80a04af0a05fdec89d5b428880c4ea814/mix.exs#L25)
 see: https://github.com/chrismccord/phoenix_chat_example/issues/40
-therefore we decided to write a quick version for Phoenix 1.3 :-)
+therefore we decided to write a quick version for Phoenix 1.4 :-)
 
 
 ## Recommended Reading / Learning
