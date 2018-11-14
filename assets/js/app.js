@@ -27,7 +27,7 @@ channel.on('shout', function (payload) { // listen to the 'shout' event
     li.id = payload.id
     console.log(payload)
     var name = payload.name || 'guest';    // get name from payload or default
-    li.innerHTML = '<b>' + name + '</b>: ' + payload.message;
+    li.innerHTML = '<p><b>' + name + '</b>: ' + payload.message + '</p> <br />';
     ul.appendChild(li);                    // append to list
   }
 });

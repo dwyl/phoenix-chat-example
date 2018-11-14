@@ -103,11 +103,13 @@ brew install elixir
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
+mix archive.install hex phx_new 1.4.0
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
 see: [https://github.com/dwyl/**learn-postgresql#installation**](https://github.com/dwyl/learn-postgresql#installation)
+
+<!-- update instructions to https://hexdocs.pm/phoenix/installation.html -->
 
 4. Basic **Elixir Syntax** knowledge will help,<br />
 please see:
@@ -129,9 +131,9 @@ elixir -v
 
 You should see something like:
 ```sh
-Erlang/OTP 20 [erts-9.2] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+Erlang/OTP 21 [erts-10.1.1] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [hipe] [dtrace]
 
-Elixir 1.6.0 (compiled with OTP 20)
+Elixir 1.7.4 (compiled with Erlang/OTP 21)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -140,7 +142,7 @@ mix phx.new -v
 ```
 You should see:
 ```sh
-Phoenix v1.3.0
+Phoenix v1.4.0
 ```
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -201,6 +203,9 @@ Generate the (WebSocket) channel to be used in the chat app:
 ```sh
 mix phx.gen.channel Room
 ```
+
+> If you are prompted to confirm installation,
+type `y` and hit the `[Enter]` key.
 
 This will create **two files**:<br />
 ```sh
@@ -322,35 +327,21 @@ At this point your `app.js` file should look like this:
 
 
 
-## 5. _Checkpoint_: Our Chat App Already Works! _Try it_!
+## 5. Instal the Node.js Dependencies
 
-At this point our Chat App already "works"!
-Try it!
-
-Run the following terminal command:
+In order to use JS in your Phoenix project,
+you need to install the node.js dependencies:
 ```sh
-mix phx.server
+cd assets && npm install && cd ..
+```
+That might take a few seconds (_depending on your internet connection speed_)
+
+But once it completes you should see:
+```sh
+added 1022 packages from 600 contributors and audited 14893 packages in 32.079s
+found 0 vulnerabilities
 ```
 
-> _**Note**: it will take a few seconds to **compile** but then you should see:_
-
-![server-running](https://user-images.githubusercontent.com/194400/35188430-22de4d9c-fe2d-11e7-82d3-85e0a0482e17.png)
-
-The line:
-```sh
-[info] Running ChatWeb.Endpoint with Cowboy using http://0.0.0.0:4000
-```
-tells us that our code compiled (_as expected_) and the Chat App
-is running on TCP Port `4000`!
-
-**Open** the Chat web app in
-**two _separate_ browser windows**: http://localhost:4000 <br />
-(_if your machine only has one browser try using one "incognito" tab_)
-
-You should be able to send messages between the two browser windows: <br />
-![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/194400/35188398-9998e10a-fe2c-11e7-9f69-2a3dfbae754d.gif)
-
-Congratulations! You have a _working_ (_basic_) Chat App written in Phoenix!
 
 # Storing Chat Message Data/History
 
@@ -358,6 +349,7 @@ If we didn't _want_ to _save_ the chat history,
 we could just _deploy_ this App _immediately_
 and we'd be done! <br />
 
+<!--
 > In fact, it could be a "_use-case_" / "_feature_"
 to have "_ephemeral_" chat without _any_ history ...
 > see: http://www.psstchat.com/
@@ -365,6 +357,7 @@ to have "_ephemeral_" chat without _any_ history ...
 > but we are _assuming_ that _most_ chat apps save history
 > so that `new` people joining the "channel" can see the history
 > and people who are briefly "absent" can "catch up" on the history.
+-->
 
 ## 6. Create/Configure Database
 
@@ -508,13 +501,30 @@ Start the Phoenix server (_if it is not already running_):
 mix phx.server
 ```
 
-_This_ time when you open two browser windows and start "chatting",
-the chat (message) history is _saved_!
+> _**Note**: it will take a few seconds to **compile** but then you should see:_
+
+![server-running](https://user-images.githubusercontent.com/194400/35188430-22de4d9c-fe2d-11e7-82d3-85e0a0482e17.png)
+
+The line:
+```sh
+[info] Running ChatWeb.Endpoint with Cowboy using http://0.0.0.0:4000
+```
+tells us that our code compiled (_as expected_) and the Chat App
+is running on TCP Port `4000`!
+
+**Open** the Chat web app in
+**two _separate_ browser windows**: http://localhost:4000 <br />
+(_if your machine only has one browser try using one "incognito" tab_)
+
+You should be able to send messages between the two browser windows: <br />
+![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/194400/35188398-9998e10a-fe2c-11e7-9f69-2a3dfbae754d.gif)
+
+Congratulations! You have a _working_ (_basic_) Chat App written in Phoenix!
+
+The chat (message) history is _saved_!
 
 This means you can _refresh_ the browser
-_or_ join in a different browser and you will still see the history.
-
-<!-- insert GIF of chat with history here -->
+_or_ join in a different browser and you will still see the history!
 
 <br />
 
@@ -818,7 +828,7 @@ https://github.com/chrismccord/phoenix_chat_example
 At the time of writing Chris' example is still
 [Phoenix 1.2](https://github.com/chrismccord/phoenix_chat_example/blob/31f0c5f80a04af0a05fdec89d5b428880c4ea814/mix.exs#L25)
 see: https://github.com/chrismccord/phoenix_chat_example/issues/40
-therefore we decided to write a quick version for Phoenix 1.3 :-)
+therefore we decided to write a quick version for Phoenix 1.4 :-)
 
 
 ## Recommended Reading / Learning
