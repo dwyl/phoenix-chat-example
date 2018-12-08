@@ -327,7 +327,7 @@ At this point your `app.js` file should look like this:
 
 
 
-## 5. Instal the Node.js Dependencies
+## 5. Install the Node.js Dependencies
 
 In order to use JS in your Phoenix project,
 you need to install the node.js dependencies:
