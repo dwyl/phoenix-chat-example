@@ -107,7 +107,7 @@ brew install elixir
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install hex phx_new 1.4.0
+mix archive.install hex phx_new 1.4.4
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
@@ -135,9 +135,9 @@ elixir -v
 
 You should see something like:
 ```sh
-Erlang/OTP 21 [erts-10.1.1] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [hipe] [dtrace]
+Erlang/OTP 21 [erts-10.3.4] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe] [dtrace]
 
-Elixir 1.7.4 (compiled with Erlang/OTP 21)
+Elixir 1.8.1 (compiled with Erlang/OTP 21)
 ```
 
 Check you have the **latest** version of **Phoenix**:
