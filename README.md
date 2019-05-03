@@ -67,7 +67,7 @@ This example is for ***complete beginners***
 as a "***My First Phoenix***" App. <br />
 
 We try to _assume_ as little as possible,
-but if think we "_skipped a step_"
+but if you think we "_skipped a step_"
 or  you feel "_stuck_" for any reason,
 or have _any_ questions (_related to this example_),
 please open an issue on GitHub! <br />
@@ -76,7 +76,7 @@ so don't be afraid/shy. <br />
 Also, by asking questions, you are helping everyone
 that is or might be stuck with the _same_ thing!
 + **Chat App _specific_** questions:
-https://github.com/nelsonic/phoenix-chat-example
+https://github.com/dwyl/phoenix-chat-example/issues
 + **General** Learning Phoenix questions:
 https://github.com/dwyl/learn-phoenix-framework/issues
 
@@ -98,12 +98,16 @@ scroll down to the "Clone Repo and Run on Localhost" section instead.
 ```
 brew install elixir
 ```
+> _**Note**: if you already have `Elixir` installed on your Mac,
+  and just want to upgrade to the latest version, run:_
+  **`brew upgrade elixir`**
+
 
 2. **Phoenix** framework **installed**.
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install hex phx_new 1.4.0
+mix archive.install hex phx_new 1.4.4
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
@@ -131,9 +135,9 @@ elixir -v
 
 You should see something like:
 ```sh
-Erlang/OTP 21 [erts-10.1.1] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [hipe] [dtrace]
+Erlang/OTP 21 [erts-10.3.4] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe] [dtrace]
 
-Elixir 1.7.4 (compiled with Erlang/OTP 21)
+Elixir 1.8.1 (compiled with Erlang/OTP 21)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -142,7 +146,7 @@ mix phx.new -v
 ```
 You should see:
 ```sh
-Phoenix v1.4.0
+Phoenix v1.4.4
 ```
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
