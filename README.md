@@ -293,11 +293,11 @@ which will give us WebSocket functionality.
 Then add the following JavaScript ("Client") code:
 
 ```js
-var channel = socket.channel('room:lobby', {}); // connect to chat "room"
+let channel = socket.channel('room:lobby', {}); // connect to chat "room"
 
 channel.on('shout', function (payload) { // listen to the 'shout' event
-  var li = document.createElement("li"); // creaet new list item DOM element
-  var name = payload.name || 'guest';    // get name from payload or set default
+  let li = document.createElement("li"); // create new list item DOM element
+  let name = payload.name || 'guest';    // get name from payload or set default
   li.innerHTML = '<b>' + name + '</b>: ' + payload.message; // set li contents
   ul.appendChild(li);                    // append to list
 });
@@ -305,9 +305,9 @@ channel.on('shout', function (payload) { // listen to the 'shout' event
 channel.join(); // join the channel.
 
 
-var ul = document.getElementById('msg-list');        // list of messages.
-var name = document.getElementById('name');          // name of message sender
-var msg = document.getElementById('msg');            // message input field
+let ul = document.getElementById('msg-list');        // list of messages.
+let name = document.getElementById('name');          // name of message sender
+let msg = document.getElementById('msg');            // message input field
 
 // "listen" for the [Enter] keypress event to send a message:
 msg.addEventListener('keypress', function (event) {
