@@ -31,3 +31,6 @@ npm-debug.log
 .hello
 /cover
 /docs
+
+# avoid adding data to .git
+production.dump

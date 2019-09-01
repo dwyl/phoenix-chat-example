@@ -5,7 +5,7 @@ defmodule Chat.Mixfile do
     [
       app: :chat,
       version: "1.4.4",
-      elixir: "~> 1.7",
+      elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -50,6 +50,9 @@ defmodule Chat.Mixfile do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
+
+      # sanitise data to avoid XSS see: https://git.io/fjpGZ
+      {:html_sanitize_ex, "~> 1.3.0-rc3"},
 
       # The rest of the dependendencies are for testing/reporting
       # tracking test coverage
