@@ -20,9 +20,9 @@ see: https://github.com/nelsonic/phoenix-chat-example/issues/1 -->
 
 ## Why?
 
-Chat apps are the "Hello World" of "real time" example apps. <br />
+Chat apps are the "Hello World" of "real time" examples. <br />
 
-_Most_ example apps show a few basics and then _ignore_ "_the rest_" ... <br />
+_Sadly, most_ example apps show a few basics and then _ignore_ "_the rest_" ... <br />
 So "_beginners_" are often left "_lost_" or "_confused_" as to
 what they should _do_ or learn _next_! <br />
 Very _few_ tutorials consider **Testing,
