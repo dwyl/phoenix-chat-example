@@ -27,10 +27,31 @@ channel.on('shout', function (payload) { // listen to the 'shout' event
     li.id = payload.id
     console.log(payload)
     var name = payload.name || 'guest';    // get name from payload or default
-    li.innerHTML = '<p><b>' + name + '</b>: ' + payload.message + '</p> <br />';
+    li.innerHTML = '<p><b>' + sanitise(name)
+      + '</b>: ' + sanitise(payload.message) + '</p> <br />';
     ul.appendChild(li);                    // append to list
   }
 });
+
+/**
+ * sanitise input to avoid XSS see: https://git.io/fjpGZ
+ * function borrowed from: https://stackoverflow.com/a/48226843/1148249
+ * @param {string} str - the text to be sanitised.
+ * @return {string} str - the santised text
+ */
+function sanitise(str) {
+  const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+  };
+  const reg = /[&<>"'/]/ig;
+  return str.replace(reg, (match)=>(map[match]));
+}
+
 
 channel.join() // join the channel.
   .receive("ok", resp => { console.log("Joined chat!", resp) })
@@ -44,8 +65,8 @@ msg.addEventListener('keypress', function (event) {
   if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
     console.log(msg.value)
     channel.push('shout', { // send the message to the server
-      name: name.value,     // get value of "name" of person sending the message
-      message: msg.value    // get message text (value) from msg input field.
+      name: sanitise(name.value), // get value of "name" of person sending
+      message: sanitise(msg.value) // get message text (value) from msg input
     });
     msg.value = '';         // reset the message input field for next message.
   }
