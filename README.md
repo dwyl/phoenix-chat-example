@@ -191,10 +191,12 @@ cd chat
 > _**Note**: at this point there is already an "App"
 it just does not **do** anything (yet) ... <br />
 you **can** run `mix phx.server`
-in your terminal <br />
-and open [http://localhost:4000](http://localhost:4000)
+in your terminal - don't worry if you're seeing error <br />
+messages, this is because we haven't created our database yet. <br />
+We will take care of that in [step 6](#6-createconfigure-database)!<br />
+For now, open [http://localhost:4000](http://localhost:4000)
 in your browser <br />
-and you will see is the `default`
+and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 ![welcome-to-phoenix](https://user-images.githubusercontent.com/194400/36354251-65e095c0-14c9-11e8-98e4-9d91c98c9b8e.png)
 
