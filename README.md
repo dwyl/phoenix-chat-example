@@ -14,8 +14,38 @@ Try it: https://phxchat.herokuapp.com
 A ***step-by-step tutorial*** for building, testing
 and _deploying_ a Chat app in Phoenix!
 
-<!-- Table of Contents Here...?
-see: https://github.com/nelsonic/phoenix-chat-example/issues/1 -->
+## Content
+- [Why?](#why)
+- [What?](#what) 
+- [Who?](#who) 
+- [How?](#how)
+  - [0. Pre-requisites (Before you Start)](#0-pre-requisites-before-you-start)
+  - [1. Create the App](#1-create-the-app)
+  - [2. Create the (Websocket) "Channel"](#2-create-the-websocket-channel)
+  - [3. Update the Template File (UI)](#3-update-the-template-file-ui)
+  - [4. Update the "Client" code in App.js](#4-update-the-client-code-in-appjs)
+  - [5. Install the Node.js Dependencies](#5-install-the-nodejs-dependencies)
+  - [6. Create/Configure Database](#6-createconfigure-database)
+  - [7. Generate Database Schema to Store Chat History](#7-generate-database-schema-to-store-chat-history)
+  - [8. Run the Ecto Migration (Create the Database Table)](#8-run-the-ecto-migration-create-the-database-table)
+    - [8.1 Review the Messages Table Schema](#81-review-the-messages-table-schema)
+  - [9. Insert Messages into Database](#9-insert-messages-into-database)
+  - [10. Load Existing Messages (When Someone Joins the Chat)](#10-load-existing-messages-when-someone-joins-the-chat)
+  - [11. Send Existing Messages to the Client when they join](#11-send-existing-messages-to-the-client-when-they-join)
+  - [12. Checkpoint: Our Chat App Saves Messages!! (Try it!)](#12-checkpoint-our-chat-app-saves-messages-try-it)
+  - [13. Run the Default/Generated Tests](#13-run-the-defaultgenerated-tests)
+    - [13.1 Fix the Failing Test](#131-fix-the-failing-test)
+    - [13.2 Re-Run the Test(s)](#132-re-run-the-tests)
+  - [14. Understanding the Channel Tests](#14-understanding-the-channel-tests)
+    - [14.1 Analyse a Test](#141-analyse-a-test)
+  - [15. What is Not Tested?](#15-what-is-not-tested)
+    - [15.1 Add `excoveralls` as a (Development) Dependency to `mix.exs`](#151-add-excoveralls-as-a-development-dependency-to-mixexs)
+    - [15.2 Create a New File called `coveralls.json`](#152-create-a-new-file-called-coverallsjson)
+    - [15.3 Run the Tests with Coverage Checking](#153-run-the-tests-with-coverage-checking)
+- [Continuous Integration](#continuous-integration)
+- [Deployment!](#deployment)
+- [Inspiration](#inspiration)
+- [Recommended Reading/Learning](#recommended-reading--learning)
 
 
 ## Why?
