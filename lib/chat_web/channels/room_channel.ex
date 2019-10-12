@@ -1,5 +1,7 @@
 defmodule ChatWeb.RoomChannel do
   use ChatWeb, :channel
+  alias Phoenix.Socket
+  alias Chat.Presence
 
   def join("room:lobby", payload, socket) do
     if authorized?(payload) do
@@ -23,12 +25,19 @@ defmodule ChatWeb.RoomChannel do
       Chat.Message.changeset(%Chat.Message{}, payload)
       |> Chat.Repo.insert()
 
-    broadcast(socket, "shout", Map.put_new(payload, :id, msg.id))
+    socket
+    |> Socket.assign(:user_name, msg.name)
+    |> track_presence()
+    |> broadcast("shout", Map.put_new(payload, :id, msg.id))
+
     {:noreply, socket}
   end
 
   # example see: https://git.io/vNsYD
   def handle_info(:after_join, socket) do
+    # Send currently online users in lobby
+    push(socket, "presence_state", Presence.list("room:lobby"))
+
     # get messages 10 - 1000
     Chat.Message.get_messages()
     |> Enum.each(fn msg ->
@@ -46,5 +55,22 @@ defmodule ChatWeb.RoomChannel do
   # Add authorization logic here as required.
   defp authorized?(_payload) do
     true
+  end
+
+  # Add a track in Presence when user joins the channel
+  # Ideally this should be on joining "room:lobby" but the socket has no info as of now
+  # to associate with a user.
+
+  defp track_presence(socket) do
+    case do_track(socket) do
+      {:ok, _ref} -> socket
+      {:error, {:already_tracked, _pid, _channel, _user}} -> socket
+    end
+  end
+
+  defp do_track(%{assigns: %{user_name: user_name}} = socket) when not is_nil(user_name) do
+    Presence.track(socket, user_name, %{
+      online_at: inspect(System.system_time(:second))
+    })
   end
 end
