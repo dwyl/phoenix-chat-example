@@ -11,9 +11,10 @@ defmodule Chat.Application do
       # Start the Ecto repository
       supervisor(Chat.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(ChatWeb.Endpoint, [])
+      supervisor(ChatWeb.Endpoint, []),
       # Start your own worker by calling: Chat.Worker.start_link(arg1, arg2, arg3)
       # worker(Chat.Worker, [arg1, arg2, arg3]),
+      Chat.Presence
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
