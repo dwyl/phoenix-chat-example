@@ -33,6 +33,55 @@ channel.on('shout', function (payload) { // listen to the 'shout' event
   }
 });
 
+/*
+  * When a user joins the channel, we ask Phoenix (our app) to push back the current state
+  * of online users.
+*/
+channel.on('presence_state', function(onlineUsers){
+  const currentlyOnlineUsers = Object.keys(onlineUsers)
+  updateOnlineList(currentlyOnlineUsers)
+})
+
+/*
+  * Every time a user joins (in case of this example, its when they send actual
+  * message and not on channel join), phoenix broadcasts a diff of joins and leaves,
+  * which can be used to modify the online users list in the view
+*/
+channel.on('presence_diff', function(userDiffPayload){
+  const currentlyOnlineUsers = Object.keys(userDiffPayload.joins)
+  const usersWhichLeft = Object.keys(userDiffPayload.leaves)
+  updateOnlineList(currentlyOnlineUsers)
+  removeOfflineUsers(usersWhichLeft)
+})
+
+// Helper function to append users to list
+function updateOnlineList(users) {
+  for (var i = users.length - 1; i >= 0; i--) {
+    const userName = users[i]
+    console.log("User: '"+userName+"' is in the room")
+
+    if (document.getElementById(userName) == null) {
+      var li = document.createElement("li"); // create new user list item DOM element
+      li.id = userName
+      li.innerHTML = `<caption>${sanitise(userName)}</caption>`
+      usersList.appendChild(li);                    // append to  userslist
+    }
+  }
+}
+
+// Helper function to remove users which have left the chat room
+function removeOfflineUsers(users) {
+  for (var i = users.length - 1; i >= 0; i--) {
+    const userName = users[i]
+    console.log("User: '"+userName+"' left from the room")
+
+    const userWhichLeft = document.getElementById(userName)
+    if (userWhichLeft != null) {
+      usersList.removeChild(userWhichLeft);         // remove the user from list
+    }
+  }
+}
+
 /**
  * sanitise input to avoid XSS see: https://git.io/fjpGZ
  * function borrowed from: https://stackoverflow.com/a/48226843/1148249
@@ -59,7 +108,7 @@ channel.join() // join the channel.
 var ul = document.getElementById('msg-list');        // list of messages.
 var name = document.getElementById('name');          // name of message sender
 var msg = document.getElementById('msg');            // message input field
-
+var usersList = document.getElementById('online-users');   // list of users.
 // "listen" for the [Enter] keypress event to send a message:
 msg.addEventListener('keypress', function (event) {
   if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
