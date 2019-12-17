@@ -16,8 +16,8 @@ and _deploying_ a Chat app in Phoenix!
 
 ## Content
 - [Why?](#why)
-- [What?](#what) 
-- [Who?](#who) 
+- [What?](#what)
+- [Who?](#who)
 - [How?](#how)
   - [0. Pre-requisites (Before you Start)](#0-pre-requisites-before-you-start)
   - [1. Create the App](#1-create-the-app)
@@ -361,7 +361,29 @@ but if _anything_ is unclear, please ask!
 At this point your `app.js` file should look like this:
 [`/assets/js/app.js`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/assets/js/app.js#L21-L48)
 
+### 4.1 Comment Out Lines in `socket.js`
 
+By default the phoenix channel (client)
+will subscribe to the generic room: `"topic:subtopic"`.
+Since we aren't going to be using this,
+we can avoid seeing any
+**`"unable to join: unmatched topic"`** errors in our browser/console
+by simply commenting out a few lines in the `socket.js` file.
+Open the file in your editor and locate the following lines:
+```JavaScript
+let channel = socket.channel("topic:subtopic", {})
+channel.join()
+  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("error", resp => { console.log("Unable to join", resp) })
+```
+Your `socket.js` should now look like this:
+[`/assets/js/socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/89d5d1127bafdcb9493c5dab060c291aa296f5e2/assets/js/socket.js#L56-L60)
+
+> If you later decide to tidy up your chat app, you can **`delete`**
+these commented lines from your file completely.
+We are just keeping them for reference. 
+
+Once that's done, proceed to the next step!
 
 ## 5. Install the Node.js Dependencies
 
