@@ -376,12 +376,22 @@ channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 ```
+Comment out the lines so they will not be executed:
+
+```JavaScript
+// let channel = socket.channel("topic:subtopic", {})
+// channel.join()
+//   .receive("ok", resp => { console.log("Joined successfully", resp) })
+//   .receive("error", resp => { console.log("Unable to join", resp) })
+```
+
 Your `socket.js` should now look like this:
 [`/assets/js/socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/89d5d1127bafdcb9493c5dab060c291aa296f5e2/assets/js/socket.js#L56-L60)
 
 > If you later decide to tidy up your chat app, you can **`delete`**
-these commented lines from your file completely.
-We are just keeping them for reference. 
+these commented lines from the file. <br />
+We are just keeping them for reference
+of how to join channels and receive messages.
 
 Once that's done, proceed to the next step!
 
