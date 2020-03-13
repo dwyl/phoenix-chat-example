@@ -881,8 +881,15 @@ e.g: https://phxchat.herokuapp.com <br />
 
 <br />
 
-_Want **more**_? ***Ask***!
-_Please share your thoughts on GitHub_: https://github.com/dwyl/phoenix-chat-example/issues
+## What _Next_?
+
+If you found this example useful, please ⭐️the GitHub repository so we (_and others_) know you liked it!
+
+If you want to learn more Phoenix and the magic of **`LiveView`**, 
+consider reading our beginner's tutorial:
+[github.com/dwyl/**phoenix-liveview-counter-tutorial**](https://github.com/dwyl/phoenix-liveview-counter-tutorial)
+
+Thank you for learning with us! ☀️ 
 
 
 <br /> <br />
