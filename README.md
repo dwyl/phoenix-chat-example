@@ -402,6 +402,7 @@ see: https://getbootstrap.com/docs/3.3/css/#forms
 Your `index.html.eex` template file should look like this:
 [`/lib/chat_web/templates/page/index.html.eex`](https://github.com/dwyl/phoenix-chat-example/blob/a313d098a2bf83e4aca1af2c628d8ffbbd158f90/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
 
+
 ### 3.1 Update Layout Template
 
 Open the `lib/chat_web/templates/layout/app.html.eex` file
@@ -443,7 +444,7 @@ mix test
      code:  assert html_response(conn, 200) =~ "Welcome to Phoenix!"
 ```
 
-Thankfuly this is easy to fix.
+Thankfully this is easy to fix.
 
 
 ### 3.2 Update the `page_controller_test.exs`
