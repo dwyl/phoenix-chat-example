@@ -35,3 +35,4 @@ npm-debug.log
 # avoid adding data to .git
 production.dump
 package-lock.json
+.DS_Store
