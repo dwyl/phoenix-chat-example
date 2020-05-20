@@ -529,7 +529,8 @@ Hopefully the in-line comments are self-explanatory,
 but if _anything_ is unclear, please ask!
 
 At this point your `app.js` file should look like this:
-[`/assets/js/app.js`]()
+[`/assets/js/app.js`](https://github.com/dwyl/phoenix-chat-example/blob/7c3f94f127adfac05fe6b11a4ba3196802d9cfe2/assets/js/app.js)
+
 
 ### 4.1 Comment Out Lines in `socket.js`
 
@@ -540,6 +541,7 @@ we can avoid seeing any
 **`"unable to join: unmatched topic"`** errors in our browser/console
 by simply commenting out a few lines in the `socket.js` file.
 Open the file in your editor and locate the following lines:
+
 ```JavaScript
 let channel = socket.channel("topic:subtopic", {})
 channel.join()
@@ -556,7 +558,7 @@ Comment out the lines so they will not be executed:
 ```
 
 Your `socket.js` should now look like this:
-[`/assets/js/socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/89d5d1127bafdcb9493c5dab060c291aa296f5e2/assets/js/socket.js#L56-L60)
+[`/assets/js/socket.js`]()
 
 > If you later decide to tidy up your chat app, you can **`delete`**
 these commented lines from the file. <br />
