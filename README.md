@@ -200,6 +200,52 @@ This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
 
 With all those "pre-flight checks" performed, let's get _going_!
 
+## First _Run_ the _Finished_ App
+
+_Before_ you attempt to build the Chat App from scratch,
+clone and run the _finished_ working version
+to get an idea of what to expect.
+
+### Clone the Project:
+
+In your terminal run the following command to clone the repo:
+
+```sh
+git clone git@github.com:dwyl/phoenix-chat-example.git
+```
+
+### Install the Dependencies
+
+Change into the `phoenix-chat-example` directory
+and install both the `Elixir` and `Node.js` dependencies
+with this command:
+
+```sh
+cd phoenix-chat-example
+> TODO: CHECKOUT COMMIT AT END OF PART 1
+mix setup
+```
+
+### TODO: Add auth step!
+
+
+
+### Run the App
+
+Run the Phoenix app with the command:
+
+```sh
+mix phx.server
+```
+
+# TODO: Add screenshot!
+
+
+
+
+
+<br />
+
 ## 1. _Create_ The _App_
 
 In your terminal program on your localhost,
@@ -212,8 +258,8 @@ That will create the directory structure and project files. <br />
 
 
 When asked to "***Fetch and install dependencies***? [Yn]",<br />
-Type `y` (_the "Y" key_) in your terminal,
-followed by the `[Enter]` / `[Return]` key.
+Type <kbd>Y</kbd> in your terminal,
+followed by the <kbd>Enter</kbd> (<kbd>Return</kbd>) key.
 
 You should see: <br />
 ![fetch-and-install-dependencies](https://user-images.githubusercontent.com/194400/34833220-d219221c-f6e6-11e7-88d6-87aa4c3054e4.png)
@@ -233,9 +279,40 @@ For now, open [http://localhost:4000](http://localhost:4000)
 in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
-![welcome-to-phoenix](https://user-images.githubusercontent.com/194400/36354251-65e095c0-14c9-11e8-98e4-9d91c98c9b8e.png)
 
-Let's continue to the _interesting_ part!
+![welcome-to-phoenix](https://user-images.githubusercontent.com/194400/82494801-11caa100-9ae2-11ea-821d-8181580201cb.png)
+
+Shut down the Phoenix server in your terminal
+with the
+<kbd>ctrl</kbd>+<kbd>C</kbd>
+command.
+
+### Run the Tests
+
+In your terminal window, run the following command:
+
+```
+mix test
+```
+
+You should see output similar to the following:
+
+```sh
+Generated chat app
+
+21:41:27.079 [info]  Already up
+...
+
+Finished in 0.07 seconds
+3 tests, 0 failures
+
+Randomized with seed 273499
+```
+
+Now that we have confirmed that everything is working (all tests pass),
+let's continue to the _interesting_ part!
+
+<br />
 
 ## 2. _Create_ the (WebSocket) "_Channel_"
 
@@ -279,6 +356,9 @@ Example:
 > For more detail on Phoenix Channels,
 (_we highly recommend you_) read:
 https://hexdocs.pm/phoenix/channels.html
+
+
+
 
 
 ## 3. Update the Template File (UI)
