@@ -481,12 +481,14 @@ Finished in 0.1 seconds
 
 ## 4. Update the "Client" code in App.js
 
-Open:
-[`/assets/js/app.js`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/assets/js/app.js#L21-L48)
-and uncomment the line:
+Open the
+`/assets/js/app.js`
+file and uncomment the line:
+
 ```js
 import socket from "./socket"
 ```
+
 with the line _uncommented_ our app will import the `socket.js` file
 which will give us WebSocket functionality.
 
@@ -527,7 +529,7 @@ Hopefully the in-line comments are self-explanatory,
 but if _anything_ is unclear, please ask!
 
 At this point your `app.js` file should look like this:
-[`/assets/js/app.js`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/assets/js/app.js#L21-L48)
+[`/assets/js/app.js`]()
 
 ### 4.1 Comment Out Lines in `socket.js`
 
