@@ -1,8 +1,8 @@
 language: elixir
 elixir:
-  - 1.10
+  - 1.10.3
 otp_release:
-  - 22
+  - 22.1.8
 addons: # ensure that Travis-CI provisions a DB for our test:
   postgresql: '9.5'
 env:
