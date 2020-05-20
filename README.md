@@ -1,3 +1,5 @@
+<div align="center">
+
 # Phoenix Chat Example
 
 ![phoenix-chat-logo](https://user-images.githubusercontent.com/194400/39481553-c448aa1c-4d63-11e8-9389-47789833a96e.png)
@@ -5,14 +7,17 @@
 
 [![Build Status](https://img.shields.io/travis/dwyl/phoenix-chat-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/phoenix-chat-example)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/phoenix-chat-example/master.svg?style=flat-square)](http://codecov.io/github/dwyl/phoenix-chat-example?branch=master)
-[![HitCount](http://hits.dwyl.io/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
+<!-- [![HitCount](http://hits.dwyl.io/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example) -->
 Try it: https://phxchat.herokuapp.com
 <!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
 <!-- [![Inline docs](http://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](http://inch-ci.org/github/dwyl/phoenix-chat-example) -->
 
 
+
 A ***step-by-step tutorial*** for building, testing
 and _deploying_ a Chat app in Phoenix!
+
+</div>
 
 ## Content
 - [Why?](#why)
@@ -137,7 +142,7 @@ brew install elixir
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install hex phx_new 1.4.4
+mix archive.install hex phx_new v1.5.1
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
@@ -165,9 +170,9 @@ elixir -v
 
 You should see something like:
 ```sh
-Erlang/OTP 21 [erts-10.3.4] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe] [dtrace]
+Erlang/OTP 23 [erts-11.0] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe] [dtrace]
 
-Elixir 1.8.1 (compiled with Erlang/OTP 21)
+Elixir 1.10.3 (compiled with Erlang/OTP 22)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -176,7 +181,7 @@ mix phx.new -v
 ```
 You should see:
 ```sh
-Phoenix v1.4.4
+Phoenix v1.5.1
 ```
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -885,11 +890,11 @@ e.g: https://phxchat.herokuapp.com <br />
 
 If you found this example useful, please ⭐️the GitHub repository so we (_and others_) know you liked it!
 
-If you want to learn more Phoenix and the magic of **`LiveView`**, 
+If you want to learn more Phoenix and the magic of **`LiveView`**,
 consider reading our beginner's tutorial:
 [github.com/dwyl/**phoenix-liveview-counter-tutorial**](https://github.com/dwyl/phoenix-liveview-counter-tutorial)
 
-Thank you for learning with us! ☀️ 
+Thank you for learning with us! ☀️
 
 
 <br /> <br />

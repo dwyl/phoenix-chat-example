@@ -13,9 +13,10 @@ config :chat,
 # Configures the endpoint
 config :chat, ChatWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "B1/lHcRWBn1I9WenGINix4hEWcrI3TIk5a1SL1tRzDXqY/vSR5n9RcQYzwpcshkE",
-  render_errors: [view: ChatWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Chat.PubSub, adapter: Phoenix.PubSub.PG2]
+  secret_key_base: "6OFS0/PTjxt7qG4rj5zC2WmrpEZOTQSA0n0w3jILDKXiJB4LoqiMGzsuSytDBmvV",
+  render_errors: [view: ChatWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Chat.PubSub,
+  live_view: [signing_salt: "zlw3ir6l"]
 
 # Configures Elixir's Logger
 config :logger, :console,

@@ -1,16 +1,38 @@
-<!-- The list of messages will appear here: -->
-<ul id="msg-list" style="list-style: none; min-height:200px;
-  border: 1px solid #e5e5e5; margin: 10px; padding: 10px;">
-  <%= for m <- @messages do %>
-    <li id="<%= m.id %>"><b> <%= m.name %> </b> <%= m.message %> </li>
-  <% end %>
-</ul>
+<section class="phx-hero">
+  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
+  <p>Peace-of-mind from prototype to production</p>
+</section>
 
-<div class="row">
-  <div class="col-xs-3">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
-  </div>
-  <div class="col-xs-9">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message">
-  </div>
-</div>
+<section class="row">
+  <article class="column">
+    <h2>Resources</h2>
+    <ul>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix">Source</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
+      </li>
+    </ul>
+  </article>
+  <article class="column">
+    <h2>Help</h2>
+    <ul>
+      <li>
+        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
+      </li>
+      <li>
+        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
+      </li>
+      <li>
+        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
+      </li>
+    </ul>
+  </article>
+</section>

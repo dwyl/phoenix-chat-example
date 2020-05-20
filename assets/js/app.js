@@ -1,80 +1,15 @@
-// Brunch automatically concatenates all files in your
-// watched paths. Those paths can be configured at
-// config.paths.watched in "brunch-config.js".
-//
-// However, those files will only be executed if
-// explicitly imported. The only exception are files
-// in vendor, which are never wrapped in imports and
-// therefore are always executed.
+// We need to import the CSS so that webpack will load it.
+// The MiniCssExtractPlugin is used to separate it out into
+// its own CSS file.
+import "../css/app.scss"
 
-// Import dependencies
+// webpack automatically bundles all modules in your
+// entry points. Those entry points can be configured
+// in "webpack.config.js".
 //
-// If you no longer want to use a dependency, remember
-// to also remove its path from "config.paths.watched".
+// Import deps with the dep name or local files with a relative path, for example:
+//
+//     import {Socket} from "phoenix"
+//     import socket from "./socket"
+//
 import "phoenix_html"
-
-// Import local files
-//
-// Local files can be imported directly using relative
-// paths "./socket" or full ones "web/static/js/socket".
-
-import socket from "./socket"
-
-var channel = socket.channel('room:lobby', {}); // connect to chat "room"
-channel.on('shout', function (payload) { // listen to the 'shout' event
-  if (document.getElementById(payload.id) == null) { // check if message exists.
-    var li = document.createElement("li"); // creaet new list item DOM element
-    li.id = payload.id
-    console.log(payload)
-    var name = payload.name || 'guest';    // get name from payload or default
-    li.innerHTML = '<p><b>' + sanitise(name)
-      + '</b>: ' + sanitise(payload.message) + '</p> <br />';
-    ul.appendChild(li);                    // append to list
-  }
-});
-
-/**
- * sanitise input to avoid XSS see: https://git.io/fjpGZ
- * function borrowed from: https://stackoverflow.com/a/48226843/1148249
- * @param {string} str - the text to be sanitised.
- * @return {string} str - the santised text
- */
-function sanitise(str) {
-  const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#x27;',
-      "/": '&#x2F;',
-  };
-  const reg = /[&<>"'/]/ig;
-  return str.replace(reg, (match)=>(map[match]));
-}
-
-
-channel.join() // join the channel.
-  .receive("ok", resp => { console.log("Joined chat!", resp) })
-
-var ul = document.getElementById('msg-list');        // list of messages.
-var name = document.getElementById('name');          // name of message sender
-var msg = document.getElementById('msg');            // message input field
-
-// "listen" for the [Enter] keypress event to send a message:
-msg.addEventListener('keypress', function (event) {
-  if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
-    console.log(msg.value)
-    channel.push('shout', { // send the message to the server
-      name: sanitise(name.value), // get value of "name" of person sending
-      message: sanitise(msg.value) // get message text (value) from msg input
-    });
-    msg.value = '';         // reset the message input field for next message.
-  }
-});
-
-  // .receive('ok', resp => {
-  //   console.log('Joined successfully', resp);
-  // })
-  // .receive('error', resp => {
-  //   console.error('Unable to join', resp);
-  // });
