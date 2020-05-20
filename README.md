@@ -326,15 +326,18 @@ mix phx.gen.channel Room
 type `y` and hit the `[Enter]` key.
 
 This will create **two files**:<br />
+
 ```sh
 * creating lib/chat_web/channels/room_channel.ex
 * creating test/chat_web/channels/room_channel_test.exs
 ```
+
 The `room_channel.ex` file handles receiving/sending messages
 and the `room_channel_test.exs` tests basic interaction with the channel.
 (_Don't worry about this yet, we will look at the test file in step 14 below_!)
 
 We are informed that we need to update a piece of code into your app: <br />
+
 ```sh
 Add the channel to your `/lib/chat_web/channels/user_socket.ex` handler, for example:
 
@@ -343,13 +346,17 @@ Add the channel to your `/lib/chat_web/channels/user_socket.ex` handler, for exa
 
 Open the file called `/lib/chat_web/channels/user_socket.ex` <br >
 and change the line:
+
 ```elixir
 # channel "room:*", ChatWeb.RoomChannel
 ```
+
 to:
+
 ```elixir
 channel "room:lobby", ChatWeb.RoomChannel
 ```
+
 Example:
 [user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/channels/user_socket.ex#L5)
 
@@ -358,8 +365,7 @@ Example:
 https://hexdocs.pm/phoenix/channels.html
 
 
-
-
+<br />
 
 ## 3. Update the Template File (UI)
 
@@ -373,18 +379,19 @@ and _copy-paste_ (_or type_) the following code:
 <ul id='msg-list' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
 
 <div class="row">
-  <div class="col-xs-3">
+  <div class="column column-20">
     <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
   </div>
-  <div class="col-xs-9">
+  <div class="column column-80">
     <input type="text" id="msg" class="form-control" placeholder="Your Message">
   </div>
 </div>
 ```
 
 This is the _basic_ form we will use to input Chat messages. <br />
-The classes e.g: `"form-control"` and `"col-xs-3"`
-are Bootstrap CSS classes to _style_ the form. <br />
+The classes e.g: `"column"` and `"column-20"`
+are [Milligram CSS](https://milligram.io/grids.html)
+classes to _style_ the form. <br />
 Phoenix includes Bootstrap by default so you can get up-and-running
 with your App/Idea/"MVP"! <br />
 If you are unfamiliar with Bootstrap UI,
@@ -393,8 +400,83 @@ and if you _specifically_ want to understand the Bootstrap _forms_,
 see: https://getbootstrap.com/docs/3.3/css/#forms
 
 Your `index.html.eex` template file should look like this:
-[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
+[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/dwyl/phoenix-chat-example/blob/a313d098a2bf83e4aca1af2c628d8ffbbd158f90/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
 
+### 3.1 Update Layout Template
+
+Open the `lib/chat_web/templates/layout/app.html.eex` file
+and locate the `<header>` tag.
+Replace the contents of the `<header>` with the following code:
+
+```html
+<section class="container">
+  <nav role="navigation">
+    <h1 style="padding-top: 15px">Chat Example</h1>
+  </nav>
+    <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>"
+    width="500px" alt="Phoenix Framework Logo" />
+</section>
+```
+
+Your `app.html.eex` template file should look like this:
+[`/lib/chat_web/templates/page/index.html.eex`]() (_snapshot_)
+
+At the end of this step, if you run the Phoenix Server `mix phx.server`,
+and view the App in your browser it will look like this:
+
+![phoenix-chat-blank](https://user-images.githubusercontent.com/194400/82498454-ef3b8680-9ae7-11ea-9d1f-8cf593deacba.png)
+
+So it's already starting to look like a basic Chat App.
+Sadly, since we changed the copy of the `index.html.eex`
+our `page_controller_test.exs` now fails:
+
+Run the command:
+
+```sh
+mix test
+```
+
+```
+1) test GET / (ChatWeb.PageControllerTest)
+     test/chat_web/controllers/page_controller_test.exs:4
+     Assertion with =~ failed
+     code:  assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+```
+
+Thankfuly this is easy to fix.
+
+
+### 3.2 Update the `page_controller_test.exs`
+
+Open the `test/chat_web/controllers/page_controller_test.exs` file
+and replace the line:
+
+```elixir
+assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+```
+
+With:
+
+```elixir
+assert html_response(conn, 200) =~ "Chat Example"
+```
+
+Now if you run the tests again, they will pass:
+```
+mix test
+```
+
+Sample output:
+
+```
+22:22:43.076 [info]  Already up
+......
+
+Finished in 0.1 seconds
+6 tests, 0 failures
+```
+
+<br />
 
 ## 4. Update the "Client" code in App.js
 

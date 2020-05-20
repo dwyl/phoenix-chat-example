@@ -12,16 +12,10 @@
     <header>
       <section class="container">
         <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
+          <h1 style="padding-top: 15px">Chat Example</h1>
         </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
+          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>"
+          width="500px" alt="Phoenix Framework Logo" />
       </section>
     </header>
     <main role="main" class="container">
