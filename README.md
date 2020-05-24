@@ -558,7 +558,7 @@ Comment out the lines so they will not be executed:
 ```
 
 Your `socket.js` should now look like this:
-[`/assets/js/socket.js`]()
+[`/assets/js/socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/26f98f2dbca061f6cc383dfd99861325113eaf1b/assets/js/socket.js)
 
 > If you later decide to tidy up your chat app, you can **`delete`**
 these commented lines from the file. <br />
@@ -567,13 +567,17 @@ of how to join channels and receive messages.
 
 Once that's done, proceed to the next step!
 
+<br />
+
 ## 5. Install the Node.js Dependencies
 
-In order to use JS in your Phoenix project,
+In order to use JavaScript in your Phoenix project,
 you need to install the node.js dependencies:
+
 ```sh
-cd assets && npm install && cd ..
+mix setup
 ```
+
 That might take a few seconds (_depending on your internet connection speed_)
 
 But once it completes you should see:
@@ -583,7 +587,7 @@ found 0 vulnerabilities
 ```
 
 
-# Storing Chat Message Data/History
+## Storing Chat Message Data/History
 
 If we didn't _want_ to _save_ the chat history,
 we could just _deploy_ this App _immediately_
@@ -907,22 +911,27 @@ defp deps do
 
 Add the following line to the end of the List:
 ```elixir
-{:excoveralls, "~> 0.7.0", only: [:test, :dev]}, # tracking test coverage
+{:excoveralls, "~> 0.12.3", only: [:test, :dev]}, # tracking test coverage
 ```
+
 Additionally, find the `def project do` section (_towards the top of `mix.exs`_)
 and add the following lines to the List:
+
 ```elixir
 test_coverage: [tool: ExCoveralls],
-preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test,
+preferred_cli_env: [coveralls: :test, "coveralls.detail": :test,
   "coveralls.post": :test, "coveralls.html": :test]
 ```
 
 _Then_, ***install*** the dependency on `excoveralls`
 we just added to `mix.exs`:
+
 ```sh
 mix deps.get
 ```
+
 You should see:
+
 ```sh
 Resolving Hex dependencies...
 Dependency resolution completed:
@@ -1055,7 +1064,8 @@ e.g: https://phxchat.herokuapp.com <br />
 
 ## What _Next_?
 
-If you found this example useful, please ⭐️the GitHub repository so we (_and others_) know you liked it!
+If you found this example useful, please ⭐️ the GitHub repository
+so we (_and others_) know you liked it!
 
 If you want to learn more Phoenix and the magic of **`LiveView`**,
 consider reading our beginner's tutorial:
@@ -1070,12 +1080,24 @@ Thank you for learning with us! ☀️
 ## Inspiration
 
 This repo is inspired by @chrismccord's Simple Chat Example:
-https://github.com/chrismccord/phoenix_chat_example
+https://github.com/chrismccord/phoenix_chat_example ❤️
 
-At the time of writing Chris' example is still
-[Phoenix 1.2](https://github.com/chrismccord/phoenix_chat_example/blob/31f0c5f80a04af0a05fdec89d5b428880c4ea814/mix.exs#L25)
-see: https://github.com/chrismccord/phoenix_chat_example/issues/40
-therefore we decided to write a quick version for Phoenix 1.4 :-)
+At the time of writing Chris' example was last updated on
+[20 Feb 2018](https://github.com/chrismccord/phoenix_chat_example/commit/7fb1d3d040b9d1e9a1bbd239c60ca1f4dd403c24)
+and uses
+[Phoenix 1.3](https://github.com/chrismccord/phoenix_chat_example/blob/7fb1d3d040b9d1e9a1bbd239c60ca1f4dd403c24/mix.exs#L25)
+see:
+[issues/40](https://github.com/chrismccord/phoenix_chat_example/issues/40). <br />
+There are quite a few differences (breaking changes)
+between Phoenix 1.3 and 1.5 (_the latest version_). <br />
+
+Our tutorial uses Phoenix `1.5.1` (latest as of May 2020).
+Our hope is that by writing (_and maintaining_)
+a step-by-step beginner focussed
+tutorial we contribute to the Elixir/Phoenix community
+without piling up
+[PRs](https://github.com/chrismccord/phoenix_chat_example/pulls)
+on Chris's repo.
 
 
 ## Recommended Reading / Learning
