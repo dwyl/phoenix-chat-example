@@ -142,7 +142,7 @@ brew install elixir
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install hex phx_new v1.5.1
+mix archive.install hex phx_new v1.5.3
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
@@ -269,6 +269,11 @@ Change directory into the `chat` directory by running the suggested command:
 cd chat
 ```
 
+Now run the following comand:
+```sh
+mix setup
+```
+
 > _**Note**: at this point there is already an "App"
 it just does not **do** anything (yet) ... <br />
 you **can** run `mix phx.server`
@@ -392,15 +397,15 @@ This is the _basic_ form we will use to input Chat messages. <br />
 The classes e.g: `"column"` and `"column-20"`
 are [Milligram CSS](https://milligram.io/grids.html)
 classes to _style_ the form. <br />
-Phoenix includes Bootstrap by default so you can get up-and-running
+Phoenix includes Milligram by default so you can get up-and-running
 with your App/Idea/"MVP"! <br />
-If you are unfamiliar with Bootstrap UI,
-read: https://getbootstrap.com/docs/3.3 <br />
-and if you _specifically_ want to understand the Bootstrap _forms_,
-see: https://getbootstrap.com/docs/3.3/css/#forms
+If you are unfamiliar with Milligram,
+read: https://milligram.io/#typography <br />
+and if you _specifically_ want to understand the Milligram _forms_,
+see: https://milligram.io/#forms
 
 Your `index.html.eex` template file should look like this:
-[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/dwyl/phoenix-chat-example/blob/a313d098a2bf83e4aca1af2c628d8ffbbd158f90/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
+[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/dwyl/phoenix-chat-example/blob/7e9d5f0e8fd69d3c13f6fe7814d81a9d7ec602ca/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
 
 
 ### 3.1 Update Layout Template
