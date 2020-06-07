@@ -34,9 +34,31 @@ let msg = document.getElementById('msg');            // message input field
 msg.addEventListener('keypress', function (event) {
   if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
     channel.push('shout', { // send the message to the server on "shout" channel
-      name: name.value,     // get value of "name" of person sending the message
-      message: msg.value    // get message text (value) from msg input field.
+      name:  sanitise(name.value),     // get value of "name" of person sending the message
+      message:  sanitise(msg.value)    // get message text (value) from msg input field.
     });
     msg.value = '';         // reset the message input field for next message.
   }
 });
+
+
+
+
+/**
+ * sanitise input to avoid XSS see: https://git.io/fjpGZ
+ * function borrowed from: https://stackoverflow.com/a/48226843/1148249
+ * @param {string} str - the text to be sanitised.
+ * @return {string} str - the santised text
+ */
+function sanitise(str) {
+  const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+  };
+  const reg = /[&<>"'/]/ig;
+  return str.replace(reg, (match)=>(map[match]));
+}

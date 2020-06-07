@@ -1,5 +1,10 @@
 <!-- The list of messages will appear here: -->
-<ul id='msg-list' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
+<ul id='msg-list'>
+</ul>
+
+<style>
+  #msg-list > li { display: inline-block; width: 100%;}
+</style>
 
 <div class="row">
   <div class="column column-20">
