@@ -29,9 +29,7 @@ defmodule ChatWeb.RoomChannel do
     true
   end
 
-  # if you know how to invoke this function in a test please share!!
   @impl true
-  # coveralls-ignore-start
   def handle_info(:after_join, socket) do
     Chat.Message.get_messages()
     |> Enum.each(fn msg ->
@@ -44,5 +42,5 @@ defmodule ChatWeb.RoomChannel do
     # :noreply
     {:noreply, socket}
   end
-  # coveralls-ignore-stop
+
 end

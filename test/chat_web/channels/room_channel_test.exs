@@ -26,13 +26,14 @@ defmodule ChatWeb.RoomChannelTest do
   end
 
   test ":after_join sends all existing messages", %{socket: socket} do
-    # IO.inspect(socket)
+    # insert a new message to send in the :after_join
+    payload = %{name: "Alex", message: "test"}
+    Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert()
+
     {:ok, _, socket2} = ChatWeb.UserSocket
       |> socket("user_id", %{some: :assign})
       |> subscribe_and_join(ChatWeb.RoomChannel, "room:lobby")
 
-    # {:noreply, socket2} = ChatWeb.RoomChannel.handle_info(:after_join, socket)
-    # IO.inspect(socket2)
     assert socket2.join_ref != socket.join_ref
   end
 end

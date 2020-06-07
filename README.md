@@ -999,11 +999,55 @@ for this command to work because it's expecting 100% coverage._</small>
 to write up my **Definitive** thoughts on "Test Coverage" once-and-for-all! -->
 
 
-<!--
 ### 13.4 Write a Test for the Untested Function
--->
 
+Open the `test/chat_web/channels/room_channel_test.exs` file
+and add the following test:
 
+```elixir
+test ":after_join sends all existing messages", %{socket: socket} do
+  # insert a new message to send in the :after_join
+  payload = %{name: "Alex", message: "test"}
+  Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert()
+
+  {:ok, _, socket2} = ChatWeb.UserSocket
+    |> socket("user_id", %{some: :assign})
+    |> subscribe_and_join(ChatWeb.RoomChannel, "room:lobby")
+
+  assert socket2.join_ref != socket.join_ref
+end
+```
+
+Now when you run `MIX_ENV=test mix do coveralls.json`
+you should see:
+
+```
+Randomized with seed 232886
+----------------
+COV    FILE                                        LINES RELEVANT   MISSED
+100.0% lib/chat.ex                                     9        0        0
+100.0% lib/chat/message.ex                            22        3        0
+100.0% lib/chat/repo.ex                                5        0        0
+100.0% lib/chat_web/channels/room_channel.ex          46        9        0
+100.0% lib/chat_web/channels/user_socket.ex           35        0        0
+100.0% lib/chat_web/controllers/page_controller        7        1        0
+100.0% lib/chat_web/endpoint.ex                       54        0        0
+100.0% lib/chat_web/gettext.ex                        24        0        0
+100.0% lib/chat_web/views/error_view.ex               16        1        0
+100.0% lib/chat_web/views/layout_view.ex               3        0        0
+100.0% lib/chat_web/views/page_view.ex                 3        0        0
+[TOTAL] 100.0%
+----------------
+```
+
+This test just creates a message before
+the `subscribe_and_join` so there is a message in the database
+to send out to any clien that joins the chat.
+
+That way the `:after_join` has at least one message
+and the `Enum.each` will be invoked at least once.
+
+With that our app is fully tested!
 
 
 
