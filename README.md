@@ -888,7 +888,7 @@ defp deps do
 
 Add the following line to the end of the List:
 ```elixir
-{:excoveralls, "~> 0.12.3", only: [:test, :dev]}, # tracking test coverage
+{:excoveralls, "~> 0.13.0", only: [:test, :dev]}, # tracking test coverage
 ```
 
 Additionally, find the `def project do` section (_towards the top of `mix.exs`_)
@@ -916,7 +916,7 @@ Dependency resolution completed:
 ... etc.
 ```
 
-### 15.2 Create a _New File_ Called `coveralls.json`
+### 13.2 Create a _New File_ Called `coveralls.json`
 
 In the "root" (_base directory_) of the Chat project,
 create a new file called `coveralls.json` and _copy-paste_ the following:
@@ -943,7 +943,7 @@ is **worth it** to have **fewer bugs** later. <br />
 and **confidence**/**reliability** is **priceless**_. </small>
 
 
-### 15.3 Run the Tests with Coverage Checking
+### 13.3 Run the Tests with Coverage Checking
 
 To run the tests with coverage, copy-paste the following command
 into your terminal:
@@ -951,10 +951,29 @@ into your terminal:
 ```elixir
 MIX_ENV=test mix do coveralls.json
 ```
-You should see: <br />
-![phoenix-chat-coverage](https://user-images.githubusercontent.com/194400/36356461-435c4dde-14ea-11e8-9e48-3ea49f55b1e7.png)
 
-As we can se here, only **59.3%** of lines of code in `/lib`
+You should see: <br />
+
+```
+Randomized with seed 68194
+----------------
+COV    FILE                                        LINES RELEVANT   MISSED
+100.0% lib/chat.ex                                     9        0        0
+100.0% lib/chat/message.ex                            22        3        0
+100.0% lib/chat/repo.ex                                5        0        0
+ 66.7% lib/chat_web/channels/room_channel.ex          45        9        3
+100.0% lib/chat_web/channels/user_socket.ex           35        0        0
+100.0% lib/chat_web/controllers/page_controller        7        1        0
+100.0% lib/chat_web/endpoint.ex                       54        0        0
+100.0% lib/chat_web/gettext.ex                        24        0        0
+100.0% lib/chat_web/views/error_view.ex               16        1        0
+100.0% lib/chat_web/views/layout_view.ex               3        0        0
+100.0% lib/chat_web/views/page_view.ex                 3        0        0
+[TOTAL]  78.6%
+----------------
+```
+
+As we can se here, only **78.6%** of lines of code in `/lib`
 are being "covered" by the tests we have written.
 
 To **view** the coverage in a web browser run the following:
@@ -962,20 +981,26 @@ To **view** the coverage in a web browser run the following:
 ```elixir
 MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 ```
+
 <br />
+
 This will open the Coverage Report (HTML) in your default Web Browser: <br />
 
-![coverage-report-59 3-percent](https://user-images.githubusercontent.com/194400/36425359-7637adfc-163e-11e8-9c9f-3c4fcbcded32.png)
+![coverage-66-percent](https://user-images.githubusercontent.com/194400/83980823-a6ba0080-a910-11ea-93ab-46aba8b8ece3.png)
 
 
 > <small>_**Note**: you will need to **temporarily** lower
-the coverage threshold in `coveralls.json` form `100` to `50`
+the coverage threshold in the `coveralls.json` file form `100` to `50`
 for this command to work because it's expecting 100% coverage._</small>
 
 
 
 <!-- I think I'm at a point where I need to take a "Detour"
 to write up my **Definitive** thoughts on "Test Coverage" once-and-for-all! -->
+
+
+### 13.4 Write a Test for the Untested Function
+
 
 
 
@@ -1004,8 +1029,8 @@ with the following lines:
 language: elixir
 elixir: # Latest version of Elixir
   - 1.6
-addons: # ensure that Travis-CI provisions a DB for our test:
-  postgresql: '9.5'
+services: # ensure that Travis-CI provisions a DB for our test:
+  - postgresql
 env:
   - MIX_ENV=test
 script: # run the tests:

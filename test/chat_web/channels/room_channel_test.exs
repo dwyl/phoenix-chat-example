@@ -24,4 +24,9 @@ defmodule ChatWeb.RoomChannelTest do
     broadcast_from! socket, "broadcast", %{"some" => "data"}
     assert_push "broadcast", %{"some" => "data"}
   end
+
+  # test ":after_join sends all existing messages", %{socket: socket} do
+  #   push socket, "shout", %{"hello" => "all"}
+  #   assert_broadcast "shout", %{"hello" => "all"}
+  # end
 end

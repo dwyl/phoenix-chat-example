@@ -5,7 +5,7 @@ defmodule Chat.Mixfile do
     [
       app: :chat,
       version: "1.5.3",
-      elixir: "~> 1.7",
+      elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -58,7 +58,7 @@ defmodule Chat.Mixfile do
 
       # The rest of the dependendencies are for testing/reporting
       # tracking test coverage
-      {:excoveralls, "~> 0.12.3", only: [:test, :dev]},
+      {:excoveralls, "~> 0.13.0", only: [:test, :dev]},
       # documentation
       {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
       # github.com/dwyl/learn-pre-commit
