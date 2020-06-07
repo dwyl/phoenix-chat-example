@@ -222,11 +222,10 @@ with this command:
 
 ```sh
 cd phoenix-chat-example
-> TODO: CHECKOUT COMMIT AT END OF PART 1
 mix setup
 ```
 
-### TODO: Add auth step!
+<!-- ### TODO: Add auth step! -->
 
 
 
@@ -238,7 +237,7 @@ Run the Phoenix app with the command:
 mix phx.server
 ```
 
-# TODO: Add screenshot!
+# TODO: Add GIF of Finished App
 
 
 
@@ -269,7 +268,7 @@ Change directory into the `chat` directory by running the suggested command:
 cd chat
 ```
 
-Now run the following comand:
+Now run the following command:
 ```sh
 mix setup
 ```
@@ -574,6 +573,7 @@ Once that's done, proceed to the next step!
 
 <br />
 
+<!-- Remove if no longer required as mix setup in step 1 covers this.
 ## 5. Install the Node.js Dependencies
 
 In order to use JavaScript in your Phoenix project,
@@ -590,6 +590,7 @@ But once it completes you should see:
 added 1022 packages from 600 contributors and audited 14893 packages in 32.079s
 found 0 vulnerabilities
 ```
+ -->
 
 
 ## Storing Chat Message Data/History
@@ -608,7 +609,7 @@ to have "_ephemeral_" chat without _any_ history ...
 > and people who are briefly "absent" can "catch up" on the history.
 -->
 
-## 6. Create/Configure Database
+## 5. Create/Configure Database
 
 Create the database to store the chat history data:
 
@@ -620,7 +621,7 @@ You should see:
 The database for Chat.Repo has been created
 ```
 
-## 7. Generate Database Schema to Store Chat History
+## 6. Generate Database Schema to Store Chat History
 
 Run the following command in your terminal:
 ```sh
