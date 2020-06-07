@@ -599,7 +599,6 @@ If we didn't _want_ to _save_ the chat history,
 we could just _deploy_ this App _immediately_
 and we'd be done! <br />
 
-<!--
 > In fact, it could be a "_use-case_" / "_feature_"
 to have "_ephemeral_" chat without _any_ history ...
 > see: http://www.psstchat.com/
@@ -608,19 +607,7 @@ to have "_ephemeral_" chat without _any_ history ...
 > so that `new` people joining the "channel" can see the history
 > and people who are briefly "absent" can "catch up" on the history.
 
-
-## 5. Create/Configure Database
-
-Create the database to store the chat history data:
-
-```sh
-mix ecto.create
-```
-You should see:
-```sh
-The database for Chat.Repo has been created
-```
--->
+<br />
 
 ## 5. Generate Database Schema to Store Chat History
 
@@ -652,7 +639,7 @@ Additionally a migration file is created, e.g:
 `creating priv/repo/migrations/20200607184409_create_messages.exs`
 The "_migration_" actually _creates_ the database table in our database.
 
-
+<br />
 
 ## 6. Run the Ecto Migration (_Create The Database Table_)
 
@@ -673,6 +660,8 @@ Generated chat app
 19:47:14.275 [info]  == Migrated 20200607184409 in 0.0s
 ```
 
+<br />
+
 ### 6.1 Review the Messages Table Schema
 
 If you open your PostgreSQL GUI (_e.g: [pgadmin](https://www.pgadmin.org)_)
@@ -686,7 +675,7 @@ on the `messages` table and selecting "properties":
 
 ![pgadmin-messages-schema-columns-view](https://user-images.githubusercontent.com/194400/35623295-c3a4df5c-0693-11e8-8484-199c2bcab458.png)
 
-
+<br />
 
 ## 7. Insert Messages into Database
 
@@ -706,6 +695,9 @@ def handle_in("shout", payload, socket) do
 end
 ```
 
+<br />
+
+
 ## 8. Load _Existing_ Messages (_When Someone Joins the Chat_)
 
 Open the `lib/chat/message.ex` file and add a new function to it:
@@ -720,6 +712,7 @@ It uses Ecto's `all` function to fetch all records from the database.
 `Message` is the name of the schema/table we want to get records for,
 and limit is the maximum number of records to fetch.
 
+<br />
 
 ## 9. Send Existing Messages to the Client when they Join
 
@@ -747,6 +740,9 @@ def join("room:lobby", payload, socket) do
   end
 end
 ```
+
+<br />
+
 
 ## 10. _Checkpoint_: Our Chat App Saves Messages!! (_Try it_!)
 
@@ -805,7 +801,9 @@ If you have never seen or written a test with `ExUnit`,
 don't fear, the syntax should be _familiar_ if you have
 written _any_ sort of automated test in the past.
 
-## 13. Run the Default/Generated Tests
+<br />
+
+## 11. Run the Default/Generated Tests
 
 Whenever you create a new Phoenix app
 or add a new feature (_like a channel_),
@@ -813,56 +811,20 @@ Phoenix _generates_ a new test for you.
 
 We _run_ the tests using the **`mix test`** command:
 
-![one-failing-test](https://user-images.githubusercontent.com/194400/35329453-d2549d86-00f7-11e8-9176-2cd14a258abe.png)
-
-In this case _one_ of the tests fails. (_7 tests, **1 failure**_)
-
-The "**stacktrace**" informs us that location of the failing test is:
-`test/chat_web/controllers/page_controller_test.exs:4`
-And that the "assertion" is:
 ```elixir
-assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+22:37:03.724 [info]  Already up
+......
+
+Finished in 0.1 seconds
+6 tests, 0 failures
+
+Randomized with seed 906499
 ```
-In _English_ this means we are asserting that the "homepage"
-returns an "HTML response" which contains the words: "**Welcome to Phoenix!**"
 
-Since we changed the code in
-[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex)
-(_in section 3, above_),
-the page no longer contains the string " ***Welcome to Phoenix!*** ".
+In this case _one_ of the tests fails. (_6 tests, **0 failure**_)
 
-### 13.1 Fix The Failing Test
 
-We have _two_ options:
-1. **Add** the text "**Welcome to Phoenix!**" back into `page/index.html.eex`
-2. ***Update*** the assertion to something that _is_ on the page e.g:
-"**msg-list**".
-
-Both are _valid_ approaches, however we _prefer_ the second option because
-it "_reflects the reality_" rather than "_altering reality_"
-to match the exiting assertion. <br />
-Let's make the update now. Open the
-[`test/chat_web/controllers/page_controller_test.exs`](https://github.com/nelsonic/phoenix-chat-example/blob/f9cf59e8282a5c0756d7c6be91f3b5926430fd3b/test/chat_web/controllers/page_controller_test.exs)
-file and change line **6** to:
-
-```elixir
-assert html_response(conn, 200) =~ "msg-list"
-```
-We know that `"msg-list"` is _on_ the page
-because that's the `id` of the `<ul>`
-where our message history is bing displayed.
-
-Your `page_controller_test.exs` file should now look like this:
-[`/test/chat_web/controllers/page_controller_test.exs#L6`](https://github.com/nelsonic/phoenix-chat-example/blob/c2abfa05df178f71f615eae363b7475788c96b43/test/chat_web/controllers/page_controller_test.exs#L6)
-
-### 13.2 Re-Run The Test(s)
-
-Now that we have _updated_ the assertion,
-we can re-run the tests with the **`mix test`** command:
-
-![tests-pass](https://user-images.githubusercontent.com/194400/35342629-6dcc7c3e-0120-11e8-89dc-5f07e81b32ff.png)
-
-## 14. Understanding The Channel Tests
+## 12. Understanding The Channel Tests
 
 It's worth taking a moment (_or as long as you need_!)
 to _understand_ what is going on in the
@@ -872,7 +834,7 @@ file. _Open_ it if you have not already, read the test descriptions & code.
 > For a bit of _context_ we recommend reading:
 [https://hexdocs.pm/phoenix/**testing_channels**.html](https://hexdocs.pm/phoenix/testing_channels.html)
 
-### 14.1 _Analyse_ a Test
+### 12.1 _Analyse_ a Test
 
 Let's take a look at the _first_ test in
 [/test/chat_web/channels/room_channel_test.exs#L14-L17](https://github.com/nelsonic/phoenix-chat-example/blob/f3823e64d9f9826db67f5cdf228ea5c974ad59fa/test/chat_web/channels/room_channel_test.exs#L14-L17):
@@ -908,14 +870,16 @@ so beginners are not "overwhelmed" by anything...)_
 
 <br />
 
-## 15. What is _Not_ Tested?
+## 13. What is _Not_ Tested?
 
 _Often_ we can learn a _lot_ about an application (_or API_)
 from reading the tests and seeing where the "gaps" in testing are.
 
 _Thankfully_ we can achieve this with only a couple of steps:
 
-### 15.1 Add `excoveralls` as a (Development) Dependency to `mix.exs`
+<br />
+
+### 13.1 Add `excoveralls` as a (Development) Dependency to `mix.exs`
 
 Open your `mix.exs` file and find the "deps" function:
 ```elixir
