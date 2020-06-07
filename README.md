@@ -593,7 +593,7 @@ found 0 vulnerabilities
  -->
 
 
-## Storing Chat Message Data/History
+### Storing Chat Message Data/History
 
 If we didn't _want_ to _save_ the chat history,
 we could just _deploy_ this App _immediately_
@@ -607,7 +607,7 @@ to have "_ephemeral_" chat without _any_ history ...
 > but we are _assuming_ that _most_ chat apps save history
 > so that `new` people joining the "channel" can see the history
 > and people who are briefly "absent" can "catch up" on the history.
--->
+
 
 ## 5. Create/Configure Database
 
@@ -620,8 +620,9 @@ You should see:
 ```sh
 The database for Chat.Repo has been created
 ```
+-->
 
-## 6. Generate Database Schema to Store Chat History
+## 5. Generate Database Schema to Store Chat History
 
 Run the following command in your terminal:
 ```sh
@@ -630,7 +631,7 @@ mix phx.gen.schema Message messages name:string message:string
 You should see the following output:
 ```sh
 * creating lib/chat/message.ex
-* creating priv/repo/migrations/20180107074333_create_messages.exs
+* creating priv/repo/migrations/20200607184409_create_messages.exs
 
 Remember to update your repository by running migrations:
 
@@ -644,16 +645,16 @@ Let's break down that command for clarity:
 + `name:string` - the name of the person sending a message, stored as a `string`.
 + `message:string` - the message sent by the person, also stored as a `string`.
 
-The `creating lib/chat/message.ex` file is the "schema"
+The line `creating lib/chat/message.ex` creates the "schema"
 for our Message database table.
 
 Additionally a migration file is created, e.g:
-`creating priv/repo/migrations/20180107074333_create_messages.exs`
+`creating priv/repo/migrations/20200607184409_create_messages.exs`
 The "_migration_" actually _creates_ the database table in our database.
 
 
 
-## 8. Run the Ecto Migration (_Create The Database Table_)
+## 6. Run the Ecto Migration (_Create The Database Table_)
 
 In your terminal run the following command to create the `messages` table:
 
@@ -662,14 +663,17 @@ mix ecto.migrate
 ```
 You should see the following in your terminal:
 ```sh
-Compiling 1 file (.ex)
+Compiling 16 files (.ex)
 Generated chat app
-[info] == Running Chat.Repo.Migrations.CreateMessages.change/0 forward
-[info] create table messages
-[info] == Migrated in 0.0s
+
+19:47:14.215 [info]  == Running 20200607184409 Chat.Repo.Migrations.CreateMessages.change/0 forward
+
+19:47:14.219 [info]  create table messages
+
+19:47:14.275 [info]  == Migrated 20200607184409 in 0.0s
 ```
 
-### 8.1 Review the Messages Table Schema
+### 6.1 Review the Messages Table Schema
 
 If you open your PostgreSQL GUI (_e.g: [pgadmin](https://www.pgadmin.org)_)
 you will see that the messages table has been created
