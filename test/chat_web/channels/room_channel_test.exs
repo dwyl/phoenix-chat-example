@@ -25,8 +25,10 @@ defmodule ChatWeb.RoomChannelTest do
     assert_push "broadcast", %{"some" => "data"}
   end
 
-  # test ":after_join sends all existing messages", %{socket: socket} do
-  #   push socket, "shout", %{"hello" => "all"}
-  #   assert_broadcast "shout", %{"hello" => "all"}
-  # end
+  test ":after_join sends all existing messages", %{socket: socket} do
+    {:ok, _, socket} = subscribe_and_join(socket, "room:lobby", socket)
+    {:noreply, socket2} = ChatWeb.RoomChannel.handle_info(:after_join, socket)
+    # IO.inspect(socket2)
+    assert socket2.join_ref > 0
+  end
 end

@@ -999,7 +999,9 @@ for this command to work because it's expecting 100% coverage._</small>
 to write up my **Definitive** thoughts on "Test Coverage" once-and-for-all! -->
 
 
+<!--
 ### 13.4 Write a Test for the Untested Function
+-->
 
 
 
@@ -1028,7 +1030,7 @@ with the following lines:
 ```yml
 language: elixir
 elixir: # Latest version of Elixir
-  - 1.6
+  - 1.10
 services: # ensure that Travis-CI provisions a DB for our test:
   - postgresql
 env:
