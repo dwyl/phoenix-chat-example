@@ -688,7 +688,7 @@ on the `messages` table and selecting "properties":
 
 
 
-## 9. Insert Messages into Database
+## 7. Insert Messages into Database
 
 Open the `lib/chat_web/channels/room_channel.ex` file
 and inside the function `def handle_in("shout", payload, socket) do`
@@ -706,7 +706,7 @@ def handle_in("shout", payload, socket) do
 end
 ```
 
-## 10. Load _Existing_ Messages (_When Someone Joins the Chat_)
+## 8. Load _Existing_ Messages (_When Someone Joins the Chat_)
 
 Open the `lib/chat/message.ex` file and add a new function to it:
 ```elixir
@@ -721,7 +721,7 @@ It uses Ecto's `all` function to fetch all records from the database.
 and limit is the maximum number of records to fetch.
 
 
-## 11. Send Existing Messages to the Client when they Join
+## 9. Send Existing Messages to the Client when they Join
 
 In the `/lib/chat_web/channels/room_channel.ex` file create a new function:
 ```elixir
@@ -748,22 +748,25 @@ def join("room:lobby", payload, socket) do
 end
 ```
 
-## 12. _Checkpoint_: Our Chat App Saves Messages!! (_Try it_!)
+## 10. _Checkpoint_: Our Chat App Saves Messages!! (_Try it_!)
 
 Start the Phoenix server (_if it is not already running_):
 ```sh
 mix phx.server
 ```
 
-> _**Note**: it will take a few seconds to **compile** but then you should see:_
+> _**Note**: it will take a few seconds to **compile**_.
 
-![server-running](https://user-images.githubusercontent.com/194400/35188430-22de4d9c-fe2d-11e7-82d3-85e0a0482e17.png)
 
-The line:
+In your terminal, you should see:
 ```sh
-[info] Running ChatWeb.Endpoint with Cowboy using http://0.0.0.0:4000
+[info] Running ChatWeb.Endpoint with cowboy 2.8.0 at 0.0.0.0:4000 (http)
+[info] Access ChatWeb.Endpoint at http://localhost:4000
+
+webpack is watching the files…
 ```
-tells us that our code compiled (_as expected_) and the Chat App
+
+This tells us that our code compiled (_as expected_) and the Chat App
 is running on TCP Port `4000`!
 
 **Open** the Chat web app in
