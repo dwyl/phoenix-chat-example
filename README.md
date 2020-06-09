@@ -243,11 +243,7 @@ you can see the chat messages
 displayed in all of them
 as soon as you hit the <kbd>Enter</kbd> key:
 
-<<<<<<< Updated upstream
-![phoenix-chat-localhost-demo](https://user-images.githubusercontent.com/194400/84200400-a2bbe900-aa9e-11ea-95fd-4e9b2dde4820.gif)
-=======
 ![phoenix-chat-localhost-demo-optimised](https://user-images.githubusercontent.com/194400/84203142-d861d180-aaa0-11ea-8f10-abff03c3b4d2.gif)
->>>>>>> Stashed changes
 
 <br />
 
