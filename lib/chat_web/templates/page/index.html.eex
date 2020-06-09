@@ -25,6 +25,7 @@
   }
   #name, #msg {
     border: 1px black solid;
+    font-size: 1.3em;
   }
 
   footer {
