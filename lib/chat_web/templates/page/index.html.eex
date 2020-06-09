@@ -1,16 +1,36 @@
 <!-- The list of messages will appear here: -->
-<ul id='msg-list'>
-</ul>
+<ul id='msg-list'> </ul>
+
+<footer class="container">
+  <input type="text" id="name" placeholder="Your Name" autofocus>
+  <input type="text" id="msg" placeholder="Your Message">
+</footer>
 
 <style>
-  #msg-list > li { display: inline-block; width: 100%;}
-</style>
+  #msg-list {
+    list-style: none;
+    min-height: 200px;
+  }
+  #msg-list > li {
+    margin-bottom: 0;
+  }
 
-<div class="row">
-  <div class="column column-20">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
-  </div>
-  <div class="column column-80">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message">
-  </div>
-</div>
+  #name {
+    width: 20%;
+    margin-left: 0;
+  }
+  #msg {
+    width: 78%;
+    margin-left: 1%;
+  }
+  #name, #msg {
+    border: 1px black solid;
+  }
+
+  footer {
+    position:fixed;
+    bottom: 10px;
+    height: 50px;
+    z-index: 2;
+  }
+</style>
