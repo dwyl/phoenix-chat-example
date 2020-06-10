@@ -1,16 +1,38 @@
 <!-- The list of messages will appear here: -->
-<ul id="msg-list" style="list-style: none; min-height:200px;
-  border: 1px solid #e5e5e5; margin: 10px; padding: 10px;">
-  <%= for m <- @messages do %>
-    <li id="<%= m.id %>"><b> <%= m.name %> </b> <%= m.message %> </li>
-  <% end %>
-</ul>
+<ul id='msg-list'> </ul>
 
-<div class="row">
-  <div class="col-xs-3">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
-  </div>
-  <div class="col-xs-9">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message">
-  </div>
-</div>
+<footer>
+  <input type="text" id="name" placeholder="Your Name" autofocus>
+  <input type="text" id="msg" placeholder="Your Message">
+</footer>
+
+<style>
+  #msg-list {
+    list-style: none;
+    min-height: 200px;
+  }
+  #msg-list > li {
+    margin-bottom: 0;
+  }
+
+  #name {
+    width: 20%;
+    margin-left: 0;
+  }
+  #msg {
+    width: 78%;
+    margin-left: 1%;
+  }
+  #name, #msg {
+    border: 1px black solid;
+    font-size: 1.3em;
+  }
+
+  footer {
+    position:fixed;
+    bottom: 10px;
+    height: 50px;
+    z-index: 2;
+    width: 95%;
+  }
+</style>

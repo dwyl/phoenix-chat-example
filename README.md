@@ -1,3 +1,5 @@
+<div align="center">
+
 # Phoenix Chat Example
 
 ![phoenix-chat-logo](https://user-images.githubusercontent.com/194400/39481553-c448aa1c-4d63-11e8-9389-47789833a96e.png)
@@ -5,14 +7,17 @@
 
 [![Build Status](https://img.shields.io/travis/dwyl/phoenix-chat-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/phoenix-chat-example)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/phoenix-chat-example/master.svg?style=flat-square)](http://codecov.io/github/dwyl/phoenix-chat-example?branch=master)
-[![HitCount](http://hits.dwyl.io/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
+<!-- [![HitCount](http://hits.dwyl.io/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example) -->
 Try it: https://phxchat.herokuapp.com
 <!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
 <!-- [![Inline docs](http://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](http://inch-ci.org/github/dwyl/phoenix-chat-example) -->
 
 
+
 A ***step-by-step tutorial*** for building, testing
 and _deploying_ a Chat app in Phoenix!
+
+</div>
 
 ## Content
 - [Why?](#why)
@@ -137,7 +142,7 @@ brew install elixir
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install hex phx_new 1.4.4
+mix archive.install hex phx_new v1.5.3
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
@@ -165,9 +170,9 @@ elixir -v
 
 You should see something like:
 ```sh
-Erlang/OTP 21 [erts-10.3.4] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe] [dtrace]
+Erlang/OTP 23 [erts-11.0] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe] [dtrace]
 
-Elixir 1.8.1 (compiled with Erlang/OTP 21)
+Elixir 1.10.3 (compiled with Erlang/OTP 22)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -176,7 +181,7 @@ mix phx.new -v
 ```
 You should see:
 ```sh
-Phoenix v1.4.4
+Phoenix v1.5.1
 ```
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -195,6 +200,68 @@ This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
 
 With all those "pre-flight checks" performed, let's get _going_!
 
+## First _Run_ the _Finished_ App
+
+_Before_ you attempt to build the Chat App from scratch,
+clone and run the _finished_ working version
+to get an idea of what to expect.
+
+### Clone the Project:
+
+In your terminal run the following command to clone the repo:
+
+```sh
+git clone git@github.com:dwyl/phoenix-chat-example.git
+```
+
+### Install the Dependencies
+
+Change into the `phoenix-chat-example` directory
+and install both the `Elixir` and `Node.js` dependencies
+with this command:
+
+```sh
+cd phoenix-chat-example
+mix setup
+```
+
+<!-- ### TODO: Add auth step? -->
+
+
+### Run the App
+
+Run the Phoenix app with the command:
+
+```sh
+mix phx.server
+```
+
+If you open the app
+[localhost:4000](http://localhost:4000)
+in two more web browsers,
+you can see the chat messages
+displayed in all of them
+as soon as you hit the <kbd>Enter</kbd> key:
+
+![phoenix-chat-localhost-demo-optimised](https://user-images.githubusercontent.com/194400/84203142-d861d180-aaa0-11ea-8f10-abff03c3b4d2.gif)
+
+<br />
+
+Now that you have confirmed that the _finished_
+phoenix chat app works on your machine,
+it's time to _build_ it from scratch!
+
+Change directory:
+
+```sh
+cd ..
+```
+
+And start building!
+
+
+<br />
+
 ## 1. _Create_ The _App_
 
 In your terminal program on your localhost,
@@ -207,8 +274,8 @@ That will create the directory structure and project files. <br />
 
 
 When asked to "***Fetch and install dependencies***? [Yn]",<br />
-Type `y` (_the "Y" key_) in your terminal,
-followed by the `[Enter]` / `[Return]` key.
+Type <kbd>Y</kbd> in your terminal,
+followed by the <kbd>Enter</kbd> (<kbd>Return</kbd>) key.
 
 You should see: <br />
 ![fetch-and-install-dependencies](https://user-images.githubusercontent.com/194400/34833220-d219221c-f6e6-11e7-88d6-87aa4c3054e4.png)
@@ -216,6 +283,11 @@ You should see: <br />
 Change directory into the `chat` directory by running the suggested command:
 ```sh
 cd chat
+```
+
+Now run the following command:
+```sh
+mix setup
 ```
 
 > _**Note**: at this point there is already an "App"
@@ -228,9 +300,40 @@ For now, open [http://localhost:4000](http://localhost:4000)
 in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
-![welcome-to-phoenix](https://user-images.githubusercontent.com/194400/36354251-65e095c0-14c9-11e8-98e4-9d91c98c9b8e.png)
 
-Let's continue to the _interesting_ part!
+![welcome-to-phoenix](https://user-images.githubusercontent.com/194400/82494801-11caa100-9ae2-11ea-821d-8181580201cb.png)
+
+Shut down the Phoenix server in your terminal
+with the
+<kbd>ctrl</kbd>+<kbd>C</kbd>
+command.
+
+### Run the Tests
+
+In your terminal window, run the following command:
+
+```
+mix test
+```
+
+You should see output similar to the following:
+
+```sh
+Generated chat app
+
+21:41:27.079 [info]  Already up
+...
+
+Finished in 0.07 seconds
+3 tests, 0 failures
+
+Randomized with seed 273499
+```
+
+Now that we have confirmed that everything is working (all tests pass),
+let's continue to the _interesting_ part!
+
+<br />
 
 ## 2. _Create_ the (WebSocket) "_Channel_"
 
@@ -244,15 +347,18 @@ mix phx.gen.channel Room
 type `y` and hit the `[Enter]` key.
 
 This will create **two files**:<br />
+
 ```sh
 * creating lib/chat_web/channels/room_channel.ex
 * creating test/chat_web/channels/room_channel_test.exs
 ```
+
 The `room_channel.ex` file handles receiving/sending messages
 and the `room_channel_test.exs` tests basic interaction with the channel.
 (_Don't worry about this yet, we will look at the test file in step 14 below_!)
 
 We are informed that we need to update a piece of code into your app: <br />
+
 ```sh
 Add the channel to your `/lib/chat_web/channels/user_socket.ex` handler, for example:
 
@@ -261,13 +367,17 @@ Add the channel to your `/lib/chat_web/channels/user_socket.ex` handler, for exa
 
 Open the file called `/lib/chat_web/channels/user_socket.ex` <br >
 and change the line:
+
 ```elixir
 # channel "room:*", ChatWeb.RoomChannel
 ```
+
 to:
+
 ```elixir
 channel "room:lobby", ChatWeb.RoomChannel
 ```
+
 Example:
 [user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/channels/user_socket.ex#L5)
 
@@ -275,6 +385,8 @@ Example:
 (_we highly recommend you_) read:
 https://hexdocs.pm/phoenix/channels.html
 
+
+<br />
 
 ## 3. Update the Template File (UI)
 
@@ -288,37 +400,116 @@ and _copy-paste_ (_or type_) the following code:
 <ul id='msg-list' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
 
 <div class="row">
-  <div class="col-xs-3">
+  <div class="column column-20">
     <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
   </div>
-  <div class="col-xs-9">
+  <div class="column column-80">
     <input type="text" id="msg" class="form-control" placeholder="Your Message">
   </div>
 </div>
 ```
 
 This is the _basic_ form we will use to input Chat messages. <br />
-The classes e.g: `"form-control"` and `"col-xs-3"`
-are Bootstrap CSS classes to _style_ the form. <br />
-Phoenix includes Bootstrap by default so you can get up-and-running
+The classes e.g: `"column"` and `"column-20"`
+are [Milligram CSS](https://milligram.io/grids.html)
+classes to _style_ the form. <br />
+Phoenix includes Milligram by default so you can get up-and-running
 with your App/Idea/"MVP"! <br />
-If you are unfamiliar with Bootstrap UI,
-read: https://getbootstrap.com/docs/3.3 <br />
-and if you _specifically_ want to understand the Bootstrap _forms_,
-see: https://getbootstrap.com/docs/3.3/css/#forms
+If you are unfamiliar with Milligram,
+read: https://milligram.io/#typography <br />
+and if you _specifically_ want to understand the Milligram _forms_,
+see: https://milligram.io/#forms
 
 Your `index.html.eex` template file should look like this:
-[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
+[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/dwyl/phoenix-chat-example/blob/7e9d5f0e8fd69d3c13f6fe7814d81a9d7ec602ca/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
 
+
+### 3.1 Update Layout Template
+
+Open the `lib/chat_web/templates/layout/app.html.eex` file
+and locate the `<header>` tag.
+Replace the contents of the `<header>` with the following code:
+
+```html
+<section class="container">
+  <nav role="navigation">
+    <h1 style="padding-top: 15px">Chat Example</h1>
+  </nav>
+    <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>"
+    width="500px" alt="Phoenix Framework Logo" />
+</section>
+```
+
+Your `app.html.eex` template file should look like this:
+[`/lib/chat_web/templates/page/index.html.eex`]() (_snapshot_)
+
+At the end of this step, if you run the Phoenix Server `mix phx.server`,
+and view the App in your browser it will look like this:
+
+![phoenix-chat-blank](https://user-images.githubusercontent.com/194400/82498454-ef3b8680-9ae7-11ea-9d1f-8cf593deacba.png)
+
+So it's already starting to look like a basic Chat App.
+Sadly, since we changed the copy of the `index.html.eex`
+our `page_controller_test.exs` now fails:
+
+Run the command:
+
+```sh
+mix test
+```
+
+```
+1) test GET / (ChatWeb.PageControllerTest)
+     test/chat_web/controllers/page_controller_test.exs:4
+     Assertion with =~ failed
+     code:  assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+```
+
+Thankfully this is easy to fix.
+
+
+### 3.2 Update the `page_controller_test.exs`
+
+Open the `test/chat_web/controllers/page_controller_test.exs` file
+and replace the line:
+
+```elixir
+assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+```
+
+With:
+
+```elixir
+assert html_response(conn, 200) =~ "Chat Example"
+```
+
+Now if you run the tests again, they will pass:
+```
+mix test
+```
+
+Sample output:
+
+```
+22:22:43.076 [info]  Already up
+......
+
+Finished in 0.1 seconds
+6 tests, 0 failures
+```
+
+<br />
 
 ## 4. Update the "Client" code in App.js
 
-Open:
-[`/assets/js/app.js`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/assets/js/app.js#L21-L48)
-and uncomment the line:
+Open the
+`/assets/js/app.js`
+file and uncomment the line:
+
 ```js
 import socket from "./socket"
 ```
+
 with the line _uncommented_ our app will import the `socket.js` file
 which will give us WebSocket functionality.
 
@@ -359,7 +550,8 @@ Hopefully the in-line comments are self-explanatory,
 but if _anything_ is unclear, please ask!
 
 At this point your `app.js` file should look like this:
-[`/assets/js/app.js`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/assets/js/app.js#L21-L48)
+[`/assets/js/app.js`](https://github.com/dwyl/phoenix-chat-example/blob/7c3f94f127adfac05fe6b11a4ba3196802d9cfe2/assets/js/app.js)
+
 
 ### 4.1 Comment Out Lines in `socket.js`
 
@@ -370,6 +562,7 @@ we can avoid seeing any
 **`"unable to join: unmatched topic"`** errors in our browser/console
 by simply commenting out a few lines in the `socket.js` file.
 Open the file in your editor and locate the following lines:
+
 ```JavaScript
 let channel = socket.channel("topic:subtopic", {})
 channel.join()
@@ -386,7 +579,7 @@ Comment out the lines so they will not be executed:
 ```
 
 Your `socket.js` should now look like this:
-[`/assets/js/socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/89d5d1127bafdcb9493c5dab060c291aa296f5e2/assets/js/socket.js#L56-L60)
+[`/assets/js/socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/26f98f2dbca061f6cc383dfd99861325113eaf1b/assets/js/socket.js)
 
 > If you later decide to tidy up your chat app, you can **`delete`**
 these commented lines from the file. <br />
@@ -395,13 +588,18 @@ of how to join channels and receive messages.
 
 Once that's done, proceed to the next step!
 
+<br />
+
+<!-- Remove if no longer required as mix setup in step 1 covers this.
 ## 5. Install the Node.js Dependencies
 
-In order to use JS in your Phoenix project,
+In order to use JavaScript in your Phoenix project,
 you need to install the node.js dependencies:
+
 ```sh
-cd assets && npm install && cd ..
+mix setup
 ```
+
 That might take a few seconds (_depending on your internet connection speed_)
 
 But once it completes you should see:
@@ -409,15 +607,15 @@ But once it completes you should see:
 added 1022 packages from 600 contributors and audited 14893 packages in 32.079s
 found 0 vulnerabilities
 ```
+ -->
 
 
-# Storing Chat Message Data/History
+### Storing Chat Message Data/History
 
 If we didn't _want_ to _save_ the chat history,
 we could just _deploy_ this App _immediately_
 and we'd be done! <br />
 
-<!--
 > In fact, it could be a "_use-case_" / "_feature_"
 to have "_ephemeral_" chat without _any_ history ...
 > see: http://www.psstchat.com/
@@ -425,21 +623,10 @@ to have "_ephemeral_" chat without _any_ history ...
 > but we are _assuming_ that _most_ chat apps save history
 > so that `new` people joining the "channel" can see the history
 > and people who are briefly "absent" can "catch up" on the history.
--->
 
-## 6. Create/Configure Database
+<br />
 
-Create the database to store the chat history data:
-
-```sh
-mix ecto.create
-```
-You should see:
-```sh
-The database for Chat.Repo has been created
-```
-
-## 7. Generate Database Schema to Store Chat History
+## 5. Generate Database Schema to Store Chat History
 
 Run the following command in your terminal:
 ```sh
@@ -448,7 +635,7 @@ mix phx.gen.schema Message messages name:string message:string
 You should see the following output:
 ```sh
 * creating lib/chat/message.ex
-* creating priv/repo/migrations/20180107074333_create_messages.exs
+* creating priv/repo/migrations/20200607184409_create_messages.exs
 
 Remember to update your repository by running migrations:
 
@@ -462,16 +649,16 @@ Let's break down that command for clarity:
 + `name:string` - the name of the person sending a message, stored as a `string`.
 + `message:string` - the message sent by the person, also stored as a `string`.
 
-The `creating lib/chat/message.ex` file is the "schema"
+The line `creating lib/chat/message.ex` creates the "schema"
 for our Message database table.
 
 Additionally a migration file is created, e.g:
-`creating priv/repo/migrations/20180107074333_create_messages.exs`
+`creating priv/repo/migrations/20200607184409_create_messages.exs`
 The "_migration_" actually _creates_ the database table in our database.
 
+<br />
 
-
-## 8. Run the Ecto Migration (_Create The Database Table_)
+## 6. Run the Ecto Migration (_Create The Database Table_)
 
 In your terminal run the following command to create the `messages` table:
 
@@ -480,14 +667,19 @@ mix ecto.migrate
 ```
 You should see the following in your terminal:
 ```sh
-Compiling 1 file (.ex)
+Compiling 16 files (.ex)
 Generated chat app
-[info] == Running Chat.Repo.Migrations.CreateMessages.change/0 forward
-[info] create table messages
-[info] == Migrated in 0.0s
+
+19:47:14.215 [info]  == Running 20200607184409 Chat.Repo.Migrations.CreateMessages.change/0 forward
+
+19:47:14.219 [info]  create table messages
+
+19:47:14.275 [info]  == Migrated 20200607184409 in 0.0s
 ```
 
-### 8.1 Review the Messages Table Schema
+<br />
+
+### 6.1 Review the Messages Table Schema
 
 If you open your PostgreSQL GUI (_e.g: [pgadmin](https://www.pgadmin.org)_)
 you will see that the messages table has been created
@@ -500,9 +692,9 @@ on the `messages` table and selecting "properties":
 
 ![pgadmin-messages-schema-columns-view](https://user-images.githubusercontent.com/194400/35623295-c3a4df5c-0693-11e8-8484-199c2bcab458.png)
 
+<br />
 
-
-## 9. Insert Messages into Database
+## 7. Insert Messages into Database
 
 Open the `lib/chat_web/channels/room_channel.ex` file
 and inside the function `def handle_in("shout", payload, socket) do`
@@ -520,7 +712,10 @@ def handle_in("shout", payload, socket) do
 end
 ```
 
-## 10. Load _Existing_ Messages (_When Someone Joins the Chat_)
+<br />
+
+
+## 8. Load _Existing_ Messages (_When Someone Joins the Chat_)
 
 Open the `lib/chat/message.ex` file and add a new function to it:
 ```elixir
@@ -534,8 +729,9 @@ It uses Ecto's `all` function to fetch all records from the database.
 `Message` is the name of the schema/table we want to get records for,
 and limit is the maximum number of records to fetch.
 
+<br />
 
-## 11. Send Existing Messages to the Client when they Join
+## 9. Send Existing Messages to the Client when they Join
 
 In the `/lib/chat_web/channels/room_channel.ex` file create a new function:
 ```elixir
@@ -562,22 +758,28 @@ def join("room:lobby", payload, socket) do
 end
 ```
 
-## 12. _Checkpoint_: Our Chat App Saves Messages!! (_Try it_!)
+<br />
+
+
+## 10. _Checkpoint_: Our Chat App Saves Messages!! (_Try it_!)
 
 Start the Phoenix server (_if it is not already running_):
 ```sh
 mix phx.server
 ```
 
-> _**Note**: it will take a few seconds to **compile** but then you should see:_
+> _**Note**: it will take a few seconds to **compile**_.
 
-![server-running](https://user-images.githubusercontent.com/194400/35188430-22de4d9c-fe2d-11e7-82d3-85e0a0482e17.png)
 
-The line:
+In your terminal, you should see:
 ```sh
-[info] Running ChatWeb.Endpoint with Cowboy using http://0.0.0.0:4000
+[info] Running ChatWeb.Endpoint with cowboy 2.8.0 at 0.0.0.0:4000 (http)
+[info] Access ChatWeb.Endpoint at http://localhost:4000
+
+webpack is watching the files…
 ```
-tells us that our code compiled (_as expected_) and the Chat App
+
+This tells us that our code compiled (_as expected_) and the Chat App
 is running on TCP Port `4000`!
 
 **Open** the Chat web app in
@@ -616,7 +818,9 @@ If you have never seen or written a test with `ExUnit`,
 don't fear, the syntax should be _familiar_ if you have
 written _any_ sort of automated test in the past.
 
-## 13. Run the Default/Generated Tests
+<br />
+
+## 11. Run the Default/Generated Tests
 
 Whenever you create a new Phoenix app
 or add a new feature (_like a channel_),
@@ -624,56 +828,20 @@ Phoenix _generates_ a new test for you.
 
 We _run_ the tests using the **`mix test`** command:
 
-![one-failing-test](https://user-images.githubusercontent.com/194400/35329453-d2549d86-00f7-11e8-9176-2cd14a258abe.png)
-
-In this case _one_ of the tests fails. (_7 tests, **1 failure**_)
-
-The "**stacktrace**" informs us that location of the failing test is:
-`test/chat_web/controllers/page_controller_test.exs:4`
-And that the "assertion" is:
 ```elixir
-assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+22:37:03.724 [info]  Already up
+......
+
+Finished in 0.1 seconds
+6 tests, 0 failures
+
+Randomized with seed 906499
 ```
-In _English_ this means we are asserting that the "homepage"
-returns an "HTML response" which contains the words: "**Welcome to Phoenix!**"
 
-Since we changed the code in
-[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex)
-(_in section 3, above_),
-the page no longer contains the string " ***Welcome to Phoenix!*** ".
+In this case _one_ of the tests fails. (_6 tests, **0 failure**_)
 
-### 13.1 Fix The Failing Test
 
-We have _two_ options:
-1. **Add** the text "**Welcome to Phoenix!**" back into `page/index.html.eex`
-2. ***Update*** the assertion to something that _is_ on the page e.g:
-"**msg-list**".
-
-Both are _valid_ approaches, however we _prefer_ the second option because
-it "_reflects the reality_" rather than "_altering reality_"
-to match the exiting assertion. <br />
-Let's make the update now. Open the
-[`test/chat_web/controllers/page_controller_test.exs`](https://github.com/nelsonic/phoenix-chat-example/blob/f9cf59e8282a5c0756d7c6be91f3b5926430fd3b/test/chat_web/controllers/page_controller_test.exs)
-file and change line **6** to:
-
-```elixir
-assert html_response(conn, 200) =~ "msg-list"
-```
-We know that `"msg-list"` is _on_ the page
-because that's the `id` of the `<ul>`
-where our message history is bing displayed.
-
-Your `page_controller_test.exs` file should now look like this:
-[`/test/chat_web/controllers/page_controller_test.exs#L6`](https://github.com/nelsonic/phoenix-chat-example/blob/c2abfa05df178f71f615eae363b7475788c96b43/test/chat_web/controllers/page_controller_test.exs#L6)
-
-### 13.2 Re-Run The Test(s)
-
-Now that we have _updated_ the assertion,
-we can re-run the tests with the **`mix test`** command:
-
-![tests-pass](https://user-images.githubusercontent.com/194400/35342629-6dcc7c3e-0120-11e8-89dc-5f07e81b32ff.png)
-
-## 14. Understanding The Channel Tests
+## 12. Understanding The Channel Tests
 
 It's worth taking a moment (_or as long as you need_!)
 to _understand_ what is going on in the
@@ -683,7 +851,7 @@ file. _Open_ it if you have not already, read the test descriptions & code.
 > For a bit of _context_ we recommend reading:
 [https://hexdocs.pm/phoenix/**testing_channels**.html](https://hexdocs.pm/phoenix/testing_channels.html)
 
-### 14.1 _Analyse_ a Test
+### 12.1 _Analyse_ a Test
 
 Let's take a look at the _first_ test in
 [/test/chat_web/channels/room_channel_test.exs#L14-L17](https://github.com/nelsonic/phoenix-chat-example/blob/f3823e64d9f9826db67f5cdf228ea5c974ad59fa/test/chat_web/channels/room_channel_test.exs#L14-L17):
@@ -719,14 +887,16 @@ so beginners are not "overwhelmed" by anything...)_
 
 <br />
 
-## 15. What is _Not_ Tested?
+## 13. What is _Not_ Tested?
 
 _Often_ we can learn a _lot_ about an application (_or API_)
 from reading the tests and seeing where the "gaps" in testing are.
 
 _Thankfully_ we can achieve this with only a couple of steps:
 
-### 15.1 Add `excoveralls` as a (Development) Dependency to `mix.exs`
+<br />
+
+### 13.1 Add `excoveralls` as a (Development) Dependency to `mix.exs`
 
 Open your `mix.exs` file and find the "deps" function:
 ```elixir
@@ -735,22 +905,27 @@ defp deps do
 
 Add the following line to the end of the List:
 ```elixir
-{:excoveralls, "~> 0.7.0", only: [:test, :dev]}, # tracking test coverage
+{:excoveralls, "~> 0.13.0", only: [:test, :dev]}, # tracking test coverage
 ```
+
 Additionally, find the `def project do` section (_towards the top of `mix.exs`_)
 and add the following lines to the List:
+
 ```elixir
 test_coverage: [tool: ExCoveralls],
-preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test,
+preferred_cli_env: [coveralls: :test, "coveralls.detail": :test,
   "coveralls.post": :test, "coveralls.html": :test]
 ```
 
 _Then_, ***install*** the dependency on `excoveralls`
 we just added to `mix.exs`:
+
 ```sh
 mix deps.get
 ```
+
 You should see:
+
 ```sh
 Resolving Hex dependencies...
 Dependency resolution completed:
@@ -758,7 +933,7 @@ Dependency resolution completed:
 ... etc.
 ```
 
-### 15.2 Create a _New File_ Called `coveralls.json`
+### 13.2 Create a _New File_ Called `coveralls.json`
 
 In the "root" (_base directory_) of the Chat project,
 create a new file called `coveralls.json` and _copy-paste_ the following:
@@ -785,7 +960,7 @@ is **worth it** to have **fewer bugs** later. <br />
 and **confidence**/**reliability** is **priceless**_. </small>
 
 
-### 15.3 Run the Tests with Coverage Checking
+### 13.3 Run the Tests with Coverage Checking
 
 To run the tests with coverage, copy-paste the following command
 into your terminal:
@@ -793,10 +968,29 @@ into your terminal:
 ```elixir
 MIX_ENV=test mix do coveralls.json
 ```
-You should see: <br />
-![phoenix-chat-coverage](https://user-images.githubusercontent.com/194400/36356461-435c4dde-14ea-11e8-9e48-3ea49f55b1e7.png)
 
-As we can se here, only **59.3%** of lines of code in `/lib`
+You should see: <br />
+
+```
+Randomized with seed 68194
+----------------
+COV    FILE                                        LINES RELEVANT   MISSED
+100.0% lib/chat.ex                                     9        0        0
+100.0% lib/chat/message.ex                            22        3        0
+100.0% lib/chat/repo.ex                                5        0        0
+ 66.7% lib/chat_web/channels/room_channel.ex          45        9        3
+100.0% lib/chat_web/channels/user_socket.ex           35        0        0
+100.0% lib/chat_web/controllers/page_controller        7        1        0
+100.0% lib/chat_web/endpoint.ex                       54        0        0
+100.0% lib/chat_web/gettext.ex                        24        0        0
+100.0% lib/chat_web/views/error_view.ex               16        1        0
+100.0% lib/chat_web/views/layout_view.ex               3        0        0
+100.0% lib/chat_web/views/page_view.ex                 3        0        0
+[TOTAL]  78.6%
+----------------
+```
+
+As we can se here, only **78.6%** of lines of code in `/lib`
 are being "covered" by the tests we have written.
 
 To **view** the coverage in a web browser run the following:
@@ -804,14 +998,16 @@ To **view** the coverage in a web browser run the following:
 ```elixir
 MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 ```
+
 <br />
+
 This will open the Coverage Report (HTML) in your default Web Browser: <br />
 
-![coverage-report-59 3-percent](https://user-images.githubusercontent.com/194400/36425359-7637adfc-163e-11e8-9c9f-3c4fcbcded32.png)
+![coverage-66-percent](https://user-images.githubusercontent.com/194400/83980823-a6ba0080-a910-11ea-93ab-46aba8b8ece3.png)
 
 
 > <small>_**Note**: you will need to **temporarily** lower
-the coverage threshold in `coveralls.json` form `100` to `50`
+the coverage threshold in the `coveralls.json` file form `100` to `50`
 for this command to work because it's expecting 100% coverage._</small>
 
 
@@ -819,6 +1015,56 @@ for this command to work because it's expecting 100% coverage._</small>
 <!-- I think I'm at a point where I need to take a "Detour"
 to write up my **Definitive** thoughts on "Test Coverage" once-and-for-all! -->
 
+
+### 13.4 Write a Test for the Untested Function
+
+Open the `test/chat_web/channels/room_channel_test.exs` file
+and add the following test:
+
+```elixir
+test ":after_join sends all existing messages", %{socket: socket} do
+  # insert a new message to send in the :after_join
+  payload = %{name: "Alex", message: "test"}
+  Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert()
+
+  {:ok, _, socket2} = ChatWeb.UserSocket
+    |> socket("user_id", %{some: :assign})
+    |> subscribe_and_join(ChatWeb.RoomChannel, "room:lobby")
+
+  assert socket2.join_ref != socket.join_ref
+end
+```
+
+Now when you run `MIX_ENV=test mix do coveralls.json`
+you should see:
+
+```
+Randomized with seed 232886
+----------------
+COV    FILE                                        LINES RELEVANT   MISSED
+100.0% lib/chat.ex                                     9        0        0
+100.0% lib/chat/message.ex                            22        3        0
+100.0% lib/chat/repo.ex                                5        0        0
+100.0% lib/chat_web/channels/room_channel.ex          46        9        0
+100.0% lib/chat_web/channels/user_socket.ex           35        0        0
+100.0% lib/chat_web/controllers/page_controller        7        1        0
+100.0% lib/chat_web/endpoint.ex                       54        0        0
+100.0% lib/chat_web/gettext.ex                        24        0        0
+100.0% lib/chat_web/views/error_view.ex               16        1        0
+100.0% lib/chat_web/views/layout_view.ex               3        0        0
+100.0% lib/chat_web/views/page_view.ex                 3        0        0
+[TOTAL] 100.0%
+----------------
+```
+
+This test just creates a message before
+the `subscribe_and_join` so there is a message in the database
+to send out to any clien that joins the chat.
+
+That way the `:after_join` has at least one message
+and the `Enum.each` will be invoked at least once.
+
+With that our app is fully tested!
 
 
 
@@ -845,9 +1091,9 @@ with the following lines:
 ```yml
 language: elixir
 elixir: # Latest version of Elixir
-  - 1.6
-addons: # ensure that Travis-CI provisions a DB for our test:
-  postgresql: '9.5'
+  - 1.10
+services: # ensure that Travis-CI provisions a DB for our test:
+  - postgresql
 env:
   - MIX_ENV=test
 script: # run the tests:
@@ -883,13 +1129,14 @@ e.g: https://phxchat.herokuapp.com <br />
 
 ## What _Next_?
 
-If you found this example useful, please ⭐️the GitHub repository so we (_and others_) know you liked it!
+If you found this example useful, please ⭐️ the GitHub repository
+so we (_and others_) know you liked it!
 
-If you want to learn more Phoenix and the magic of **`LiveView`**, 
+If you want to learn more Phoenix and the magic of **`LiveView`**,
 consider reading our beginner's tutorial:
 [github.com/dwyl/**phoenix-liveview-counter-tutorial**](https://github.com/dwyl/phoenix-liveview-counter-tutorial)
 
-Thank you for learning with us! ☀️ 
+Thank you for learning with us! ☀️
 
 
 <br /> <br />
@@ -898,12 +1145,24 @@ Thank you for learning with us! ☀️
 ## Inspiration
 
 This repo is inspired by @chrismccord's Simple Chat Example:
-https://github.com/chrismccord/phoenix_chat_example
+https://github.com/chrismccord/phoenix_chat_example ❤️
 
-At the time of writing Chris' example is still
-[Phoenix 1.2](https://github.com/chrismccord/phoenix_chat_example/blob/31f0c5f80a04af0a05fdec89d5b428880c4ea814/mix.exs#L25)
-see: https://github.com/chrismccord/phoenix_chat_example/issues/40
-therefore we decided to write a quick version for Phoenix 1.4 :-)
+At the time of writing Chris' example was last updated on
+[20 Feb 2018](https://github.com/chrismccord/phoenix_chat_example/commit/7fb1d3d040b9d1e9a1bbd239c60ca1f4dd403c24)
+and uses
+[Phoenix 1.3](https://github.com/chrismccord/phoenix_chat_example/blob/7fb1d3d040b9d1e9a1bbd239c60ca1f4dd403c24/mix.exs#L25)
+see:
+[issues/40](https://github.com/chrismccord/phoenix_chat_example/issues/40). <br />
+There are quite a few differences (breaking changes)
+between Phoenix 1.3 and 1.5 (_the latest version_). <br />
+
+Our tutorial uses Phoenix `1.5.1` (latest as of May 2020).
+Our hope is that by writing (_and maintaining_)
+a step-by-step beginner focussed
+tutorial we contribute to the Elixir/Phoenix community
+without piling up
+[PRs](https://github.com/chrismccord/phoenix_chat_example/pulls)
+on Chris's repo.
 
 
 ## Recommended Reading / Learning

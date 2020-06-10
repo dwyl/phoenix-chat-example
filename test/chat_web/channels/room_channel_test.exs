@@ -1,36 +1,39 @@
 defmodule ChatWeb.RoomChannelTest do
   use ChatWeb.ChannelCase
 
-  alias ChatWeb.RoomChannel
-
   setup do
     {:ok, _, socket} =
-      socket("user_id", %{some: :assign})
-      |> subscribe_and_join(RoomChannel, "room:lobby")
+      ChatWeb.UserSocket
+      |> socket("user_id", %{some: :assign})
+      |> subscribe_and_join(ChatWeb.RoomChannel, "room:lobby")
 
-    {:ok, socket: socket}
+    %{socket: socket}
   end
 
   test "ping replies with status ok", %{socket: socket} do
-    ref = push(socket, "ping", %{"hello" => "all"})
-    assert_reply(ref, :ok, %{"hello" => "all"})
+    ref = push socket, "ping", %{"hello" => "there"}
+    assert_reply ref, :ok, %{"hello" => "there"}
   end
 
   test "shout broadcasts to room:lobby", %{socket: socket} do
-    push(socket, "shout", %{"name" => "Alex", "message" => "hello"})
-    assert_broadcast("shout", %{"name" => "Alex", "message" => "hello"})
+    push socket, "shout", %{"hello" => "all"}
+    assert_broadcast "shout", %{"hello" => "all"}
   end
 
   test "broadcasts are pushed to the client", %{socket: socket} do
-    broadcast_from!(socket, "broadcast", %{"some" => "data"})
-    assert_push("broadcast", %{"some" => "data"})
+    broadcast_from! socket, "broadcast", %{"some" => "data"}
+    assert_push "broadcast", %{"some" => "data"}
   end
 
-  test "handle_info pushes existing messages to clients", %{socket: socket} do
-    # first save a message to DB:
-    RoomChannel.handle_in("shout", %{"name" => "Alex", "message" => "hello"}, socket)
-    # then handle "broadcasting" the message using handle_info
-    {:noreply, sock} = RoomChannel.handle_info(:after_join, socket)
-    assert sock == socket
+  test ":after_join sends all existing messages", %{socket: socket} do
+    # insert a new message to send in the :after_join
+    payload = %{name: "Alex", message: "test"}
+    Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert()
+
+    {:ok, _, socket2} = ChatWeb.UserSocket
+      |> socket("user_id", %{some: :assign})
+      |> subscribe_and_join(ChatWeb.RoomChannel, "room:lobby")
+
+    assert socket2.join_ref != socket.join_ref
   end
 end

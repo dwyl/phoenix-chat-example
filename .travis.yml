@@ -1,13 +1,17 @@
 language: elixir
 elixir:
-  - 1.6
+  - 1.10.3
 otp_release:
-  - 20.3
-addons: # ensure that Travis-CI provisions a DB for our test:
-  postgresql: '9.5'
+  - 22.1.8
+services:
+  - postgresql
 env:
   - MIX_ENV=test
 script: # run the tests:
-  - mix cover
+  - mix do setup, coveralls.json
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+cache:
+  directories:
+  - _build
+  - deps

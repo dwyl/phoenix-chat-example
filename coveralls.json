@@ -4,6 +4,10 @@
   },
   "skip_files": [
     "test/",
-    "lib/chat_web.ex"
+    "lib/chat_web.ex",
+    "lib/chat/application.ex",
+    "lib/chat_web/router.ex",
+    "lib/chat_web/views/error_helpers.ex",
+    "lib/chat_web/telemetry.ex"
   ]
 }
