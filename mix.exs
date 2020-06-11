@@ -53,6 +53,9 @@ defmodule Chat.Mixfile do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
 
+      # Wake Heroku App. See: https://github.com/dwyl/ping
+      {:ping, "~> 1.0.1"},
+
       # sanitise data to avoid XSS see: https://git.io/fjpGZ
       {:html_sanitize_ex, "~> 1.4"},
 
