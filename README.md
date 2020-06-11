@@ -13,7 +13,7 @@ _Try_ it: https://phxchat.herokuapp.com
 <!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
 <!-- [![Inline docs](http://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](http://inch-ci.org/github/dwyl/phoenix-chat-example) -->
 <!-- wake Heroku app so it loads faster! see: https://github.com/dwyl/ping -->
-![wake-sleeping-heroku-app](http://phxchat.herokuapp.com/ping)
+![wake-sleeping-heroku-app](https://phxtodo.herokuapp.com/ping)
 
 
 A ***step-by-step tutorial*** for building, testing
