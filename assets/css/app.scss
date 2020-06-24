@@ -1,6 +1,25 @@
 /* This file is for your main application css. */
 @import "./phoenix.css";
 
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 1rem;
+  min-height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
 /* Alerts and form errors */
 .alert {
   padding: 15px;
@@ -29,3 +48,4 @@
 .alert:empty {
   display: none;
 }
+
