@@ -7,6 +7,7 @@
 
 [![Build Status](https://img.shields.io/travis/dwyl/phoenix-chat-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/phoenix-chat-example)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/phoenix-chat-example/master.svg?style=flat-square)](http://codecov.io/github/dwyl/phoenix-chat-example?branch=master)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/phoenix-chat-example/issues)
 [![HitCount](http://hits.dwyl.io/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
 [![Hex pm](http://img.shields.io/hexpm/v/phoenix.svg?style=flat-square)](https://hex.pm/packages/phoenix)
 _Try_ it: https://phxchat.herokuapp.com
@@ -145,7 +146,7 @@ brew install elixir
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install hex phx_new v1.5.3
+mix archive.install hex phx_new 1.5.5
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
@@ -175,7 +176,7 @@ You should see something like:
 ```sh
 Erlang/OTP 23 [erts-11.0] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe] [dtrace]
 
-Elixir 1.10.3 (compiled with Erlang/OTP 22)
+Elixir 1.10.4 (compiled with Erlang/OTP 22)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -184,7 +185,7 @@ mix phx.new -v
 ```
 You should see:
 ```sh
-Phoenix v1.5.1
+Phoenix v1.5.5
 ```
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)

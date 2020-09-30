@@ -4,7 +4,7 @@ defmodule Chat.Mixfile do
   def project do
     [
       app: :chat,
-      version: "1.5.3",
+      version: "1.5.5",
       elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
@@ -40,9 +40,9 @@ defmodule Chat.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.3"},
-      {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.4"},
+      {:phoenix, "~> 1.5.5"},
+      {:phoenix_ecto, "~> 4.2.1"},
+      {:ecto_sql, "~> 3.4.5"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
