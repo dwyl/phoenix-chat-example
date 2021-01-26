@@ -401,14 +401,15 @@ and _copy-paste_ (_or type_) the following code:
 
 ```html
 <!-- The list of messages will appear here: -->
-<ul id='msg-list' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
+<ul id="msg-list" style="list-style: none; min-height:200px;">
+</ul>
 
 <div class="row">
-  <div class="column column-20">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
+  <div class="col-xs-3" style="width: 20%; margin-left: 0;">
+    <input type="text" id="name" class="form-control" placeholder="Your Name" style="border: 1px black solid; font-size: 1.3em;" autofocus>
   </div>
-  <div class="column column-80">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message">
+  <div class="col-xs-9" style="width: 100%; margin-left: 1%; ">
+    <input type="text" id="msg" class="form-control" placeholder="Your Message" style="border: 1px black solid; font-size: 1.3em;">
   </div>
 </div>
 ```
