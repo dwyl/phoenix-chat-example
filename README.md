@@ -843,7 +843,7 @@ Finished in 0.1 seconds
 Randomized with seed 906499
 ```
 
-In this case _one_ of the tests fails. (_6 tests, **0 failure**_)
+In this case _none_ of these tests fails. (_6 tests, **0 failure**_)
 
 
 ## 12. Understanding The Channel Tests
