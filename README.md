@@ -210,7 +210,7 @@ _Before_ you attempt to build the Chat App from scratch,
 clone and run the _finished_ working version
 to get an idea of what to expect.
 
-### Clone the Project:
+### Clone the Project:
 
 In your terminal run the following command to clone the repo:
 
