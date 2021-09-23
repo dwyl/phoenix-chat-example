@@ -867,7 +867,7 @@ test "ping replies with status ok", %{socket: socket} do
   assert_reply ref, :ok, %{"hello" => "there"}
 end
 ```
-The test get's the `socket` from the `setup` function (_on line 6 of the file_)
+The test gets the `socket` from the `setup` function (_on line 6 of the file_)
 and assigns the result of calling the `push` function to a variable `ref`
 `push` merely _pushes_ a message (_the map `%{"hello" => "there"}`_)
 on the `socket` to the `"ping"` ***topic***.
