@@ -41,7 +41,7 @@ and _deploying_ a Chat app in Phoenix!
   - [7. Insert Messages into Database](#7-insert-messages-into-database)
   - [8. Load Existing Messages (When Someone Joins the Chat)](#8-load-existing-messages-when-someone-joins-the-chat)
   - [9. Send Existing Messages to the Client when they Join](#9-send-existing-messages-to-the-client-when-they-join)
-  - [10. Checkpoints: Our Chat App Saves Messages!! (Try it!)](#10-checkpoint-our-chat-app-saves-messages-try-it)
+  - [10. Checkpoint: Our Chat App Saves Messages!! (Try it!)](#10-checkpoint-our-chat-app-saves-messages-try-it)
 - [Testing our App (Automated Testing)](#testing-our-app-automated-testing)
   - [11. Run the Default/Generated Tests](#11-run-the-defaultgenerated-tests)
   - [12. Understanding The Channel Tests](#12-understanding-the-channel-tests)
