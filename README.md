@@ -1001,7 +1001,7 @@ are being "covered" by the tests we have written.
 To **view** the coverage in a web browser run the following:
 
 ```elixir
-MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
+MIX_ENV=test mix coveralls.html ; open cover/excoveralls.html
 ```
 
 <br />
@@ -1009,12 +1009,6 @@ MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 This will open the Coverage Report (HTML) in your default Web Browser: <br />
 
 ![coverage-66-percent](https://user-images.githubusercontent.com/194400/83980823-a6ba0080-a910-11ea-93ab-46aba8b8ece3.png)
-
-
-> <small>_**Note**: you will need to **temporarily** lower
-the coverage threshold in the `coveralls.json` file form `100` to `50`
-for this command to work because it's expecting 100% coverage._</small>
-
 
 
 <!-- I think I'm at a point where I need to take a "Detour"
