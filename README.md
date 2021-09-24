@@ -908,9 +908,10 @@ Open your `mix.exs` file and find the "deps" function:
 defp deps do
 ```
 
-Add the following line to the end of the List:
+Add a comma to the end of the last line, then add the following line to the end
+of the List:
 ```elixir
-{:excoveralls, "~> 0.13.0", only: [:test, :dev]}, # tracking test coverage
+{:excoveralls, "~> 0.13.0", only: [:test, :dev]} # tracking test coverage
 ```
 
 Additionally, find the `def project do` section (_towards the top of `mix.exs`_)
