@@ -4,8 +4,8 @@ defmodule Chat.Mixfile do
   def project do
     [
       app: :chat,
-      version: "1.5.5",
-      elixir: "~> 1.10",
+      version: "1.6.2",
+      elixir: "~> 1.12.3",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -40,21 +40,26 @@ defmodule Chat.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.5"},
-      {:phoenix_ecto, "~> 4.2.1"},
-      {:ecto_sql, "~> 3.4.5"},
+      {:phoenix, "~> 1.6.0"},
+      {:phoenix_ecto, "~> 4.4"},
+      {:ecto_sql, "~> 3.7.0"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.2.0"},
-      {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
+      {:phoenix_live_view, "~> 0.16.4"},
+      {:floki, ">= 0.30.0", only: :test},
+      {:phoenix_live_dashboard, "~> 0.5"},
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:swoosh, "~> 1.5"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 1.0"},
+      {:gettext, "~> 0.18.2"},
+      {:jason, "~> 1.2.2"},
+      {:plug_cowboy, "~> 2.5.2"},
+      {:plug_crypto, "~> 1.2.2"},
 
       # Wake Heroku App. See: https://github.com/dwyl/ping
-      {:ping, "~> 1.0.1"},
+      {:ping, "~> 1.1.0"},
 
       # sanitise data to avoid XSS see: https://git.io/fjpGZ
       {:html_sanitize_ex, "~> 1.4"},
