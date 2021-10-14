@@ -2,7 +2,7 @@ language: elixir
 elixir:
   - 1.12.3
 otp_release:
-  - 23.3.2
+  - 24.0.2
 services:
   - postgresql
 env:
