@@ -144,7 +144,7 @@ brew install elixir
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install hex phx_new 1.5.5
+mix archive.install hex phx_new 1.6.2
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
@@ -172,9 +172,9 @@ elixir -v
 
 You should see something like:
 ```sh
-Erlang/OTP 23 [erts-11.0] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe] [dtrace]
+Erlang/OTP 24 [erts-12.1.2] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-threads:1] [jit]
 
-Elixir 1.10.4 (compiled with Erlang/OTP 22)
+Elixir 1.12.3 (compiled with Erlang/OTP 22)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -183,7 +183,7 @@ mix phx.new -v
 ```
 You should see:
 ```sh
-Phoenix v1.5.5
+Phoenix v1.6.2
 ```
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -1089,7 +1089,7 @@ with the following lines:
 ```yml
 language: elixir
 elixir: # Latest version of Elixir
-  - 1.10
+  - 1.12.3
 services: # ensure that Travis-CI provisions a DB for our test:
   - postgresql
 env:
@@ -1152,9 +1152,9 @@ and uses
 see:
 [issues/40](https://github.com/chrismccord/phoenix_chat_example/issues/40). <br />
 There are quite a few differences (breaking changes)
-between Phoenix 1.3 and 1.5 (_the latest version_). <br />
+between Phoenix 1.3 and 1.6 (_the latest version_). <br />
 
-Our tutorial uses Phoenix `1.5.1` (latest as of May 2020).
+Our tutorial uses Phoenix `1.6.2` (latest as of October 2021).
 Our hope is that by writing (_and maintaining_)
 a step-by-step beginner focussed
 tutorial we contribute to the Elixir/Phoenix community
