@@ -2,13 +2,13 @@ defmodule ChatWeb.RoomChannel do
   use ChatWeb, :channel
 
   @impl true
-  def join("room:lobby", payload, socket) do
-    if authorized?(payload) do
+  def join("room:lobby", _payload, socket) do
+    # if authorized?(payload) do
       send(self(), :after_join)
       {:ok, socket}
-    else
-      {:error, %{reason: "unauthorized"}}
-    end
+    # else
+    #   {:error, %{reason: "unauthorized"}}
+    # end
   end
 
   def handle_in("ping", payload, socket) do
@@ -25,9 +25,10 @@ defmodule ChatWeb.RoomChannel do
   end
 
   # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
-  end
+  # Auth coming soon via: https://github.com/dwyl/phoenix-chat-example/issues/54 
+  # defp authorized?(_payload) do
+  #   true
+  # end
 
   @impl true
   def handle_info(:after_join, socket) do
