@@ -87,7 +87,8 @@ defmodule Chat.Mixfile do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
       cover: ["coveralls.json"],
-      "cover.html": ["coveralls.html"]
+      "cover.html": ["coveralls.html"],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end
 end
