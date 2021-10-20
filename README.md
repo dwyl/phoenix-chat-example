@@ -720,10 +720,24 @@ end
 
 ## 8. Load _Existing_ Messages (_When Someone Joins the Chat_)
 
-Open the `lib/chat/message.ex` file and add a new function to it:
+Open the `lib/chat/message.ex` file and import `Ecto.Query`:
+
+```elixir
+defmodule Chat.Message do
+  use Ecto.Schema
+  import Ecto.Changeset
+  import Ecto.Query # add Ecto.Query
+
+```
+
+Then add a new function to it:
+
 ```elixir
 def get_messages(limit \\ 20) do
-  Chat.Repo.all(Chat.Message, limit: limit)
+  Chat.Message
+  |> limit(^limit)
+  |> order_by(desc: :inserted_at)
+  |> Chat.Repo.all()
 end
 ```
 This function accepts a single parameter `limit` to only return a fixed/maximum
@@ -740,6 +754,7 @@ In the `/lib/chat_web/channels/room_channel.ex` file create a new function:
 ```elixir
 def handle_info(:after_join, socket) do
   Chat.Message.get_messages()
+  |> Enum.reverse() # revers to display the latest message at the bottom of the page
   |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
       message: msg.message,

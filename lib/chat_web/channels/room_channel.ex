@@ -25,7 +25,7 @@ defmodule ChatWeb.RoomChannel do
   end
 
   # Add authorization logic here as required.
-  # Auth coming soon via: https://github.com/dwyl/phoenix-chat-example/issues/54 
+  # Auth coming soon via: https://github.com/dwyl/phoenix-chat-example/issues/54
   # defp authorized?(_payload) do
   #   true
   # end
@@ -33,6 +33,7 @@ defmodule ChatWeb.RoomChannel do
   @impl true
   def handle_info(:after_join, socket) do
     Chat.Message.get_messages()
+    |> Enum.reverse()
     |> Enum.each(fn msg ->
       push(socket, "shout", %{
         name: msg.name,
