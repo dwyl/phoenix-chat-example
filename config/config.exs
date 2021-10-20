@@ -30,7 +30,7 @@ config :phoenix, :json_library, Jason
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
 
-config :esbuild, 
+config :esbuild,
   version: "0.13.4",
   default: [
     args: ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets),

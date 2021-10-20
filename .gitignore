@@ -7,6 +7,12 @@
 /deps
 /*.ez
 
+# Ignore assets that are produced by build tools.
+/priv/static/assets/
+
+# Ignore digested assets cache.
+/priv/static/cache_manifest.json
+
 # Generated on crash by the VM
 erl_crash.dump
 
@@ -15,11 +21,6 @@ npm-debug.log
 
 # Static artifacts
 /assets/node_modules
-
-# Since we are building assets from assets/,
-# we ignore priv/static. You may want to comment
-# this depending on your deployment strategy.
-/priv/static/
 
 # Files matching config/*.secret.exs pattern contain sensitive
 # data and you should not commit them into version control.
@@ -36,3 +37,4 @@ npm-debug.log
 production.dump
 package-lock.json
 .DS_Store
+.env
