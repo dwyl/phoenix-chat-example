@@ -36,7 +36,7 @@ let msg = document.getElementById('msg');            // message input field
 msg.addEventListener('keypress', function (event) {
   if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
     channel.push('shout', { // send the message to the server on "shout" channel
-      name: sanitise(name.value),     // get value of "name" of person sending the message
+      name: sanitise(name.value) || "guest",     // get value of "name" of person sending the message
       message: sanitise(msg.value)    // get message text (value) from msg input field.
     });
     msg.value = '';         // reset the message input field for next message.
