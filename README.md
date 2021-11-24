@@ -1149,6 +1149,9 @@ If you want to learn more Phoenix and the magic of **`LiveView`**,
 consider reading our beginner's tutorial:
 [github.com/dwyl/**phoenix-liveview-counter-tutorial**](https://github.com/dwyl/phoenix-liveview-counter-tutorial)
 
+For a version of a chat application using **LiveView** you can read the following repository:
+[github.com/dwyl/**phoenix-liveview-chat-example**](https://github.com/dwyl/phoenix-liveview-chat-example)
+
 Thank you for learning with us! ☀️
 
 
