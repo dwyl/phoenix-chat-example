@@ -53,7 +53,7 @@ defmodule Chat.Mixfile do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18.2"},
-      {:jason, "~> 1.2.2"},
+      {:jason, "~> 1.3.0"},
       {:plug_cowboy, "~> 2.5.2"},
       {:plug_crypto, "~> 1.2.2"},
 
