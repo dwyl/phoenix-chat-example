@@ -65,7 +65,7 @@ defmodule Chat.Mixfile do
 
       # The rest of the dependendencies are for testing/reporting
       # tracking test coverage
-      {:excoveralls, "~> 0.13.0", only: [:test, :dev]},
+      {:excoveralls, "~> 0.14.4", only: [:test, :dev]},
       # documentation
       {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
       # github.com/dwyl/learn-pre-commit
