@@ -144,7 +144,7 @@ brew install elixir
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
-mix archive.install hex phx_new 1.6.2
+mix archive.install hex phx_new
 ```
 
 3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
@@ -172,9 +172,9 @@ elixir -v
 
 You should see something like:
 ```sh
-Erlang/OTP 24 [erts-12.1.2] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-threads:1] [jit]
+Erlang/OTP 25 [erts-13.1.1] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
 
-Elixir 1.12.3 (compiled with Erlang/OTP 22)
+Elixir 1.14.1 (compiled with Erlang/OTP 25)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -183,7 +183,7 @@ mix phx.new -v
 ```
 You should see:
 ```sh
-Phoenix v1.6.2
+Phoenix installer v1.6.14
 ```
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -345,7 +345,7 @@ Generate the (WebSocket) channel to be used in the chat app:
 mix phx.gen.channel Room
 ```
 
-> If you are prompted to confirm installation,
+> If you are prompted to confirm installation of a new socket handler
 type `y` and hit the `[Enter]` key.
 
 This will create **two files**:<br />
@@ -355,23 +355,40 @@ This will create **two files**:<br />
 * creating test/chat_web/channels/room_channel_test.exs
 ```
 
-The `room_channel.ex` file handles receiving/sending messages
-and the `room_channel_test.exs` tests basic interaction with the channel.
-(_Don't worry about this yet, we will look at the test file in step 14 below_!)
-
-We are informed that we need to update a piece of code into your app: <br />
-
+in addition to creating **two more files**:
 ```sh
-Add the channel to your `/lib/chat_web/channels/user_socket.ex` handler, for example:
-
-    channel "room:lobby", ChatWeb.RoomChannel
+* creating lib/chat_web/channels/user_socket.ex
+* creating assets/js/user_socket.js
 ```
 
-Open the file called `/lib/chat_web/channels/user_socket.ex` <br >
+
+The `room_channel.ex` file handles receiving/sending messages
+and the `room_channel_test.exs` tests basic interaction with the channel.
+We'll focus on the `socket` files created afterwards.
+(_Don't worry about this yet, we will look at the test file in step 14 below_!)
+
+We are informed that we need to update a piece of code in our app:
+```sh
+Add the socket handler to your `lib/chat_web/endpoint.ex`, for example:
+
+    socket "/socket", ChatWeb.UserSocket,
+      websocket: true,
+      longpoll: false
+
+For the front-end integration, you need to import the `user_socket.js`
+in your `assets/js/app.js` file:
+
+    import "./user_socket.js"
+```
+
+The generator asks us to import the client code in the frontend.
+Let's do that later. For now, open the `lib/chat_web/endpoint.ex` file and follow the instructions.
+
+After this, open the file called `/lib/chat_web/channels/user_socket.ex` <br >
 and change the line:
 
 ```elixir
-# channel "room:*", ChatWeb.RoomChannel
+channel "room:*", ChatWeb.RoomChannel
 ```
 
 to:
@@ -382,6 +399,10 @@ channel "room:lobby", ChatWeb.RoomChannel
 
 Example:
 [user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/channels/user_socket.ex#L5)
+
+This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
+The previous `"room.*` meant that any subtopic within `"room"` were routed. 
+But for now, let's narrow down to just one subtopic :smile:.
 
 > For more detail on Phoenix Channels,
 (_we highly recommend you_) read:
@@ -429,7 +450,7 @@ Your `index.html.eex` template file should look like this:
 
 ### 3.1 Update Layout Template
 
-Open the `lib/chat_web/templates/layout/app.html.eex` file
+Open the `lib/chat_web/templates/layout/root.html.eex` file
 and locate the `<header>` tag.
 Replace the contents of the `<header>` with the following code:
 
@@ -443,8 +464,8 @@ Replace the contents of the `<header>` with the following code:
 </section>
 ```
 
-Your `app.html.eex` template file should look like this:
-[`/lib/chat_web/templates/page/index.html.eex`]() (_snapshot_)
+Your `root.html.eex` template file should look like this:
+[`/lib/chat_web/templates/page/root.html.eex`]() (_snapshot_)
 
 At the end of this step, if you run the Phoenix Server `mix phx.server`,
 and view the App in your browser it will look like this:
@@ -510,7 +531,7 @@ Open the
 file and uncomment the line:
 
 ```js
-import socket from "./socket"
+import socket from "./user_socket.js"
 ```
 
 with the line _uncommented_ our app will import the `socket.js` file
@@ -556,14 +577,14 @@ At this point your `app.js` file should look like this:
 [`/assets/js/app.js`](https://github.com/dwyl/phoenix-chat-example/blob/7c3f94f127adfac05fe6b11a4ba3196802d9cfe2/assets/js/app.js)
 
 
-### 4.1 Comment Out Lines in `socket.js`
+### 4.1 Comment Out Lines in `user_socket.js`
 
 By default the phoenix channel (client)
 will subscribe to the generic room: `"topic:subtopic"`.
 Since we aren't going to be using this,
 we can avoid seeing any
 **`"unable to join: unmatched topic"`** errors in our browser/console
-by simply commenting out a few lines in the `socket.js` file.
+by simply commenting out a few lines in the `user_socket.js` file.
 Open the file in your editor and locate the following lines:
 
 ```JavaScript
@@ -581,8 +602,8 @@ Comment out the lines so they will not be executed:
 //   .receive("error", resp => { console.log("Unable to join", resp) })
 ```
 
-Your `socket.js` should now look like this:
-[`/assets/js/socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/26f98f2dbca061f6cc383dfd99861325113eaf1b/assets/js/socket.js)
+Your `user_socket.js` should now look like this:
+[`/assets/js/user_socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/26f98f2dbca061f6cc383dfd99861325113eaf1b/assets/js/socket.js)
 
 > If you later decide to tidy up your chat app, you can **`delete`**
 these commented lines from the file. <br />

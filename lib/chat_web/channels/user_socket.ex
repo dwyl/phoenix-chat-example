@@ -1,8 +1,14 @@
 defmodule ChatWeb.UserSocket do
   use Phoenix.Socket
 
+  # A Socket handler
+  #
+  # It's possible to control the websocket connection and
+  # assign values that can be accessed by your channel topics.
+
   ## Channels
-  channel "room:lobby", ChatWeb.RoomChannel
+
+  channel "room:*", ChatWeb.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -27,7 +33,7 @@ defmodule ChatWeb.UserSocket do
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
   #
-  #     ChatWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
+  #     Elixir.ChatWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   @impl true

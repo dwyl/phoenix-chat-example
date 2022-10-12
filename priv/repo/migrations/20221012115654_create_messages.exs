@@ -8,6 +8,5 @@ defmodule Chat.Repo.Migrations.CreateMessages do
 
       timestamps()
     end
-
   end
 end
