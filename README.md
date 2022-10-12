@@ -10,6 +10,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/phoenix-chat-example/issues)
 [![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
 [![Hex pm](https://img.shields.io/hexpm/v/phoenix.svg?style=flat-square)](https://hex.pm/packages/phoenix)
+  
 _Try_ it: https://phxchat.herokuapp.com
 <!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
 <!-- [![Inline docs](https://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://inch-ci.org/github/dwyl/phoenix-chat-example) -->
@@ -397,8 +398,7 @@ to:
 channel "room:lobby", ChatWeb.RoomChannel
 ```
 
-Example:
-[user_socket.ex#L5](/lib/chat_web/channels/user_socket.ex#L11)
+Check the change [here](/lib/chat_web/channels/user_socket.ex#L11)
 
 This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
 The previous `"room.*` meant that any subtopic within `"room"` were routed. 
@@ -414,7 +414,7 @@ https://hexdocs.pm/phoenix/channels.html
 ## 3. Update the Template File (UI)
 
 Open the the
-[`/lib/chat_web/templates/page/index.html.eex`](/lib/chat_web/templates/page/index.html.eex)
+[`/lib/chat_web/templates/page/index.html.heex`](/lib/chat_web/templates/page/index.html.heex)
 file <br />
 and _copy-paste_ (_or type_) the following code:
 
@@ -444,13 +444,13 @@ read: https://milligram.io/#typography <br />
 and if you _specifically_ want to understand the Milligram _forms_,
 see: https://milligram.io/#forms
 
-Your `index.html.eex` template file should look like this:
+Your `index.html.heex` template file should look like this:
 [`/lib/chat_web/templates/page/index.html.heex`](/lib/chat_web/templates/page/index.html.heex)
 
 
 ### 3.1 Update Layout Template
 
-Open the `lib/chat_web/templates/layout/root.html.eex` file
+Open the `lib/chat_web/templates/layout/root.html.heex` file
 and locate the `<header>` tag.
 Replace the contents of the `<header>` with the following code:
 
@@ -465,7 +465,7 @@ Replace the contents of the `<header>` with the following code:
 ```
 
 Your `root.html.heex` template file should look like this:
-[`/lib/chat_web/templates/page/root.html.heex`](/lib/chat_web/templates/page/root.html.heex)
+[`/lib/chat_web/templates/layout/root.html.heex`](/lib/chat_web/templates/layout/root.html.heex)
 
 At the end of this step, if you run the Phoenix Server `mix phx.server`,
 and view the App in your browser it will look like this:
@@ -473,7 +473,7 @@ and view the App in your browser it will look like this:
 ![phoenix-chat-blank](https://user-images.githubusercontent.com/194400/82498454-ef3b8680-9ae7-11ea-9d1f-8cf593deacba.png)
 
 So it's already starting to look like a basic Chat App.
-Sadly, since we changed the copy of the `index.html.eex`
+Sadly, since we changed the copy of the `index.html.heex`
 our `page_controller_test.exs` now fails:
 
 Run the command:
