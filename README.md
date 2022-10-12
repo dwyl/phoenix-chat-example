@@ -906,7 +906,7 @@ and assigns the result of calling the `push` function to a variable `ref`
 `push` merely _pushes_ a message (_the map `%{"hello" => "there"}`_)
 on the `socket` to the `"ping"` ***topic***.
 
-The [`handle_in`](https://github.com/nelsonic/phoenix-chat-example/blob/f3823e64d9f9826db67f5cdf228ea5c974ad59fa/lib/chat_web/channels/room_channel.ex#L13-L17)
+The [`handle_in`](https://github.com/nelsonic/phoenix-chat-example/blob/f3823e64d9f9826db67f5cdf228ea5c974ad59fa/lib/chat_web/channels/room_channel.ex#L12-L16)
 function clause which handles the `"ping"` topic:
 
 ```elixir
