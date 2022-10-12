@@ -1,10 +1,6 @@
 defmodule ChatWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :chat
 
-  socket "/socket", ChatWeb.UserSocket,
-    websocket: true,
-    longpoll: false
-
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
@@ -13,6 +9,10 @@ defmodule ChatWeb.Endpoint do
     key: "_chat_key",
     signing_salt: "ikoLrg5N"
   ]
+
+  socket "/socket", ChatWeb.UserSocket,
+    websocket: true,
+    longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
