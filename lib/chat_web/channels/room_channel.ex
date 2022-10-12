@@ -28,9 +28,10 @@ defmodule ChatWeb.RoomChannel do
   end
 
   # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
-  end
+  # Auth coming soon via: https://github.com/dwyl/phoenix-chat-example/issues/54
+  # defp authorized?(_payload) do
+  #   true
+  # end
 
   def handle_info(:after_join, socket) do
     Chat.Message.get_messages()
