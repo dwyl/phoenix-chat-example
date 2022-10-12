@@ -445,7 +445,7 @@ and if you _specifically_ want to understand the Milligram _forms_,
 see: https://milligram.io/#forms
 
 Your `index.html.eex` template file should look like this:
-[`/lib/chat_web/templates/page/index.html.eex`](/lib/chat_web/templates/page/index.html.eex)
+[`/lib/chat_web/templates/page/index.html.heex`](/lib/chat_web/templates/page/index.html.heex)
 
 
 ### 3.1 Update Layout Template
@@ -464,8 +464,8 @@ Replace the contents of the `<header>` with the following code:
 </section>
 ```
 
-Your `root.html.eex` template file should look like this:
-[`/lib/chat_web/templates/page/root.html.eex`](/lib/chat_web/templates/page/root.html.eex)
+Your `root.html.heex` template file should look like this:
+[`/lib/chat_web/templates/page/root.html.heex`](/lib/chat_web/templates/page/root.html.heex)
 
 At the end of this step, if you run the Phoenix Server `mix phx.server`,
 and view the App in your browser it will look like this:
