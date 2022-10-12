@@ -398,7 +398,7 @@ channel "room:lobby", ChatWeb.RoomChannel
 ```
 
 Example:
-[user_socket.ex#L5](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/channels/user_socket.ex#L5)
+[user_socket.ex#L5](/lib/chat_web/channels/user_socket.ex#L11)
 
 This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
 The previous `"room.*` meant that any subtopic within `"room"` were routed. 
@@ -414,7 +414,7 @@ https://hexdocs.pm/phoenix/channels.html
 ## 3. Update the Template File (UI)
 
 Open the the
-[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/nelsonic/phoenix-chat-example/blob/fb02977db7a0e749a6eb5212749ae4df190f6b01/lib/chat_web/templates/page/index.html.eex)
+[`/lib/chat_web/templates/page/index.html.eex`](/lib/chat_web/templates/page/index.html.eex)
 file <br />
 and _copy-paste_ (_or type_) the following code:
 
@@ -445,7 +445,7 @@ and if you _specifically_ want to understand the Milligram _forms_,
 see: https://milligram.io/#forms
 
 Your `index.html.eex` template file should look like this:
-[`/lib/chat_web/templates/page/index.html.eex`](https://github.com/dwyl/phoenix-chat-example/blob/7e9d5f0e8fd69d3c13f6fe7814d81a9d7ec602ca/lib/chat_web/templates/page/index.html.eex) (_snapshot_)
+[`/lib/chat_web/templates/page/index.html.eex`](/lib/chat_web/templates/page/index.html.eex)
 
 
 ### 3.1 Update Layout Template
@@ -465,7 +465,7 @@ Replace the contents of the `<header>` with the following code:
 ```
 
 Your `root.html.eex` template file should look like this:
-[`/lib/chat_web/templates/page/root.html.eex`]() (_snapshot_)
+[`/lib/chat_web/templates/page/root.html.eex`](/lib/chat_web/templates/page/root.html.eex)
 
 At the end of this step, if you run the Phoenix Server `mix phx.server`,
 and view the App in your browser it will look like this:
@@ -574,7 +574,7 @@ Hopefully the in-line comments are self-explanatory,
 but if _anything_ is unclear, please ask!
 
 At this point your `app.js` file should look like this:
-[`/assets/js/app.js`](https://github.com/dwyl/phoenix-chat-example/blob/7c3f94f127adfac05fe6b11a4ba3196802d9cfe2/assets/js/app.js)
+[`/assets/js/app.js`](/assets/js/app.js)
 
 
 ### 4.1 Comment Out Lines in `user_socket.js`
@@ -603,7 +603,7 @@ Comment out the lines so they will not be executed:
 ```
 
 Your `user_socket.js` should now look like this:
-[`/assets/js/user_socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/26f98f2dbca061f6cc383dfd99861325113eaf1b/assets/js/socket.js)
+[`/assets/js/user_socket.js`](/assets/js/user_socket.js)
 
 > If you later decide to tidy up your chat app, you can **`delete`**
 these commented lines from the file. <br />
@@ -884,7 +884,7 @@ In this case _none_ of these tests fails. (_6 tests, **0 failure**_)
 
 It's worth taking a moment (_or as long as you need_!)
 to _understand_ what is going on in the
-[`/room_channel_test.exs`](https://github.com/nelsonic/phoenix-chat-example/blob/master/test/chat_web/channels/room_channel_test.exs)
+[`/room_channel_test.exs`](/test/chat_web/channels/room_channel_test.exs)
 file. _Open_ it if you have not already, read the test descriptions & code.
 
 > For a bit of _context_ we recommend reading:
@@ -893,7 +893,7 @@ file. _Open_ it if you have not already, read the test descriptions & code.
 ### 12.1 _Analyse_ a Test
 
 Let's take a look at the _first_ test in
-[/test/chat_web/channels/room_channel_test.exs#L14-L17](https://github.com/nelsonic/phoenix-chat-example/blob/f3823e64d9f9826db67f5cdf228ea5c974ad59fa/test/chat_web/channels/room_channel_test.exs#L14-L17):
+[/test/chat_web/channels/room_channel_test.exs](/test/chat_web/channels/room_channel_test.exs#L14-L17):
 
 ```elixir
 test "ping replies with status ok", %{socket: socket} do
