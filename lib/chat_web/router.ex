@@ -21,6 +21,17 @@ defmodule ChatWeb.Router do
     get "/ping", PageController, :ping
   end
 
+
+  pipeline :auth, do: plug(AuthPlug, %{auth_url: "https://auth.dwyl.com/"})
+
+  scope "/", ChatWeb do
+    pipe_through :browser
+    pipe_through :auth
+
+    get "/auth", PageController, :auth_page
+  end
+
+
   # Other scopes may use custom stacks.
   # scope "/api", ChatWeb do
   #   pipe_through :api
@@ -55,3 +66,4 @@ defmodule ChatWeb.Router do
   #  end
   #end
 end
+
