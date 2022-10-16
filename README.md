@@ -459,8 +459,7 @@ Replace the contents of the `<header>` with the following code:
   <nav role="navigation">
     <h1 style="padding-top: 15px">Chat Example</h1>
   </nav>
-    <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>"
-    width="500px" alt="Phoenix Framework Logo" />
+    <img src={Routes.static_path(@conn, "/images/phoenix.png")} width="500px" alt="Phoenix Framework Logo" />
 </section>
 ```
 
