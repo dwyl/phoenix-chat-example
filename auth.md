@@ -1,22 +1,47 @@
-# Adding authentication to Phoenix Chat Example
+<div align="center">
 
-The process of adding protected routes and authentication to a Phoenix authentication can be annoying sometimes but luckily there are tools out there that can help us get through this. 
+# Adding Auth 🔐 in 5 Minutes!
 
-In this document we'll document the process of adding authentication to the Phoenix Chat App example.
-We'll add a new route that is protected and also use authentication to use as username in the chat app.
+</div>
+
+The process of adding protected routes and authentication 
+to a `Phoenix` App can be quite a few steps ...
+Luckily there there is a tool [shameless plug]
+that can dramatically simplify the process!
+
+In this guide we'll show the steps 
+for adding **auth** using 
+[**`auth_plug`**](https://github.com/dwyl/auth_plug)
+in **5 minutes**.
+We'll add **_optional_ `auth`**
+that will let people authenticate 
+with their **`GitHub`** or **`Google`** Account
+and use their Account username and Avatar in the Chat. 
 
 Let's do this!
 
-## 1 - Add `auth_plug` to the project.
-We are going to use [`auth_plug`](https://github.com/dwyl/auth_plug)
-which will serve as middleware in the router. 
-Here's a quick rundown of the instructions that can also be found in the link.
+- [Adding Auth 🔐 in 5 Minutes!](#adding-auth--in-5-minutes)
+  - [1. Add `auth_plug`](#1-add-auth_plug)
+  - [2. Making index route with login page.](#2-making-index-route-with-login-page)
 
-1 - Add `auth_plug` to list dependencies in `mix.exs` and run `$ mix deps.get`.
-2 - Go to https://auth.dwyl.com/  and sign in with GitHub and create your app with `localhost:4000` url 
+<br />
+
+## 1. Add `auth_plug`
+
+We are using 
+[**`auth_plug`**](https://github.com/dwyl/auth_plug)
+which will serve as 
+["***middleware***"](https://en.wikipedia.org/wiki/Middleware)
+for handling our all authentication in the Chat App.
+
+Here's a quick rundown 
+of the steps.
+
+1. Add `auth_plug` to `deps` in `mix.exs` and run `$ mix deps.get`.
+2. Visit [auth.dwyl.com](https://auth.dwyl.com/) and sign in with GitHub and create your app with `localhost:4000` url 
 (or whatever port you're running your Phoenix app)
-3 - Save the shown `AUTH_API_KEY` env variable or make sure you run the application with the `export` command with this env variable.
-4 - Add `auth_plug` to your `router.ex` file by creating a new pipeline and adding it to run through your protected route.
+3. Save the shown `AUTH_API_KEY` env variable or make sure you run the application with the `export` command with this env variable.
+4. Add `auth_plug` to your `router.ex` file by creating a new pipeline and adding it to run through your protected route.
 
 ```elixir
   pipeline :auth, do: plug(AuthPlug)
@@ -29,9 +54,10 @@ Here's a quick rundown of the instructions that can also be found in the link.
 ```
 5 - You're done! Your portected route now redirects you to a page where you sign in with whatever option you want.
 
-## 2 - Making index route with login page.
+## 2. Making index route with login page.
 It's a bit useless having a protected router path that does nothing but just...be protected. Instead, we should
 add these auth capabilities to our main page and let the user *have the option* to login with Github or Google Drive
 and use their username in following interactions!
 
 //TODO continue after auth_plug is importable
+
