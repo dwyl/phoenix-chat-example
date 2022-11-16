@@ -58,7 +58,8 @@ defmodule Chat.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.4"},
       {:plug_cowboy, "~> 2.5.2"},
-      {:auth_plug, "~> 1.2.1"},       # Change this to 1.4.16 for latest version
+      # See: github.com/dwyl/auth_plug
+      {:auth_plug, "~> 1.4.20"},
 
       # Wake Heroku App. See: https://github.com/dwyl/ping
       {:ping, "~> 1.1.0"},
