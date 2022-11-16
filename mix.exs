@@ -19,7 +19,6 @@ defmodule Chat.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test,
         t: :test
-
       ]
     ]
   end
