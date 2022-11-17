@@ -11,12 +11,10 @@
 [![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
 [![Hex pm](https://img.shields.io/hexpm/v/phoenix.svg?style=flat-square)](https://hex.pm/packages/phoenix)
   
-_Try_ it: https://phxchat.herokuapp.com
+_Try_ it: 
+[**phoenix-chat**.fly.dev](https://phoenix-chat.fly.dev/)
 <!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
 <!-- [![Inline docs](https://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://inch-ci.org/github/dwyl/phoenix-chat-example) -->
-<!-- wake Heroku app so it loads faster! see: https://github.com/dwyl/ping -->
-![wake-sleeping-heroku-app](https://phxtodo.herokuapp.com/ping)
-
 
 
 A ***step-by-step tutorial*** for building, testing
@@ -25,36 +23,49 @@ and _deploying_ a Chat app in Phoenix!
 </div>
 
 ## Content
-- [Why?](#why)
-- [What?](#what)
-- [Who?](#who)
-- [How?](#how)
-  - [0. Pre-requisites (Before you Start)](#0-pre-requisites-before-you-start)
-  - [1. Create the App](#1-create-the-app)
-  - [2. Create the (Websocket) "Channel"](#2-create-the-websocket-channel)
+- [Phoenix Chat Example](#phoenix-chat-example)
+  - [Content](#content)
+  - [Why?](#why)
+  - [What?](#what)
+  - [Who?](#who)
+- [_How_?](#how)
+  - [0. Pre-requisites (_Before you Start_)](#0-pre-requisites-before-you-start)
+    - [_Check_ You Have Everything _Before_ Starting](#check-you-have-everything-before-starting)
+  - [First _Run_ the _Finished_ App](#first-run-the-finished-app)
+    - [Clone the Project:](#clone-the-project)
+    - [Install the Dependencies](#install-the-dependencies)
+    - [Run the App](#run-the-app)
+  - [1. _Create_ The _App_](#1-create-the-app)
+    - [Run the Tests](#run-the-tests)
+  - [2. _Create_ the (WebSocket) "_Channel_"](#2-create-the-websocket-channel)
   - [3. Update the Template File (UI)](#3-update-the-template-file-ui)
     - [3.1 Update Layout Template](#31-update-layout-template)
-    - [3.2 Update the page_controller_test.exs](#32-update-the-page_controller_testexs)
+    - [3.2 Update the `page_controller_test.exs`](#32-update-the-page_controller_testexs)
   - [4. Update the "Client" code in App.js](#4-update-the-client-code-in-appjs)
-    - [4.1 Comment out lines in `socket.js`](#41-comment-out-lines-in-socketjs)
+    - [4.1 Comment Out Lines in `user_socket.js`](#41-comment-out-lines-in-user_socketjs)
+    - [Storing Chat Message Data/History](#storing-chat-message-datahistory)
   - [5. Generate Database Schema to Store Chat History](#5-generate-database-schema-to-store-chat-history)
-  - [6. Run the Ecto Migration (Create The Database Table)](#6-run-the-ecto-migration-create-the-database-table)
+  - [6. Run the Ecto Migration (_Create The Database Table_)](#6-run-the-ecto-migration-create-the-database-table)
+    - [6.1 Review the Messages Table Schema](#61-review-the-messages-table-schema)
   - [7. Insert Messages into Database](#7-insert-messages-into-database)
-  - [8. Load Existing Messages (When Someone Joins the Chat)](#8-load-existing-messages-when-someone-joins-the-chat)
+  - [8. Load _Existing_ Messages (_When Someone Joins the Chat_)](#8-load-existing-messages-when-someone-joins-the-chat)
   - [9. Send Existing Messages to the Client when they Join](#9-send-existing-messages-to-the-client-when-they-join)
-  - [10. Checkpoint: Our Chat App Saves Messages!! (Try it!)](#10-checkpoint-our-chat-app-saves-messages-try-it)
-- [Testing our App (Automated Testing)](#testing-our-app-automated-testing)
+  - [10. _Checkpoint_: Our Chat App Saves Messages!! (_Try it_!)](#10-checkpoint-our-chat-app-saves-messages-try-it)
+- [Testing our App (_Automated Testing_)](#testing-our-app-automated-testing)
   - [11. Run the Default/Generated Tests](#11-run-the-defaultgenerated-tests)
   - [12. Understanding The Channel Tests](#12-understanding-the-channel-tests)
-  - [13. What is Not Tested?](#13-what-is-not-tested)
-    - [13.1 Add excoveralls as a (Development) Dependency to mix.exs](#131-add-excoveralls-as-a-development-dependency-to-mixexs)
-    - [13.2 Create a New File Called coveralls.json](#132-create-a-new-file-called-coverallsjson)
+    - [12.1 _Analyse_ a Test](#121-analyse-a-test)
+  - [13. What is _Not_ Tested?](#13-what-is-not-tested)
+    - [13.1 Add `excoveralls` as a (Development) Dependency to `mix.exs`](#131-add-excoveralls-as-a-development-dependency-to-mixexs)
+    - [13.2 Create a _New File_ Called `coveralls.json`](#132-create-a-new-file-called-coverallsjson)
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
-- [Inspiration](#inspiration)
-- [Recommended Reading/Learning](#recommended-reading--learning)
+- [Todo: Update Screenshot!](#todo-update-screenshot)
+  - [What _Next_?](#what-next)
+  - [Inspiration](#inspiration)
+  - [Recommended Reading / Learning](#recommended-reading--learning)
 
 ## Why?
 
@@ -1105,52 +1116,36 @@ With that our app is fully tested!
 
 # Continuous Integration
 
-Continuous integration lets you _automate_ running the tests
-to check/confirm that your app is working as _expected_ (_before deploying_).
+Continuous integration 
+lets you _automate_ running the tests
+to check/confirm that your app 
+is working as _expected_ (_before deploying_).
 This prevents accidentally "_breaking_" your app.
 
 _Thankfully_ the steps are quite simple.
 
-> _If you are `new` to Continuous Integration, or need a refresher,
-we wrote a step-by-step tutorial for it!
-see_:
-[github.com/dwyl/**learn-travis**](https://github.com/dwyl/learn-travis)
+Please see:
 
-The Elixir-specific section is:
-https://github.com/dwyl/learn-travis#elixir-lang
+For an example `ci.yml`, see:
 
-We only need to add `.travis.yml` file to the project
-with the following lines:
-```yml
-language: elixir
-elixir: # Latest version of Elixir
-  - 1.12.3
-services: # ensure that Travis-CI provisions a DB for our test:
-  - postgresql
-env:
-  - MIX_ENV=test
-script: # run the tests:
-  - mix test
-```
-
-You will need to _enable_ your project on Travis-CI
-for the build to run. <br />
-Please see: https://github.com/dwyl/learn-travis#getting-started
+[`.github/workflows/ci.yml`](https://github.com/dwyl/phoenix-chat-example/blob/main/.github/workflows/ci.yml)
 
 <br />
 
 # Deployment!
 
-Deployment to Heroku takes a few minutes,
-but has a few "steps",
-therefore we have created a _separate_
-guide for it:
- [elixir-phoenix-app-deployment.md](https://github.com/dwyl/learn-heroku/blob/master/elixir-phoenix-app-deployment.md)
+Deployment to Fly.io takes a couple of minutes,
+we recommend following the official guide:
+[fly.io/docs/elixir/**getting-started**](https://fly.io/docs/elixir/getting-started/)
 
 Once you have _deployed_ you will will be able
 to view/use your app in any Web/Mobile Browser.
 
-e.g: https://phxchat.herokuapp.com <br />
+e.g:
+[**phoenix-chat**.fly.dev/](https://phoenix-chat.fly.dev/) <br />
+
+# Todo: Update Screenshot!
+
 ![phxchat](https://user-images.githubusercontent.com/194400/36480000-9c6fe768-1702-11e8-86d6-c8703883096c.png)
 
 <br />

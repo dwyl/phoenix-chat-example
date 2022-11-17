@@ -4,16 +4,16 @@
 
 </div>
 
-The process of adding protected routes and authentication 
-to a `Phoenix` App can be quite a few steps ...
-Luckily there there is a package 
+Adding protected routes and authentication 
+to a `Phoenix` App can be quite a few steps ... ⏳ <br />
+Luckily, there there is a package 
 [we built; yes, shameless plug =]
 that can **_significantly_ simplify** the process!
 
 In this guide we'll show the steps 
 for adding **auth** using 
 [**`auth_plug`**](https://github.com/dwyl/auth_plug)
-in **5 minutes**.
+in **5 minutes**. <br />
 We'll add **_optional_ `auth`**
 that will let people authenticate 
 with their **`GitHub`** or **`Google`** Account
@@ -25,7 +25,7 @@ Let's do this!
   - [1. Add `auth_plug` to `mix.exs`](#1-add-auth_plug-to-mixexs)
   - [2. Create `AUTH_API_KEY`](#2-create-auth_api_key)
   - [3. Create the _Optional_ Auth Pipeline in `router.ex`](#3-create-the-optional-auth-pipeline-in-routerex)
-  - [4. Making index route with login page.](#4-making-index-route-with-login-page)
+  - [4. Create `AuthController`](#4-create-authcontroller)
 
 <br />
 
@@ -39,12 +39,12 @@ for handling authentication.
 Add **`auth_plug`** to **`deps`** in **`mix.exs`**, e.g:
 
 ```elixir
-{:auth_plug, "~> 1.4.20"},
+{:auth_plug, "~> 1.4"},
 ```
 
 then run: 
 
-```sh
+```elixir
 mix deps.get
 ```
 
@@ -89,11 +89,10 @@ This will make the `AUTH_API_KEY` environment variable available.
 
 ## 3. Create the _Optional_ Auth Pipeline in `router.ex`
 
-Add `auth_plug` to your `router.ex` file 
-by creating a new 
+Open the `router.ex` file 
+and create a new 
 [Optional Auth](https://github.com/dwyl/auth_plug#optional-auth)
-pipeline 
-and adding it to run through your protected route.
+pipeline and use it in your routes:
 
 ```elixir
 # define the new pipeline using auth_plug
@@ -109,11 +108,30 @@ end
 ```
 
 
-## 4. Making index route with login page.
+## 4. Create `AuthController`
 
-It's a bit useless having a protected router path that does nothing but just...be protected. Instead, we should
-add these auth capabilities to our main page and let the user *have the option* to login with Github or Google Drive
-and use their username in following interactions!
+Create a new file: 
+`lib/chat_web/controllers/auth_controller.ex` 
+and add the following code:
 
-//TODO continue after auth_plug is importable
+```elixir
+defmodule ChatWeb.AuthController do
+  use ChatWeb, :controller
+
+  def login(conn, _params) do
+    redirect(conn, external: AuthPlug.get_auth_url(conn, "/"))
+  end
+
+  def logout(conn, _params) do
+    conn
+    |> AuthPlug.logout()
+    |> put_status(302)
+    |> redirect(to: "/")
+  end
+end
+```
+
+The login/2 function redirects to the dwyl auth app. Read more about how to use the AuthPlug.get_auth_url/2 function. Once authenticated the user will be redirected to the / endpoint and a jwt session is created on the client.
+
+The logout/2 function invokes AuthPlug.logout/1 which removes the (JWT) session and redirects back to the homepage.
 
