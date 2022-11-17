@@ -16,6 +16,7 @@ defmodule Chat.MixProject do
         c: :test,
         coveralls: :test,
         "coveralls.detail": :test,
+        "coveralls.json": :test,
         "coveralls.post": :test,
         "coveralls.html": :test,
         t: :test
@@ -58,8 +59,9 @@ defmodule Chat.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.4"},
       {:plug_cowboy, "~> 2.5.2"},
+
       # See: github.com/dwyl/auth_plug
-      {:auth_plug, "~> 1.4.20"},
+      {:auth_plug, "~> 1.4.21"},
 
       # Wake Heroku App. See: https://github.com/dwyl/ping
       {:ping, "~> 1.1.0"},

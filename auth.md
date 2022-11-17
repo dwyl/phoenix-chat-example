@@ -1,6 +1,6 @@
 <div align="center">
 
-# Adding Auth 🔐 in 5 Minutes!
+# Auth in 5 Minutes! 🔐
 
 </div>
 
@@ -21,7 +21,7 @@ and use their Account username and Avatar in the Chat.
 
 Let's do this!
 
-- [Adding Auth 🔐 in 5 Minutes!](#adding-auth--in-5-minutes)
+- [Auth in 5 Minutes! 🔐](#auth-in-5-minutes-)
   - [1. Add `auth_plug` to `mix.exs`](#1-add-auth_plug-to-mixexs)
   - [2. Create `AUTH_API_KEY`](#2-create-auth_api_key)
   - [3. Create the _Optional_ Auth Pipeline in `router.ex`](#3-create-the-optional-auth-pipeline-in-routerex)
@@ -55,17 +55,30 @@ That will install everything you need.
 
 Visit [authdemo.fly.dev](https://authdemo.fly.dev/apps/new),
 sign in with your `GitHub` account,
-and create your app with `localhost:4000` URL.
+and create your app with `localhost:4000` URL:
 
-Save the shown `AUTH_API_KEY` environment variable 
-in an `.env` file, 
+<img width="1089" alt="image" src="https://user-images.githubusercontent.com/194400/202419197-80e082d0-1ab0-497c-a095-6764e6df9b64.png">
+
+When you click "Save" 
+you will be presented with a screen 
+similar to the following:
+
+<img width="1162" alt="image" src="https://user-images.githubusercontent.com/194400/202419365-e06c43d6-c537-4646-a1a3-90320fb3aa59.png">
+
+> **Note**: don't worry this is not a valid key,
+> it's just for illustration purposes. 
+
+Copy the shown `AUTH_API_KEY` environment variable 
+and paste in into 
+a new `.env` file, 
 e.g:
 
 ```txt
 export AUTH_API_KEY=2cfxNaMmkvwKmHncbYAL58mLZMs/2cfxNa4RnU12gYYSwPvp2hSPFdVDcbdK/authdemo.fly.dev
 ```
 
-Make sure the `.env` line is in your `.gitignore` file.
+Make sure the `.env` line 
+is in your `.gitignore` file.
 Then run:
 
 ```sh
