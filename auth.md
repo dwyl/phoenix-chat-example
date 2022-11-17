@@ -182,3 +182,5 @@ defmodule ChatWeb.AuthControllerTest do
   end
 end
 ```
+<br />
+[![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example-auth.svg)](https://github.com/dwyl/phoenix-chat-example)

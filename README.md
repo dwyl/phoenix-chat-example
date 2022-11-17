@@ -61,6 +61,7 @@ and _deploying_ a Chat app in Phoenix!
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
   - [14. Tailwind CSS Stylin'](#14-tailwind-css-stylin)
+  - [15. Authentication 🔐](#15-authentication-)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
 - [Todo: Update Screenshot!](#todo-update-screenshot)
@@ -1170,45 +1171,31 @@ with:
 ```
 
 And then replace the contents of 
-`lib/liveview_chat_web/templates/message/messages.html.heex`
+`lib/chat_web/templates/page/index.html.heex`
 with:
 
 ```html
-<ul id='msg-list' phx-update="append">
-   <%= for message <- @messages do %>
-     <li id={"msg-#{message.id}"} class="px-5">
-       <small class="float-right text-xs align-middle ">
-         <%= message.inserted_at %>
-       </small>
-       <b><%= message.name %>:</b>
-       <%= message.message %>
-     </li>
-   <% end %>
+<ul id='msg-list' phx-update="append" class="pa-1">
 </ul>
 
 <footer class="fixed bottom-0 w-full bg-slate-300 pb-2 px-5 pt-2">
-<.form let={f} for={@changeset} id="form" phx-submit="new_message" phx-hook="Form">
+  
+<form>
+ <%= if @loggedin do %>
+  <input type="text" id="name" value={@person.givenName} class="hidden" />
+ <% else %>
+ <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus
+    class="border p-2 w-9/12 mb-2 mt-2 mr2" />
+    <span class="italic text-2xl ml-4">or</span>
+    <span class="bg-green-600 text-white rounded-xl px-4 py-2 mb-2 mt-3 float-right">
+      <%= link "Login", to: "/login" %>
+    </span>
+ <% end %>
 
-  <%= if @loggedin do %>
-    <%= text_input f, :name, id: "name", value: @person.givenName,
-    class: "hidden" %>
-  <% else %>
-    <%= text_input f, :name, id: "name", placeholder: "Name", autofocus: "true",
-     class: "border p-2 w-9/12 mb-2 mt-2 mr2" %>
-     <span class="italic text-2xl ml-4">or</span>
-     <span class="bg-green-600 text-white rounded-xl px-4 py-2 mb-2 mt-3 float-right">
-       <%= link "Login", to: "/login" %>
-     </span>
-    <%= error_tag f, :name %>
-  <% end %>
-
-   <%= text_input f, :message, id: "msg", placeholder: "Message",
-   class: "border p-2 w-10/12  mb-2 mt-2 float-left"  %>
-   <p class=" text-amber-600">
-    <%= error_tag f, :message %>
-   </p>
-   <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
- </.form>
+ <input type="text" id="msg" class="form-control" placeholder="Your Message"
+  class="border p-2 w-10/12  mb-2 mt-2 float-left" >
+  <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
+</form>
 </footer>
 ```
 
@@ -1223,6 +1210,14 @@ and then if you're still stuck,
 
 <br />
 
+## 15. Authentication 🔐
+
+You may have noticed in the previous step,
+that the template adds a **`Login`** button. 
+If you want to understand 
+how Authentication is implemented the _easy/fast_ way,
+see:
+[auth.md](https://github.com/dwyl/phoenix-chat-example/blob/main/auth.md)
 
 
 <br />
