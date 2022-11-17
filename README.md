@@ -101,7 +101,7 @@ the **Database Table** (_to store messages_)
 + **Write** the functions ("CRUD") to _save_
 message/sender data to a database table.
 + **Test** that everything is working as expected.
-+ ***Deploy*** to Heroku so you can _show_ people your creation!
++ ***Deploy*** to Fly.io so you can _show_ people your creation!
 
 _Initially_, we _deliberately_ skip over configuration files
 and "_Phoenix Internals_"
