@@ -1,12 +1,21 @@
-<!-- The list of messages will appear here: -->
-<ul id="msg-list" style="list-style: none; min-height:200px;">
+<ul id='msg-list' phx-update="append" class="pa-1">
 </ul>
 
-<div class="row">
-  <div class="col-xs-3" style="width: 20%; margin-left: 0;">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" style="border: 1px black solid; font-size: 1.3em;" autofocus>
-  </div>
-  <div class="col-xs-9" style="width: 100%; margin-left: 1%; ">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message" style="border: 1px black solid; font-size: 1.3em;">
-  </div>
-</div>
+<footer class="fixed bottom-0 w-full bg-slate-300 pb-2 px-5 pt-2">
+<form>
+ <%= if @loggedin do %>
+  <input type="text" id="name" value={@person.givenName} class="hidden" />
+ <% else %>
+ <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus
+    class="border p-2 w-9/12 mb-2 mt-2 mr2" />
+    <span class="italic text-2xl ml-4">or</span>
+    <span class="bg-green-600 text-white rounded-xl px-4 py-2 mb-2 mt-3 float-right">
+      <%= link "Login", to: "/login" %>
+    </span>
+ <% end %>
+
+ <input type="text" id="msg" class="form-control" placeholder="Your Message"
+  class="border p-2 w-10/12  mb-2 mt-2 float-left" >
+  <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
+</form>
+</footer>

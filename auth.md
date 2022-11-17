@@ -26,6 +26,7 @@ Let's do this!
   - [2. Create `AUTH_API_KEY`](#2-create-auth_api_key)
   - [3. Create the _Optional_ Auth Pipeline in `router.ex`](#3-create-the-optional-auth-pipeline-in-routerex)
   - [4. Create `AuthController`](#4-create-authcontroller)
+  - [5. Create `AuthControllerTest`](#5-create-authcontrollertest)
 
 <br />
 
@@ -131,7 +132,53 @@ defmodule ChatWeb.AuthController do
 end
 ```
 
-The login/2 function redirects to the dwyl auth app. Read more about how to use the AuthPlug.get_auth_url/2 function. Once authenticated the user will be redirected to the / endpoint and a jwt session is created on the client.
+The login/2 function redirects to the dwyl auth app. Read more about how to use the AuthPlug.get_auth_url/2 function. 
+Once authenticated the user will be redirected to the / endpoint and a jwt session is created on the client.
 
 The logout/2 function invokes AuthPlug.logout/1 which removes the (JWT) session and redirects back to the homepage.
 
+## 5. Create `AuthControllerTest`
+
+Create a file with the path:
+`test/chat_web/controllers/auth_controller_test.exs`
+
+Add the following code to it:
+
+```elixir
+defmodule ChatWeb.AuthControllerTest do
+  use ChatWeb.ConnCase
+
+  test "Logout link displayed when loggedin", %{conn: conn} do
+    data = %{email: "test@dwyl.com", givenName: "Simon", picture: "this", auth_provider: "GitHub"}
+    jwt = AuthPlug.Token.generate_jwt!(data)
+
+    conn = get(conn, "/?jwt=#{jwt}")
+    assert html_response(conn, 200) =~ "logout"
+  end
+
+  test "get /logout with valid JWT", %{conn: conn} do
+    data = %{
+      email: "al@dwyl.com",
+      givenName: "Al",
+      picture: "this",
+      auth_provider: "GitHub",
+      sid: 1,
+      id: 1
+    }
+
+    jwt = AuthPlug.Token.generate_jwt!(data)
+
+    conn =
+      conn
+      |> put_req_header("authorization", jwt)
+      |> get("/logout")
+
+    assert "/" = redirected_to(conn, 302)
+  end
+
+  test "test login link redirect to authdemo.fly.dev", %{conn: conn} do
+    conn = get(conn, "/login")
+    assert redirected_to(conn, 302) =~ "authdemo.fly.dev"
+  end
+end
+```

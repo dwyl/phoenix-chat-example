@@ -40,6 +40,7 @@ defmodule ChatWeb.RoomChannel do
     |> Enum.each(fn msg -> push(socket, "shout", %{
         name: msg.name,
         message: msg.message,
+        inserted_at: msg.inserted_at
       }) end)
     {:noreply, socket} # :noreply
   end
