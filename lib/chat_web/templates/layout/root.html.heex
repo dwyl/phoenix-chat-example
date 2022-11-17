@@ -5,17 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="csrf-token" content={csrf_token_value()}>
-    <%= live_title_tag assigns[:page_title] || "Chat", suffix: " · Phoenix Framework" %>
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <%= live_title_tag assigns[:page_title] || "Phoenix Chat", suffix: " · Tutorial!" %>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <h1 style="padding-top: 15px">Chat Example</h1>
+    <header class="bg-slate-800 w-full min-h-[15%] pt-5 pb-1 mb-2">
+      <section>
+        <nav>
+          <ul class="float-right mr-3">
+            <%= if @loggedin do %>
+              <li>
+                <img width="42px" src={@person.picture} class="-mt-3"/>
+              </li>
+              <li class="text-white">
+                <%= link "logout", to: "/logout" %>
+              </li>
+            <% else %>
+              <li class="bg-green-600 text-white rounded-xl px-4 py-2 w-full mb-2 font-bold">
+                <%= link "Login", to: "/login" %>
+              </li>
+            <% end %>
+          </ul>
         </nav>
-          <img src={Routes.static_path(@conn, "/images/phoenix.png")} width="500px" alt="Phoenix Framework Logo" />
+        <h1 class="text-3xl mb-4 text-center font-mono text-white">Phoenix Chat Example</h1>
       </section>
     </header>
     <%= @inner_content %>

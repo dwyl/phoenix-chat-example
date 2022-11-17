@@ -4,6 +4,7 @@
   },
   "skip_files": [
     "test/",
+    "lib/chat/release.ex",
     "lib/chat_web.ex",
     "lib/chat/application.ex",
     "lib/chat_web/router.ex",

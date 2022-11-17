@@ -4,7 +4,7 @@ defmodule Chat.MixProject do
   def project do
     [
       app: :chat,
-      version: "1.6.14",
+      version: "1.6.15",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
@@ -61,10 +61,10 @@ defmodule Chat.MixProject do
       {:plug_cowboy, "~> 2.5.2"},
 
       # See: github.com/dwyl/auth_plug
-      {:auth_plug, "~> 1.4.21"},
+      {:auth_plug, "~> 1.5"},
 
-      # Wake Heroku App. See: https://github.com/dwyl/ping
-      {:ping, "~> 1.1.0"},
+      # See: github.com/dwyl/learn-tailwind
+      {:tailwind, "~> 0.1.9", runtime: Mix.env() == :dev},
 
       # sanitise data to avoid XSS see: https://git.io/fjpGZ
       {:html_sanitize_ex, "~> 1.4.2"},
@@ -87,7 +87,7 @@ defmodule Chat.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "assets.deploy": ["esbuild default --minify", "phx.digest"],
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
       c: ["coveralls.html"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
