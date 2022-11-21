@@ -25,6 +25,19 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
+function formatInsertedAtString(datetime_string) {
+  const m = new Date(datetime_string)
+  let dateString = m.getUTCFullYear() +"/"+ (m.getUTCMonth()+1) +"/"+ m.getUTCDate()
+  let timeString = m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+
+  return {
+    date: dateString,
+    time: timeString
+  }
+}
+
+formatInsertedAtString("2022-10-12T12:28:19")
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
 
@@ -47,10 +60,45 @@ let channel = socket.channel('room:lobby', {}); // connect to chat "room"
 
 channel.on('shout', function (payload) { // listen to the 'shout' event
   let li = document.createElement("li"); // create new list item DOM element
-  let name = payload.name || 'guest';    // get name from payload or set default
-  let inserted = '<small class="float-right text-xs align-middle ">' + payload.inserted_at + '</small>';
-  li.innerHTML = '<b>' + name + '</b>: ' + payload.message + inserted; // set li contents
-  ul.appendChild(li);                    // append to list
+
+  // Get information from payload
+  const name = payload.name || 'guest';    
+  const message = payload.message 
+  const date = formatInsertedAtString(payload.inserted_at).date
+  const time = formatInsertedAtString(payload.inserted_at).time
+
+  // HTML to insert
+  let HTMLtoInsert = `
+  <div class="flex justify-start mt-8 ml-4">
+    <div class="flex flex-row items-start">
+      <div class="w-[6rem]">
+        <span class="font-semibold text-slate-600 break-words">
+          ${name}
+        </span>
+      </div>
+      <div class="bg-amber-200 relative mr-4 ml-4 h-full">
+        <div class="absolute left-1/2 -ml-0.5 w-[0.1px] h-1/4 bg-gray-600"></div>
+      </div>
+      <div class="flex flex-col items-start">
+        <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+          <span class="block">
+            ${message}
+          </span>
+        </div>
+        <span class="text-xs font-thin mt-2">
+          <span>${date}</span>
+          <span class="text-gray-400">at</span>
+          <span>${time}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  `
+
+  li.innerHTML = HTMLtoInsert
+
+  // Append to list
+  ul.appendChild(li);
 });
 
 channel.join(); // join the channel.
