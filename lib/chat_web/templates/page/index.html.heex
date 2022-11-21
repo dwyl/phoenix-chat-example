@@ -4,21 +4,7 @@
 
   </ul>
   <footer class=" bg-slate-300 p-4 md:fixed md:w-[40%] md:right-4 md:bottom-4 md:rounded-2xl md:shadow-md">
-    <form>
-      <!--
-      <%= if @loggedin do %>
-        <input type="text" id="name" value={@person.givenName} class="hidden" />
-      <% else %>
-        <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus
-      class="border p-2 w-9/12 mb-2 mt-2 mr2" />
-        <span class="italic text-2xl ml-4">or</span>
-      <% end %>
-      <input type="text" id="msg" class="form-control" placeholder="Your Message"
-    class="border p-2 w-10/12  mb-2 mt-2 float-left" >
-      <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
-    -->
-
-
+    <div>
       <%= if @loggedin do %>
         <input
           type="text"
@@ -53,7 +39,11 @@
         id="msg"
         placeholder="Your message"
       />
-      <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
-    </form>
+      <button
+      id="send_btn"
+      class="bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right">
+        Send
+      </button>
+    </div>
   </footer>
 </div>

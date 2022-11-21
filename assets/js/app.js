@@ -25,10 +25,16 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
-function formatInsertedAtString(datetime_string) {
-  const m = new Date(datetime_string)
-  let dateString = m.getUTCFullYear() +"/"+ (m.getUTCMonth()+1) +"/"+ m.getUTCDate()
-  let timeString = m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+function formatInsertedAtString(datetime) {
+  const m = new Date(datetime)
+
+  let dateString = m.getUTCFullYear() + "/" +
+    ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
+    ("0" + m.getUTCDate()).slice(-2);
+
+  let timeString = ("0" + m.getUTCHours()).slice(-2) + ":" +
+  ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+  ("0" + m.getUTCSeconds()).slice(-2);
 
   return {
     date: dateString,
@@ -107,14 +113,26 @@ channel.join(); // join the channel.
 let ul = document.getElementById('msg-list');        // list of messages.
 let name = document.getElementById('name');          // name of message sender
 let msg = document.getElementById('msg');            // message input field
+let send_btn = document.getElementById('send_btn');  // send button
+
+// function to be called on send
+function sendMessage() {
+  channel.push('shout', { // send the message to the server on "shout" channel
+    name: name.value || "guest",     // get value of "name" of person sending the message. Set guest as default
+    message: msg.value,    // get message text (value) from msg input field.
+    inserted_at: new Date() // datetime of when the message was isnerted
+  });
+  msg.value = '';         // reset the message input field for next message.
+  window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
+}
 
 // "listen" for the [Enter] keypress event to send a message:
 msg.addEventListener('keypress', function (event) {
   if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
-    channel.push('shout', { // send the message to the server on "shout" channel
-      name: name.value || "guest",     // get value of "name" of person sending the message. Set guest as default
-      message: msg.value    // get message text (value) from msg input field.
-    });
-    msg.value = '';         // reset the message input field for next message.
+    sendMessage()
   }
+});
+
+send_btn.addEventListener('onclick', function (event) {
+  sendMessage()
 });
