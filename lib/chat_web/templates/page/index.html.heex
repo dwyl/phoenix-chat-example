@@ -1,17 +1,59 @@
-<ul id='msg-list' phx-update="append" class="pa-1">
 
-</ul>
-<footer class="fixed bottom-0 w-full bg-slate-300 pb-2 px-5 pt-2">
-  <form>
-    <%= if @loggedin do %>
-      <input type="text" id="name" value={@person.givenName} class="hidden" />
-    <% else %>
-      <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus
-    class="border p-2 w-9/12 mb-2 mt-2 mr2" />
-      <span class="italic text-2xl ml-4">or</span>
-    <% end %>
-    <input type="text" id="msg" class="form-control" placeholder="Your Message"
-  class="border p-2 w-10/12  mb-2 mt-2 float-left" >
-    <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
-  </form>
-</footer>
+<div class="mt-2 mb-10">
+  <ul id='msg-list' phx-update="append" class="pa-1">
+
+  </ul>
+  <footer class=" bg-slate-300 p-4 md:fixed md:w-[40%] md:right-4 md:bottom-4 md:rounded-2xl md:shadow-md">
+    <form>
+      <!--
+      <%= if @loggedin do %>
+        <input type="text" id="name" value={@person.givenName} class="hidden" />
+      <% else %>
+        <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus
+      class="border p-2 w-9/12 mb-2 mt-2 mr2" />
+        <span class="italic text-2xl ml-4">or</span>
+      <% end %>
+      <input type="text" id="msg" class="form-control" placeholder="Your Message"
+    class="border p-2 w-10/12  mb-2 mt-2 float-left" >
+      <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
+    -->
+
+
+      <%= if @loggedin do %>
+        <input
+          type="text"
+          class="hidden form-control w-full px-3 py-1.5 text-base font-normal
+            text-gray-700bg-gray-100 bg-clip-padding border border-solid border-gray-300
+            rounded transition ease-in-out m-0
+            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+          "
+          placeholder={@person.givenName}
+          value={@person.givenName}
+          disabled
+        />
+      <% else %>
+        <input
+          type="text"
+          class=" form-control block w-full px-3 py-1.5 text-base font-normal
+            text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
+            rounded transition ease-in-out m-0
+            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+          "
+          id="name"
+          placeholder="Your name"
+        />
+      <% end %>
+      <input
+        type="text"
+        class="form-control block w-full px-3 py-1.5 text-base font-normal
+          text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
+          rounded transition ease-in-out m-0
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+        "
+        id="msg"
+        placeholder="Your message"
+      />
+      <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
+    </form>
+  </footer>
+</div>
