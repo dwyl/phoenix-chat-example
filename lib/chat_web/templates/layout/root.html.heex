@@ -15,20 +15,18 @@
           <h1 class="text-lg text-center font-mono text-white ml-6 sm:text-3xl">
             Phoenix Chat Example
           </h1>
-          <ul class="float-right mr-3">
+          <div class="float-right mr-3">
             <%= if @loggedin do %>
-              <li>
-                <img width="42px" src={@person.picture} class="-mt-3"/>
-              </li>
-              <li class="text-white">
-                <%= link "logout", to: "/logout" %>
-              </li>
+              <div class="flex flex-row justify-center items-center">
+                <img width="42px" src={@person.picture} />
+                <%= link "logout", to: "/logout", class: "bg-red-600 text-white rounded-xl px-4 py-2 ml-4" %>
+              </div>
             <% else %>
-              <li class="bg-green-600 text-white rounded-xl px-4 py-2 w-full font-bold">
+              <div class="bg-green-600 text-white rounded-xl px-4 py-2 w-full font-bold">
                 <%= link "Login", to: "/login" %>
-              </li>
+              </div>
             <% end %>
-          </ul>
+          </div>
       </nav>
     </header>
     <main class="mt-[7rem]">
