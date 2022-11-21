@@ -60,8 +60,8 @@ and _deploying_ a Chat app in Phoenix!
     - [13.2 Create a _New File_ Called `coveralls.json`](#132-create-a-new-file-called-coverallsjson)
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
-  - [14. Tailwind CSS Stylin'](#14-tailwind-css-stylin)
-  - [15. Authentication 🔐](#15-authentication-)
+- [Tailwind CSS Stylin'](#tailwind-css-stylin)
+- [Authentication](#authentication)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
 - [Todo: Update Screenshot!](#todo-update-screenshot)
@@ -1114,7 +1114,7 @@ With that our app is fully tested!
 
 <br />
 
-## 14. Tailwind CSS Stylin'
+# Tailwind CSS Stylin'
 
 If you're new to `Tailwind`,
 please see: https://github.com/dwyl/learn-tailwind
@@ -1126,10 +1126,211 @@ with an earlier version of **`Phoenix`**,
 see: 
 [**`Tailwind` in `Phoenix`**](https://github.com/dwyl/learn-tailwind#part-2-tailwind-in-phoenix)
 
+As it stands, the app is _fine_.
+However, we can give it a bit of pizzazz :sparkles:.
+Let's style our view templates a bit
+so the app looks awesome!
 
-Replace the contents of 
-`lib/liveview_chat_web/templates/layout/root.html.heex`
-with:
+Head over to the `lib/chat_web/templates/layout/app.html.heex`
+and change it to the following.
+
+```html
+<main class="w-full">
+  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+  <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+  <%= @inner_content %>
+</main>
+```
+
+In the `lib/chat_web/templates/layout/index.html.heex`
+fil, make the following changes.
+
+```html
+<div class="mt-2 mb-10">
+  <ul id='msg-list' phx-update="append" class="pa-1">
+
+  </ul>
+  <footer class=" bg-slate-300 p-4 md:fixed md:w-[40%] md:right-4 md:bottom-4 md:rounded-2xl md:shadow-md">
+    <div>
+      <%= if @loggedin do %>
+        <input
+          type="text"
+          class="hidden form-control w-full px-3 py-1.5 text-base font-normal
+            text-gray-700bg-gray-100 bg-clip-padding border border-solid border-gray-300
+            rounded transition ease-in-out m-0
+            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+          "
+          placeholder={@person.givenName}
+          value={@person.givenName}
+          disabled
+        />
+      <% else %>
+        <input
+          type="text"
+          class=" form-control block w-full px-3 py-1.5 text-base font-normal
+            text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
+            rounded transition ease-in-out m-0
+            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+          "
+          id="name"
+          placeholder="Your name"
+        />
+      <% end %>
+      <input
+        type="text"
+        class="form-control block w-full px-3 py-1.5 text-base font-normal
+          text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
+          rounded transition ease-in-out m-0
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+        "
+        id="msg"
+        placeholder="Your message"
+      />
+      <button
+      id="send_btn"
+      class="bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right">
+        Send
+      </button>
+    </div>
+  </footer>
+</div>
+```
+
+In the `assets/js/app.js` file, make the following changes.
+
+```javascript
+
+function formatInsertedAtString(datetime) {
+  const m = new Date(datetime)
+
+  let dateString = m.getUTCFullYear() + "/" +
+    ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
+    ("0" + m.getUTCDate()).slice(-2);
+
+  let timeString = ("0" + m.getUTCHours()).slice(-2) + ":" +
+  ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+  ("0" + m.getUTCSeconds()).slice(-2);
+
+  return {
+    date: dateString,
+    time: timeString
+  }
+}
+
+formatInsertedAtString("2022-10-12T12:28:19")
+
+let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+
+// Show progress bar on live navigation and form submits
+topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
+window.addEventListener("phx:page-loading-start", info => topbar.show())
+window.addEventListener("phx:page-loading-stop", info => topbar.hide())
+
+// connect if there are any LiveViews on the page
+liveSocket.connect()
+
+// expose liveSocket on window for web console debug logs and latency simulation:
+// >> liveSocket.enableDebug()
+// >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
+// >> liveSocket.disableLatencySim()
+window.liveSocket = liveSocket
+
+
+let channel = socket.channel('room:lobby', {}); // connect to chat "room"
+
+channel.on('shout', function (payload) { // listen to the 'shout' event
+  let li = document.createElement("li"); // create new list item DOM element
+
+  // Get information from payload
+  const name = payload.name || 'guest';    
+  const message = payload.message 
+  const date = formatInsertedAtString(payload.inserted_at).date
+  const time = formatInsertedAtString(payload.inserted_at).time
+
+  // HTML to insert
+  let HTMLtoInsert = `
+  <div class="flex justify-start mt-8 ml-4">
+    <div class="flex flex-row items-start">
+      <div class="w-[6rem]">
+        <span class="font-semibold text-slate-600 break-words">
+          ${name}
+        </span>
+      </div>
+      <div class="bg-amber-200 relative mr-4 ml-4 h-full">
+        <div class="absolute left-1/2 -ml-0.5 w-[0.1px] h-1/4 bg-gray-600"></div>
+      </div>
+      <div class="flex flex-col items-start">
+        <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+          <span class="block">
+            ${message}
+          </span>
+        </div>
+        <span class="text-xs font-thin mt-2">
+          <span>${date}</span>
+          <span class="text-gray-400">at</span>
+          <span>${time}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  `
+
+  li.innerHTML = HTMLtoInsert
+
+  // Append to list
+  ul.appendChild(li);
+});
+
+channel.join(); // join the channel.
+
+
+let ul = document.getElementById('msg-list');        // list of messages.
+let name = document.getElementById('name');          // name of message sender
+let msg = document.getElementById('msg');            // message input field
+let send_btn = document.getElementById('send_btn');  // send button
+
+// function to be called on send
+function sendMessage() {
+  channel.push('shout', { // send the message to the server on "shout" channel
+    name: name.value || "guest",     // get value of "name" of person sending the message. Set guest as default
+    message: msg.value,    // get message text (value) from msg input field.
+    inserted_at: new Date() // datetime of when the message was isnerted
+  });
+  msg.value = '';         // reset the message input field for next message.
+  window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
+}
+
+// "listen" for the [Enter] keypress event to send a message:
+msg.addEventListener('keypress', function (event) {
+  if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
+    sendMessage()
+  }
+});
+
+send_btn.addEventListener('onclick', function (event) {
+  sendMessage()
+});
+```
+
+We added a function `formatInsertAtString()` 
+function to format the `Date` object to 
+show beneath each message.
+
+We've also made some changes to 
+how the form is submitted.
+Previously, everytone the button `Send` or
+the button `Enter` was pressed,
+a form submit event was triggered,
+which cause a reload of the page.
+This is not pretty. 
+With these changes, we no longer have a form
+and now added an event listener to the 
+`Send` button.
+
+Finally, let's make some changes to the navbar.
+In the `lib/chat_web/templates/layout/root.html.heex`,
+change it so it looks like the following.
 
 ```html
 <!DOCTYPE html>
@@ -1144,62 +1345,36 @@ with:
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <header class="bg-slate-800 w-full min-h-[15%] pt-5 pb-1 mb-2">
-      <section>
-        <nav>
-          <ul class="float-right mr-3">
+    <header class="bg-slate-800 w-full h-[5rem] top-0 fixed flex flex-col justify-center z-10">
+      <nav class="flex flex-row justify-between items-center">
+          <h1 class="text-lg text-center font-mono text-white ml-6 sm:text-3xl">
+            Phoenix Chat Example
+          </h1>
+          <div class="float-right mr-3">
             <%= if @loggedin do %>
-              <li>
-                <img width="42px" src={@person.picture} class="-mt-3"/>
-              </li>
-              <li class="text-white">
-                <%= link "logout", to: "/logout" %>
-              </li>
+              <div class="flex flex-row justify-center items-center">
+                <img width="42px" src={@person.picture} />
+                <%= link "logout", to: "/logout", class: "bg-red-600 text-white rounded-xl px-4 py-2 ml-4" %>
+              </div>
             <% else %>
-              <li class="bg-green-600 text-white rounded-xl px-4 py-2 w-full mb-2 font-bold">
+              <div class="bg-green-600 text-white rounded-xl px-4 py-2 w-full font-bold">
                 <%= link "Login", to: "/login" %>
-              </li>
+              </div>
             <% end %>
-          </ul>
-        </nav>
-        <h1 class="text-3xl mb-4 text-center font-mono text-white">Phoenix Chat Example</h1>
-      </section>
+          </div>
+      </nav>
     </header>
-    <%= @inner_content %>
+    <main class="mt-[7rem]">
+        <%= @inner_content %>
+    </main>
   </body>
 </html>
 ```
 
-And then replace the contents of 
-`lib/chat_web/templates/page/index.html.heex`
-with:
-
-```html
-<ul id='msg-list' phx-update="append" class="pa-1">
-</ul>
-
-<footer class="fixed bottom-0 w-full bg-slate-300 pb-2 px-5 pt-2">
-  
-<form>
- <%= if @loggedin do %>
-  <input type="text" id="name" value={@person.givenName} class="hidden" />
- <% else %>
- <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus
-    class="border p-2 w-9/12 mb-2 mt-2 mr2" />
-    <span class="italic text-2xl ml-4">or</span>
-    <span class="bg-green-600 text-white rounded-xl px-4 py-2 mb-2 mt-3 float-right">
-      <%= link "Login", to: "/login" %>
-    </span>
- <% end %>
-
- <input type="text" id="msg" class="form-control" placeholder="Your Message"
-  class="border p-2 w-10/12  mb-2 mt-2 float-left" >
-  <%= submit "Send", class: "bg-sky-600 text-white rounded-xl px-4 py-2 mt-2 float-right" %>
-</form>
-</footer>
-```
 
 You should now have a UI/layout that looks like this:
+
+## TODO: Update GIF
 
 ![liveview-chat-with-tailwind-css](https://user-images.githubusercontent.com/194400/174119023-bb83f5f4-867c-4bfa-a005-26b39c700137.gif)
 
@@ -1210,7 +1385,7 @@ and then if you're still stuck,
 
 <br />
 
-## 15. Authentication 🔐
+# Authentication
 
 You may have noticed in the previous step,
 that the template adds a **`Login`** button. 
