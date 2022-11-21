@@ -10,9 +10,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <header class="bg-slate-800 w-full min-h-[15%] pt-5 pb-1 mb-2">
-      <section>
-        <nav>
+    <header class="bg-slate-800 w-full h-[5rem] top-0 fixed flex flex-col justify-center z-10">
+      <nav class="flex flex-row justify-between items-center">
+          <h1 class="text-lg text-center font-mono text-white ml-6 sm:text-3xl">
+            Phoenix Chat Example
+          </h1>
           <ul class="float-right mr-3">
             <%= if @loggedin do %>
               <li>
@@ -22,15 +24,15 @@
                 <%= link "logout", to: "/logout" %>
               </li>
             <% else %>
-              <li class="bg-green-600 text-white rounded-xl px-4 py-2 w-full mb-2 font-bold">
+              <li class="bg-green-600 text-white rounded-xl px-4 py-2 w-full font-bold">
                 <%= link "Login", to: "/login" %>
               </li>
             <% end %>
           </ul>
-        </nav>
-        <h1 class="text-3xl mb-4 text-center font-mono text-white">Phoenix Chat Example</h1>
-      </section>
+      </nav>
     </header>
-    <%= @inner_content %>
+    <main class="mt-[7rem]">
+        <%= @inner_content %>
+    </main>
   </body>
 </html>
