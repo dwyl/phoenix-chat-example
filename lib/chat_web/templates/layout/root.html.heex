@@ -10,16 +10,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <header class="bg-slate-800 w-full h-[5rem] top-0 fixed flex flex-col justify-center z-10">
+    <header class="bg-[#3f8a9c] w-full h-[5rem] top-0 fixed flex flex-col justify-center z-10">
       <nav class="flex flex-row justify-between items-center">
-          <h1 class="text-lg text-center font-mono text-white ml-6 sm:text-3xl">
+          <h1 class="text-xs text-center font-mono text-white ml-3 sm:text-3xl sm:ml-8">
             Phoenix Chat Example
           </h1>
           <div class="float-right mr-3">
             <%= if @loggedin do %>
               <div class="flex flex-row justify-center items-center">
                 <img width="42px" src={@person.picture} />
-                <%= link "logout", to: "/logout", class: "bg-red-600 text-white rounded-xl px-4 py-2 ml-4" %>
+                <%= link "logout", to: "/logout", class: "bg-[#b82424] text-white rounded-xl px-4 py-2 ml-4" %>
               </div>
             <% else %>
               <div class="bg-green-600 text-white rounded-xl px-4 py-2 w-full font-bold">

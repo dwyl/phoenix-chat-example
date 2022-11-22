@@ -85,7 +85,7 @@ channel.on('shout', function (payload) { // listen to the 'shout' event
       <div class="bg-amber-200 relative mr-4 ml-4 h-full">
         <div class="absolute left-1/2 -ml-0.5 w-[0.1px] h-1/4 bg-gray-600"></div>
       </div>
-      <div class="flex flex-col items-start">
+      <div class="flex flex-col items-start max-w-[50vw]">
         <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
           <span class="block">
             ${message}
