@@ -1193,7 +1193,7 @@ fil, make the following changes.
       <button
           id="send_btn"
           class="inline-flex items-center justify-center w-12 h-12 mr-2 text-pink-100 transition-colors duration-150 bg-[#00a5ff] rounded-full focus:shadow-outline hover:bg-[#027bbc]">
-        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="50px" width="50px"
           viewBox="0 0 495.003 495.003" style="enable-background:new 0 0 495.003 495.003; filter: invert(1); scale: 50%" xml:space="preserve">
           <g id="XMLID_51_">
           <path id="XMLID_53_" d="M164.711,456.687c0,2.966,1.647,5.686,4.266,7.072c2.617,1.385,5.799,1.207,8.245-0.468l55.09-37.616
