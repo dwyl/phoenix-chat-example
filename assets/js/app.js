@@ -65,44 +65,28 @@ window.liveSocket = liveSocket
 let channel = socket.channel('room:lobby', {}); // connect to chat "room"
 
 channel.on('shout', function (payload) { // listen to the 'shout' event
-  let li = document.createElement("li"); // create new list item DOM element
-
   // Get information from payload
   const name = payload.name || 'guest';    
   const message = payload.message 
   const date = formatInsertedAtString(payload.inserted_at).date
   const time = formatInsertedAtString(payload.inserted_at).time
 
-  // HTML to insert
-  let HTMLtoInsert = `
-  <div class="flex justify-start mt-8 ml-4">
-    <div class="flex flex-row items-start">
-      <div class="w-[6rem]">
-        <span class="font-semibold text-slate-600 break-words">
-          ${name}
-        </span>
+  let li = document.createElement("li"); // create new list item DOM element
+  // Message HTML with Tailwind CSS:
+  li.innerHTML = `
+  <div class="flex flex-row w-[95%] mx-2 border-b-[1px] border-slate-300 py-1">
+    <div class="text-left w-1/5 font-semibold text-slate-800 break-words">
+      ${name}
+      <div class="text-xs mr-1">
+        <span class="font-thin">${date}</span> 
+        <span>${time}</span>
       </div>
-      <div class="bg-amber-200 relative mr-4 ml-4 h-full">
-        <div class="absolute left-1/2 -ml-0.5 w-[0.1px] h-1/4 bg-gray-600"></div>
-      </div>
-      <div class="flex flex-col items-start max-w-[50vw]">
-        <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-          <span class="block">
-            ${message}
-          </span>
-        </div>
-        <span class="text-xs font-thin mt-2">
-          <span>${date}</span>
-          <span class="text-gray-400">at</span>
-          <span>${time}</span>
-        </span>
-      </div>
+    </div>
+    <div class="flex w-3/5 mx-1 grow">
+      ${message}
     </div>
   </div>
   `
-
-  li.innerHTML = HTMLtoInsert
-
   // Append to list
   ul.appendChild(li);
 });

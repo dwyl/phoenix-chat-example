@@ -58,7 +58,7 @@ and _deploying_ a Chat app in Phoenix!
     - [13.2 Create a _New File_ Called `coveralls.json`](#132-create-a-new-file-called-coverallsjson)
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
-- [Tailwind CSS Stylin'](#tailwind-css-stylin)
+- [14. Tailwind CSS Stylin'](#14-tailwind-css-stylin)
   - [TODO: Update GIF](#todo-update-gif)
 - [Authentication](#authentication)
 - [Continuous Integration](#continuous-integration)
@@ -153,10 +153,11 @@ scroll down to the "Clone Repo and Run on Localhost" section instead.
 ## 0. Pre-requisites (_Before you Start_)
 
 1. **Elixir _Installed_** on your **local machine**. <br />
-  see: 
-  [dwyl/learn-elixir#**installation**](https://github.com/dwyl/learn-elixir#installation) <br />
-  e.g: <br />
-```
+see: 
+[dwyl/learn-elixir#**installation**](https://github.com/dwyl/learn-elixir#installation) <br />
+e.g:
+
+```sh
 brew install elixir
 ```
 > _**Note**: if you already have `Elixir` installed on your Mac,
@@ -165,9 +166,11 @@ brew install elixir
 
 
 1. **Phoenix** framework **installed**.
-  see: https://hexdocs.pm/phoenix/installation.html <br />
-  e.g: <br />
-```
+see: 
+[hexdocs.pm/phoenix/installation.html](https://hexdocs.pm/phoenix/installation.html) <br />
+e.g:
+
+```sh
 mix archive.install hex phx_new
 ```
 
@@ -192,11 +195,13 @@ see:
 
 Check you have the _latest version_ of **Elixir**
 (_run the following command in your terminal_):
+
 ```sh
 elixir -v
 ```
 
 You should see something like:
+
 ```sh
 Erlang/OTP 25 [erts-13.1.1] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
 
@@ -204,10 +209,13 @@ Elixir 1.14.1 (compiled with Erlang/OTP 25)
 ```
 
 Check you have the **latest** version of **Phoenix**:
+
 ```sh
 mix phx.new -v
 ```
+
 You should see:
+
 ```sh
 Phoenix installer v1.6.15
 ```
@@ -220,15 +228,19 @@ Phoenix installer v1.6.15
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
 run the following command:
+
 ```sh
 lsof -i :5432
 ```
+
 You should see output _similar_ to the following:
+
 ```sh
 COMMAND  PID  USER   FD  TYPE DEVICE                  SIZE/OFF NODE NAME
 postgres 529 Nelson  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
 postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
 ```
+
 This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
 (_the default port_)
 
@@ -1137,36 +1149,38 @@ With that our app is fully tested!
 
 <br />
 
-# Tailwind CSS Stylin'
-
-If you're new to `Tailwind`,
-please see: https://github.com/dwyl/learn-tailwind
-
-> **Note**: We're aren't repeating the setup steps here
-as **`Phoenix 1.7`** will include Tailwind by default.
-But if you are following this guide 
-with an earlier version of **`Phoenix`**,
-see: 
-[**`Tailwind` in `Phoenix`**](https://github.com/dwyl/learn-tailwind#part-2-tailwind-in-phoenix)
+# 14. Tailwind CSS Stylin'
 
 As it stands, the app is _fine_.
 However, we can give it a bit of pizzazz :sparkles:.
 Let's style our view templates a bit
 so the app looks awesome!
 
-Head over to the `lib/chat_web/templates/layout/app.html.heex`
-and change it to the following.
+If you're new to `Tailwind`,
+please see: 
+[dwyl/**learn-tailwind**](https://github.com/dwyl/learn-tailwind)
+
+> **Note**: We're aren't repeating the setup steps here
+as **`Phoenix 1.7`** will include Tailwind by default. <br />
+But if you are following this guide 
+with an earlier version of **`Phoenix`**,
+see: 
+[**`Tailwind` in `Phoenix`**](https://github.com/dwyl/learn-tailwind#part-2-tailwind-in-phoenix)
+
+
+Open 
+`lib/chat_web/templates/layout/app.html.heex`
+and change the contents to the following:
 
 ```html
 <main class="w-full">
-  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-  <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
   <%= @inner_content %>
 </main>
 ```
 
-In the `lib/chat_web/templates/layout/index.html.heex`
-fil, make the following changes.
+In the 
+`lib/chat_web/templates/layout/index.html.heex`
+file, make the following changes.
 
 ```html
 <div class="mt-2 mb-2 pb-[8rem]">
