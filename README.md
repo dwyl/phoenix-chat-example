@@ -22,9 +22,7 @@ and _deploying_ a Chat app in Phoenix!
 
 </div>
 
-## Content
 - [Phoenix Chat Example](#phoenix-chat-example)
-  - [Content](#content)
   - [Why?](#why)
   - [What?](#what)
   - [Who?](#who)
@@ -61,6 +59,7 @@ and _deploying_ a Chat app in Phoenix!
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
 - [Tailwind CSS Stylin'](#tailwind-css-stylin)
+  - [TODO: Update GIF](#todo-update-gif)
 - [Authentication](#authentication)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
@@ -71,19 +70,28 @@ and _deploying_ a Chat app in Phoenix!
 
 ## Why?
 
-Chat apps are the "Hello World" of "real time" examples. <br />
+Chat apps are the 
+[`"Hello World"`](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) 
+of 
+[real time](https://en.wikipedia.org/wiki/Real-time_computing)
+examples. <br />
 
-_Sadly, most_ example apps show a few basics and then _ignore_ "_the rest_" ... <br />
-So "_beginners_" are often left "_lost_" or "_confused_" as to
+Sadly, **_most_ example apps** show a few **basics**
+and then **ignore the rest** ... 🤷‍♀️<br />
+So **beginners** are often left **lost** or **confused** as to
 what they should _do_ or learn _next_! <br />
-Very _few_ tutorials consider **Testing,
-Deployment, Documentation** or _other_ "**Enhancements**" which are
-all part of the "***Real World***" of building and running apps;
+Very _few_ tutorials consider 
+**Testing, Deployment, Documentation** or _other_ "**Enhancements**" 
+which are all part of the "***Real World***" 
+of building and running apps;
 so those are topics we **_will_ cover** to "_fill in the gaps_".
 
-We wrote _this_ tutorial to be _easiest_ way to learn Phoenix,
-Ecto and "Channels" with a _practical_ example _anyone_ can follow.
+We wrote _this_ tutorial to be **_easiest_ way to learn `Phoenix`**,
+`Ecto` and `Channels` with a **_practical_ example _anyone_ can follow**.
 
+This is the example/tutorial we _wished_ we had 
+when we were learning `Elixir`, `Phoenix` ...
+If you find it useful, please ⭐ 🙏 Thanks!
 
 
 ## What?
@@ -92,8 +100,9 @@ A simple step-by-step tutorial showing you how to:
 
 + **Create** a **Phoenix App** from _scratch_
 (_using the `mix phx.new chat` "generator" command_)
-+ Add a "Channel" so your app can communicate over "**WebSockets**".
-+ Implement a _basic_ "***front-end***" in "_plain_" JavaScript
++ Add a "Channel" so your app can communicate over 
+  [**WebSockets**](https://en.wikipedia.org/wiki/WebSocket).
++ Implement a _basic_ ***front-end*** in _plain_ JavaScript
 (_ES5 without any libraries_) to interact with Phoenix
 (_send/receive messages via WebSockets_)
 + Add a simple "**Ecto**" **schema** to define
@@ -101,7 +110,7 @@ the **Database Table** (_to store messages_)
 + **Write** the functions ("CRUD") to _save_
 message/sender data to a database table.
 + **Test** that everything is working as expected.
-+ ***Deploy*** to Fly.io so you can _show_ people your creation!
++ ***Deploy*** to **`Fly.io`** so you can _show_ people your creation!
 
 _Initially_, we _deliberately_ skip over configuration files
 and "_Phoenix Internals_"
@@ -127,9 +136,9 @@ so don't be afraid/shy. <br />
 Also, by asking questions, you are helping everyone
 that is or might be stuck with the _same_ thing!
 + **Chat App _specific_** questions:
-https://github.com/dwyl/phoenix-chat-example/issues
+[dwyl/**phoenix-chat-example**/issues](https://github.com/dwyl/phoenix-chat-example/issues)
 + **General** Learning Phoenix questions:
-https://github.com/dwyl/learn-phoenix-framework/issues
+[dwyl/learn-**phoenix-framework**/issues](https://github.com/dwyl/learn-phoenix-framework/issues)
 
 
 # _How_?
@@ -144,7 +153,8 @@ scroll down to the "Clone Repo and Run on Localhost" section instead.
 ## 0. Pre-requisites (_Before you Start_)
 
 1. **Elixir _Installed_** on your **local machine**. <br />
-  see: https://github.com/dwyl/learn-elixir#installation <br />
+  see: 
+  [dwyl/learn-elixir#**installation**](https://github.com/dwyl/learn-elixir#installation) <br />
   e.g: <br />
 ```
 brew install elixir
@@ -154,26 +164,28 @@ brew install elixir
   **`brew upgrade elixir`**
 
 
-2. **Phoenix** framework **installed**.
+1. **Phoenix** framework **installed**.
   see: https://hexdocs.pm/phoenix/installation.html <br />
   e.g: <br />
 ```
 mix archive.install hex phx_new
 ```
 
-3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
-see: [https://github.com/dwyl/**learn-postgresql#installation**](https://github.com/dwyl/learn-postgresql#installation)
+1. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
+see: 
+[dwyl/**learn-postgresql#installation**](https://github.com/dwyl/learn-postgresql#installation)
 
 <!-- update instructions to https://hexdocs.pm/phoenix/installation.html -->
 
-4. Basic **Elixir Syntax** knowledge will help,<br />
+1. Basic **Elixir Syntax** knowledge will help,<br />
 please see:
-[https://github.com/dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir)
+[dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir)
 
-5. Basic **JavaScript** knowledge is _advantageous_
+1. Basic **JavaScript** knowledge is _advantageous_
 (_but not essential as the "front-end" code
 is quite basic and well-commented_).
-see: https://github.com/iteles/Javascript-the-Good-Parts-notes
+see: 
+[dwyl/Javascript-the-Good-Parts-notes](https://github.com/dwyl/Javascript-the-Good-Parts-notes)
 
 
 ### _Check_ You Have Everything _Before_ Starting
@@ -197,8 +209,14 @@ mix phx.new -v
 ```
 You should see:
 ```sh
-Phoenix installer v1.6.14
+Phoenix installer v1.6.15
 ```
+
+> **Note**: if your `Phoenix` version is _newer_,
+> Please feel free to update this doc! 📝
+> We try our best to keep it updated ...
+> but _your_ contributions are always welcome!
+
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
 run the following command:
@@ -214,7 +232,11 @@ postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgre
 This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
 (_the default port_)
 
-With all those "pre-flight checks" performed, let's get _going_!
+With all those 
+["pre-flight checks"](https://en.wikipedia.org/wiki/Preflight_checklist) 
+performed, let's _fly_! 🚀
+
+<br />
 
 ## First _Run_ the _Finished_ App
 
@@ -302,6 +324,7 @@ cd chat
 ```
 
 Now run the following command:
+
 ```sh
 mix setup
 ```
