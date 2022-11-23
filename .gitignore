@@ -35,3 +35,4 @@ npm-debug.log
 
 .vscode/
 .env
+.DS_Store
