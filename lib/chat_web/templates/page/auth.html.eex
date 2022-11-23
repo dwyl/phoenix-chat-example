@@ -1,8 +1,0 @@
-<section class="phx-hero">
-  <h1> Welcome <%= @conn.assigns.person.givenName %>!
-  <img width="32px" src="<%= @conn.assigns.person.picture %>" />
-  </h1>
-  <p> You are <strong>signed in</strong>
-    with your <strong><%= @conn.assigns.person.auth_provider %> account</strong> <br />.
-  </p>
-</section>
