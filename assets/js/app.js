@@ -110,13 +110,13 @@ channel.on('shout', function (payload) { // listen to the 'shout' event
 channel.join(); // join the channel.
 
 
-let ul = document.getElementById('msg-list');        // list of messages.
-let name = document.getElementById('name');          // name of message sender
-let msg = document.getElementById('msg');            // message input field
-let send_btn = document.getElementById('send_btn');  // send button
+let ul = document.getElementById('msg-list');    // list of messages.
+let name = document.getElementById('name');      // name of message sender
+let msg = document.getElementById('msg');        // message input field
 
 // function to be called on send
 function sendMessage() {
+  console.log('sendMessage')
   channel.push('shout', { // send the message to the server on "shout" channel
     name: name.value || "guest",     // get value of "name" of person sending the message. Set guest as default
     message: msg.value,    // get message text (value) from msg input field.
@@ -133,6 +133,9 @@ msg.addEventListener('keypress', function (event) {
   }
 });
 
-send_btn.addEventListener('onclick', function (event) {
-  sendMessage()
-});
+window.onload = function() {
+  let send_btn = document.getElementById('send');  // send button
+  send_btn.addEventListener('click', function (event) {
+    sendMessage()
+  });
+}
