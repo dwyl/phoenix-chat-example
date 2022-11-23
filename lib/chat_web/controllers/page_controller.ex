@@ -4,6 +4,5 @@ defmodule ChatWeb.PageController do
   def index(conn, _params) do
     messages = Chat.Message.get_messages
     render(conn, "index.html", messages: messages)
-    |> dbg()
   end
 end
