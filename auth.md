@@ -27,6 +27,8 @@ Let's do this!
   - [3. Create the _Optional_ Auth Pipeline in `router.ex`](#3-create-the-optional-auth-pipeline-in-routerex)
   - [4. Create `AuthController`](#4-create-authcontroller)
   - [5. Create `AuthControllerTest`](#5-create-authcontrollertest)
+  - [6. Execute the `AuthControllerTest`](#6-execute-the-authcontrollertest)
+  - [7. Update the UI Template with `Auth`](#7-update-the-ui-template-with-auth)
 
 <br />
 
@@ -40,7 +42,7 @@ for handling authentication.
 Add **`auth_plug`** to **`deps`** in **`mix.exs`**, e.g:
 
 ```elixir
-{:auth_plug, "~> 1.4"},
+{:auth_plug, "~> 1.5"},
 ```
 
 then run: 
@@ -55,21 +57,21 @@ That will install everything you need.
 ## 2. Create `AUTH_API_KEY`
 
 Visit [authdemo.fly.dev](https://authdemo.fly.dev/apps/new),
-sign in with your `GitHub` account,
-and create your app with `localhost:4000` URL:
+sign in with your `GitHub` or `Google` account,
+and create your app with `localhost:4000` as the `URL`:
 
 <img width="1089" alt="image" src="https://user-images.githubusercontent.com/194400/202419197-80e082d0-1ab0-497c-a095-6764e6df9b64.png">
 
-When you click "Save" 
-you will be presented with a screen 
+When you click "**Save**" 
+you will be see a screen 
 similar to the following:
 
 <img width="1162" alt="image" src="https://user-images.githubusercontent.com/194400/202419365-e06c43d6-c537-4646-a1a3-90320fb3aa59.png">
 
-> **Note**: don't worry this is not a valid key,
+> **Note**: don't worry this is **not** a **valid** key,
 > it's just for illustration purposes. 
 
-Copy the shown `AUTH_API_KEY` environment variable 
+Copy the shown `AUTH_API_KEY` 
 and paste in into 
 a new `.env` file, 
 e.g:
@@ -80,6 +82,7 @@ export AUTH_API_KEY=2cfxNaMmkvwKmHncbYAL58mLZMs/2cfxNa4RnU12gYYSwPvp2hSPFdVDcbdK
 
 Make sure the `.env` line 
 is in your `.gitignore` file.
+
 Then run:
 
 ```sh
@@ -146,7 +149,7 @@ Add the following code to it:
 
 ```elixir
 defmodule ChatWeb.AuthControllerTest do
-  use ChatWeb.ConnCase
+  use ChatWeb.ConnCase, async: true
 
   test "Logout link displayed when loggedin", %{conn: conn} do
     data = %{email: "test@dwyl.com", givenName: "Simon", picture: "this", auth_provider: "GitHub"}
@@ -183,4 +186,61 @@ defmodule ChatWeb.AuthControllerTest do
 end
 ```
 <br />
+
+## 6. Execute the `AuthControllerTest`
+
+In your terminal,
+run the tests with the following command:
+
+```sh
+mix test test/chat_web/controllers/auth_controller_test.exs
+```
+
+You should expect to see output similar to the following:
+
+```sh
+...
+Finished in 0.7 seconds (0.7s async, 0.00s sync)
+3 tests, 0 failures
+
+Randomized with seed 713921
+```
+
+All tests should pass.
+
+If you run the tests with coverage e.g:
+
+```sh
+mix c
+```
+
+You should see **`100%` Coverage** :
+
+```sh
+----------------
+COV    FILE                                        LINES RELEVANT   MISSED
+100.0% lib/chat.ex                                     9        0        0
+100.0% lib/chat/message.ex                            26        4        0
+100.0% lib/chat/repo.ex                                5        0        0
+100.0% lib/chat_web/channels/room_channel.ex          47        8        0
+100.0% lib/chat_web/controllers/auth_controller       14        2        0
+100.0% lib/chat_web/controllers/page_controller        8        2        0
+100.0% lib/chat_web/endpoint.ex                       54        0        0
+100.0% lib/chat_web/views/error_view.ex               16        1        0
+100.0% lib/chat_web/views/layout_view.ex               7        0        0
+100.0% lib/chat_web/views/page_view.ex                 7        1        0
+[TOTAL] 100.0%
+----------------
+```
+
+With all that in-place,
+we can now update the UI!
+
+## 7. Update the UI Template with `Auth`
+
+
+
+
+
+
 [![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example-auth.svg)](https://github.com/dwyl/phoenix-chat-example)
