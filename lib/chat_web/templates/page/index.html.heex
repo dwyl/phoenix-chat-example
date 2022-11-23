@@ -1,42 +1,21 @@
-
-  <ul id='msg-list' phx-update="append" class="pa-1"> </ul>
-  <footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
-    <div class="w-full flex flex-row items-center">
-      <%= if @loggedin do %>
-        <input type="text" disabled class="hidden" id="name"
-          placeholder={person_name(@person)} value={person_name(@person)}
-        />
-      <% else %>
-        <input
-          type="text"
-          class="grow-0 w-1/6 px-1.5 py-1.5 text-base font-normal
-            text-gray-700 bg-white bg-clip-padding
-            border border-solid border-gray-300 rounded
-            transition focus:text-gray-700 focus:border-blue-600 focus:outline-none
-            "
-          id="name"
-          placeholder="Name"
-          required="required"
-        />
-      <% end %>
-
-      <input
-        type="text"
-        class="grow w-2/3 mx-2 px-2 py-1.5 text-base font-normal
-          text-gray-700 bg-white bg-clip-padding
-          border border-solid border-gray-300 rounded
-          transition ease-in-out focus:border-blue-600 focus:outline-none
-          "
-        id="msg"
-        placeholder="Your message"
-        required="required"
+<ul id='msg-list' phx-update="append" class="pa-1"> </ul>
+<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
+  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
+    <%= if @loggedin do %>
+      <input type="text" disabled class="hidden" id="name"
+        placeholder={person_name(@person)} value={person_name(@person)}
       />
+    <% else %>
+      <input type="text" id="name" placeholder="Name" required
+        class="grow-0 w-1/6 px-1.5 py-1.5"/>
+    <% end %>
 
-      <button id="send"
-        class="text-white rounded-xl px-3 py-1.5
-          transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
-        Send
-      </button>
+    <input type="text" id="msg" placeholder="Your message" required
+      class="grow w-2/3 mx-1 px-2 py-1.5"/>
 
-    </div>
-  </footer>
+    <button id="send" class="text-white bold rounded px-3 py-1.5
+        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
+      Send
+    </button>
+  </div>
+</footer>
