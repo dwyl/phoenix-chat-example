@@ -1,5 +1,5 @@
 defmodule ChatWeb.AuthControllerTest do
-  use ChatWeb.ConnCase
+  use ChatWeb.ConnCase, async: true
 
   test "Logout link displayed when loggedin", %{conn: conn} do
     data = %{email: "test@dwyl.com", givenName: "Simon", picture: "this", auth_provider: "GitHub"}
