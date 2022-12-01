@@ -1,26 +1,24 @@
 import socket from "./user_socket.js"
 
-// Establish Phoenix Socket:
-import {Socket} from "phoenix"
+const ul = document.getElementById('msg-list');    // list of messages.
+const name = document.getElementById('name');      // name of message sender
+const msg = document.getElementById('msg');        // message input field
+const send = document.getElementById('send');      // send button
+const channel = socket.channel('room:lobby', {});  // connect to chat "room"
 
-const ul = document.getElementById('msg-list');  // list of messages.
-const name = document.getElementById('name');    // name of message sender
-const msg = document.getElementById('msg');      // message input field
-let channel = socket.channel('room:lobby', {});  // connect to chat "room"
-
-channel.on('shout', function (payload) {        // listen for 'shout' event
+channel.on('shout', function (payload) {           // listen for 'shout' event
   render_message(payload)
 });
 
 channel.join(); // join the channel.
 
 function sendMessage() {
-  channel.push('shout', { // send the message to the server on "shout" channel
+  channel.push('shout', {        // send the message to the server on "shout" channel
     name: name.value || "guest", // get value of "name" of person sending the message. Set guest as default
-    message: msg.value,    // get message text (value) from msg input field.
-    inserted_at: new Date() // datetime of when the message was isnerted
+    message: msg.value,          // get message text (value) from msg input field.
+    inserted_at: new Date()      // date + time of when the message was sent
   });
-  msg.value = '';         // reset the message input field for next message.
+  msg.value = '';                // reset the message input field for next message.
   window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
 }
 
@@ -52,12 +50,11 @@ msg.addEventListener('keypress', function (event) {
   }
 });
 
-window.onload = function() {
-  let send_btn = document.getElementById('send');  // send button
-  send_btn.addEventListener('click', function (event) {
+send.addEventListener('click', function (event) {
+  if (msg.value.length > 0) { // don't sent empty msg.
     sendMessage()
-  });
-}
+  }
+});
 
 // Date & Time Formatting 
 function formatDate(datetime) {

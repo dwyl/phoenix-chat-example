@@ -59,7 +59,6 @@ and _deploying_ a Chat app in Phoenix!
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
 - [14. Tailwind CSS Stylin'](#14-tailwind-css-stylin)
-  - [TODO: Update GIF](#todo-update-gif)
 - [Authentication](#authentication)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
@@ -293,7 +292,7 @@ you can see the chat messages
 displayed in all of them
 as soon as you hit the <kbd>Enter</kbd> key:
 
-![phoenix-chat-localhost-demo-optimised](https://user-images.githubusercontent.com/194400/84203142-d861d180-aaa0-11ea-8f10-abff03c3b4d2.gif)
+![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
 
 <br />
 
@@ -1178,178 +1177,83 @@ and change the contents to the following:
 </main>
 ```
 
-In the 
+Open the 
 `lib/chat_web/templates/layout/index.html.heex`
-file, make the following changes.
+file 
+and replace the contents with the following:
 
 ```html
-<div class="mt-2 mb-2 pb-[8rem]">
-  <ul id='msg-list' phx-update="append" class="pa-1">
+<ul id='msg-list' phx-update="append" class="pa-1"> </ul>
+<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
+  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
+    <%= if @loggedin do %>
+      <input type="text" disabled class="hidden" id="name"
+        placeholder={person_name(@person)} value={person_name(@person)}
+      />
+    <% else %>
+      <input type="text" id="name" placeholder="Name" required
+        class="grow-0 w-1/6 px-1.5 py-1.5"/>
+    <% end %>
 
-  </ul>
-  <footer class="bg-slate-300 p-4 h-[8rem] fixed bottom-0 w-full flex flex-col justify-center">
-    <div class="flex flex-row justify-center items-center">
-      <div class="flex-grow mr-5">
-        <%= if @loggedin do %>
-          <input
-            type="text"
-            class="hidden form-control w-full px-3 py-1.5 text-base font-normal
-              text-gray-700bg-gray-100 bg-clip-padding border border-solid border-gray-300
-              rounded transition ease-in-out m-0
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-            "
-            id="name"
-            placeholder={@person.givenName}
-            value={@person.givenName}
-            disabled
-          />
-        <% else %>
-          <input
-            type="text"
-            class=" form-control block w-full px-3 py-1.5 text-base font-normal
-              text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
-              rounded transition ease-in-out m-0
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-            "
-            id="name"
-            placeholder="Your name"
-          />
-        <% end %>
-        <input
-          type="text"
-          class="form-control block w-full px-3 py-1.5 text-base font-normal
-            text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
-            rounded transition ease-in-out m-0
-            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-          "
-          id="msg"
-          placeholder="Your message"
-        />
-      </div>
+    <input type="text" id="msg" placeholder="Your message" required
+      class="grow w-2/3 mx-1 px-2 py-1.5"/>
 
-      <button
-          id="send_btn"
-          class="inline-flex items-center justify-center w-12 h-12 mr-2 text-pink-100 transition-colors duration-150 bg-[#00a5ff] rounded-full focus:shadow-outline hover:bg-[#027bbc]">
-        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="50px" width="50px"
-          viewBox="0 0 495.003 495.003" style="enable-background:new 0 0 495.003 495.003; filter: invert(1); scale: 50%" xml:space="preserve">
-          <g id="XMLID_51_">
-          <path id="XMLID_53_" d="M164.711,456.687c0,2.966,1.647,5.686,4.266,7.072c2.617,1.385,5.799,1.207,8.245-0.468l55.09-37.616
-            l-67.6-32.22V456.687z"/>
-          <path id="XMLID_52_" d="M492.431,32.443c-1.513-1.395-3.466-2.125-5.44-2.125c-1.19,0-2.377,0.264-3.5,0.816L7.905,264.422
-            c-4.861,2.389-7.937,7.353-7.904,12.783c0.033,5.423,3.161,10.353,8.057,12.689l125.342,59.724l250.62-205.99L164.455,364.414
-            l156.145,74.4c1.918,0.919,4.012,1.376,6.084,1.376c1.768,0,3.519-0.322,5.186-0.977c3.637-1.438,6.527-4.318,7.97-7.956
-            L494.436,41.257C495.66,38.188,494.862,34.679,492.431,32.443z"/>
-          </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g>
-        </svg>
-      </button>
-    </div>
-  </footer>
-</div>
+    <button id="send" class="text-white bold rounded px-3 py-1.5
+        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
+      Send
+    </button>
+  </div>
+</footer>
 ```
 
-In the `assets/js/app.js` file, make the following changes.
+Replace the contents of 
+`assets/js/app.js`
+with the following:
 
 ```javascript
+import socket from "./user_socket.js"
 
-function formatInsertedAtString(datetime) {
-  const m = new Date(datetime)
+const ul = document.getElementById('msg-list');    // list of messages.
+const name = document.getElementById('name');      // name of message sender
+const msg = document.getElementById('msg');        // message input field
+const send = document.getElementById('send');      // send button
+const channel = socket.channel('room:lobby', {});  // connect to chat "room"
 
-  let dateString = m.getUTCFullYear() + "/" +
-    ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
-    ("0" + m.getUTCDate()).slice(-2);
-
-  let timeString = ("0" + m.getUTCHours()).slice(-2) + ":" +
-  ("0" + m.getUTCMinutes()).slice(-2) + ":" +
-  ("0" + m.getUTCSeconds()).slice(-2);
-
-  return {
-    date: dateString,
-    time: timeString
-  }
-}
-
-formatInsertedAtString("2022-10-12T12:28:19")
-
-let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
-
-// Show progress bar on live navigation and form submits
-topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
-window.addEventListener("phx:page-loading-start", info => topbar.show())
-window.addEventListener("phx:page-loading-stop", info => topbar.hide())
-
-// connect if there are any LiveViews on the page
-liveSocket.connect()
-
-// expose liveSocket on window for web console debug logs and latency simulation:
-// >> liveSocket.enableDebug()
-// >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
-// >> liveSocket.disableLatencySim()
-window.liveSocket = liveSocket
-
-
-let channel = socket.channel('room:lobby', {}); // connect to chat "room"
-
-channel.on('shout', function (payload) { // listen to the 'shout' event
-  let li = document.createElement("li"); // create new list item DOM element
-
-  // Get information from payload
-  const name = payload.name || 'guest';    
-  const message = payload.message 
-  const date = formatInsertedAtString(payload.inserted_at).date
-  const time = formatInsertedAtString(payload.inserted_at).time
-
-  // HTML to insert
-  let HTMLtoInsert = `
-  <div class="flex justify-start mt-8 ml-4">
-    <div class="flex flex-row items-start">
-      <div class="w-[6rem]">
-        <span class="font-semibold text-slate-600 break-words">
-          ${name}
-        </span>
-      </div>
-      <div class="bg-amber-200 relative mr-4 ml-4 h-full">
-        <div class="absolute left-1/2 -ml-0.5 w-[0.1px] h-1/4 bg-gray-600"></div>
-      </div>
-      <div class="flex flex-col items-start max-w-[50vw]">
-        <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-          <span class="block">
-            ${message}
-          </span>
-        </div>
-        <span class="text-xs font-thin mt-2">
-          <span>${date}</span>
-          <span class="text-gray-400">at</span>
-          <span>${time}</span>
-        </span>
-      </div>
-    </div>
-  </div>
-  `
-
-  li.innerHTML = HTMLtoInsert
-
-  // Append to list
-  ul.appendChild(li);
+channel.on('shout', function (payload) {           // listen for 'shout' event
+  render_message(payload)
 });
 
 channel.join(); // join the channel.
 
-
-let ul = document.getElementById('msg-list');        // list of messages.
-let name = document.getElementById('name');          // name of message sender
-let msg = document.getElementById('msg');            // message input field
-let send_btn = document.getElementById('send_btn');  // send button
-
-// function to be called on send
 function sendMessage() {
-  channel.push('shout', { // send the message to the server on "shout" channel
-    name: name.value || "guest",     // get value of "name" of person sending the message. Set guest as default
-    message: msg.value,    // get message text (value) from msg input field.
-    inserted_at: new Date() // datetime of when the message was isnerted
+  channel.push('shout', {        // send the message to the server on "shout" channel
+    name: name.value || "guest", // get value of "name" of person sending the message. Set guest as default
+    message: msg.value,          // get message text (value) from msg input field.
+    inserted_at: new Date()      // date + time of when the message was sent
   });
-  msg.value = '';         // reset the message input field for next message.
+  msg.value = '';                // reset the message input field for next message.
   window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
+}
+
+function render_message(payload) {
+  const li = document.createElement("li"); // create new list item DOM element
+  // Message HTML with Tailwind CSS Classes for layout/style:
+  li.innerHTML = `
+  <div class="flex flex-row w-[95%] mx-2 border-b-[1px] border-slate-300 py-2">
+    <div class="text-left w-1/5 font-semibold text-slate-800 break-words">
+      ${payload.name}
+      <div class="text-xs mr-1">
+        <span class="font-thin">${formatDate(payload.inserted_at)}</span> 
+        <span>${formatTime(payload.inserted_at)}</span>
+      </div>
+    </div>
+    <div class="flex w-3/5 mx-1 grow">
+      ${payload.message}
+    </div>
+  </div>
+  `
+  // Append to list
+  ul.appendChild(li);
 }
 
 // "listen" for the [Enter] keypress event to send a message:
@@ -1359,18 +1263,35 @@ msg.addEventListener('keypress', function (event) {
   }
 });
 
-send_btn.addEventListener('onclick', function (event) {
-  sendMessage()
+send.addEventListener('click', function (event) {
+  if (msg.value.length > 0) { // don't sent empty msg.
+    sendMessage()
+  }
 });
+
+// Date & Time Formatting 
+function formatDate(datetime) {
+  const m = new Date(datetime);
+  return m.getUTCFullYear() + "/" 
+    + ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" 
+    + ("0" + m.getUTCDate()).slice(-2);
+}
+
+function formatTime(datetime) {
+  const m = new Date(datetime);
+  return ("0" + m.getUTCHours()).slice(-2) + ":"
+    + ("0" + m.getUTCMinutes()).slice(-2) + ":"
+    + ("0" + m.getUTCSeconds()).slice(-2);
+}
 ```
 
-We added a function `formatInsertAtString()` 
-function to format the `Date` object to 
+We added the `formatDate()` and `formatTime()`
+functions to format the `Date` object to 
 show beneath each message.
 
 We've also made some changes to 
 how the form is submitted.
-Previously, everytone the button `Send` or
+Previously, every time the `Send` button or
 the button `Enter` was pressed,
 a form submit event was triggered,
 which cause a reload of the page.
@@ -1392,46 +1313,48 @@ change it so it looks like the following.
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="csrf-token" content={csrf_token_value()}>
     <%= live_title_tag assigns[:page_title] || "Phoenix Chat", suffix: " · Tutorial!" %>
-    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script defer phx-track-static type="text/javascript"
+      src={Routes.static_path(@conn, "/assets/app.js")}></script>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <header class="bg-[#3f8a9c] w-full h-[5rem] top-0 fixed flex flex-col justify-center z-10">
-      <nav class="flex flex-row justify-between items-center">
-          <h1 class="text-xs text-center font-mono text-white ml-3 sm:text-3xl sm:ml-8">
-            Phoenix Chat Example
-          </h1>
-          <div class="float-right mr-3">
-            <%= if @loggedin do %>
-              <div class="flex flex-row justify-center items-center">
-                <img width="42px" src={@person.picture} />
-                <%= link "logout", to: "/logout", class: "bg-[#b82424] text-white rounded-xl px-4 py-2 ml-4" %>
-              </div>
-            <% else %>
-              <div class="bg-green-600 text-white rounded-xl px-4 py-2 w-full font-bold">
-                <%= link "Login", to: "/login" %>
-              </div>
-            <% end %>
-          </div>
+    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
+      <nav class="flex flex-row justify-between items-center text-white">
+        <h1 class="w-4/5 md:text-3xl text-center font-mono ml-4">
+          Phoenix Chat Example
+        </h1>
+        <div class="float-right mr-3">
+          <%= if @loggedin do %>
+            <div class="flex flex-row justify-center items-center">
+              <img width="42px" src={@person.picture} class="rounded-full"/>
+              <%= link "logout", to: "/logout", class: "bg-red-600 rounded px-2 py-2 ml-2 mr-1" %>
+            </div>
+          <% else %>
+            <div class="bg-green-500  rounded px-3 py-2 w-full font-bold">
+              <%= link "Login", to: "/login" %>
+            </div>
+          <% end %>
+        </div>
       </nav>
     </header>
-    <main class="mt-[7rem]">
+    <main class="mt-[4rem]">
         <%= @inner_content %>
     </main>
   </body>
 </html>
 ```
 
-
 You should now have a UI/layout that looks like this:
 
-## TODO: Update GIF
+![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
 
-![liveview-chat-with-tailwind-css](https://user-images.githubusercontent.com/194400/174119023-bb83f5f4-867c-4bfa-a005-26b39c700137.gif)
 
-If you have questions about any of the **`Tailwind`** classes used,
+If you have questions about any 
+of the **`Tailwind`** classes used,
 please spend 2 mins Googling 
-and then if you're still stuck, 
+or searching the official (superb!) docs:
+[tailwindcss.com/docs](https://tailwindcss.com/docs) 
+and then if you're still stuck, please
 [open an issue](https://github.com/dwyl/learn-tailwind/issues).
 
 <br />
@@ -1440,7 +1363,7 @@ and then if you're still stuck,
 
 You may have noticed in the previous step,
 that the template adds a **`Login`** button. 
-If you want to understand 
+If you want to _understand_ 
 how Authentication is implemented the _easy/fast_ way,
 see:
 [auth.md](https://github.com/dwyl/phoenix-chat-example/blob/main/auth.md)
