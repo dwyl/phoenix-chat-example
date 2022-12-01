@@ -11,12 +11,10 @@
 [![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
 [![Hex pm](https://img.shields.io/hexpm/v/phoenix.svg?style=flat-square)](https://hex.pm/packages/phoenix)
   
-_Try_ it: https://phxchat.herokuapp.com
+_Try_ it: 
+[**phoenix-chat**.fly.dev](https://phoenix-chat.fly.dev/)
 <!-- [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/phoenix-chat-example) -->
 <!-- [![Inline docs](https://inch-ci.org/github/dwyl/phoenix-chat-example.svg?style=flat-square)](https://inch-ci.org/github/dwyl/phoenix-chat-example) -->
-<!-- wake Heroku app so it loads faster! see: https://github.com/dwyl/ping -->
-![wake-sleeping-heroku-app](https://phxtodo.herokuapp.com/ping)
-
 
 
 A ***step-by-step tutorial*** for building, testing
@@ -24,53 +22,74 @@ and _deploying_ a Chat app in Phoenix!
 
 </div>
 
-## Content
-- [Why?](#why)
-- [What?](#what)
-- [Who?](#who)
-- [How?](#how)
-  - [0. Pre-requisites (Before you Start)](#0-pre-requisites-before-you-start)
-  - [1. Create the App](#1-create-the-app)
-  - [2. Create the (Websocket) "Channel"](#2-create-the-websocket-channel)
+- [Phoenix Chat Example](#phoenix-chat-example)
+  - [Why?](#why)
+  - [What?](#what)
+  - [Who?](#who)
+- [_How_?](#how)
+  - [0. Pre-requisites (_Before you Start_)](#0-pre-requisites-before-you-start)
+    - [_Check_ You Have Everything _Before_ Starting](#check-you-have-everything-before-starting)
+  - [First _Run_ the _Finished_ App](#first-run-the-finished-app)
+    - [Clone the Project:](#clone-the-project)
+    - [Install the Dependencies](#install-the-dependencies)
+    - [Run the App](#run-the-app)
+  - [1. _Create_ The _App_](#1-create-the-app)
+    - [Run the Tests](#run-the-tests)
+  - [2. _Create_ the (WebSocket) "_Channel_"](#2-create-the-websocket-channel)
   - [3. Update the Template File (UI)](#3-update-the-template-file-ui)
     - [3.1 Update Layout Template](#31-update-layout-template)
-    - [3.2 Update the page_controller_test.exs](#32-update-the-page_controller_testexs)
+    - [3.2 Update the `page_controller_test.exs`](#32-update-the-page_controller_testexs)
   - [4. Update the "Client" code in App.js](#4-update-the-client-code-in-appjs)
-    - [4.1 Comment out lines in `socket.js`](#41-comment-out-lines-in-socketjs)
+    - [4.1 Comment Out Lines in `user_socket.js`](#41-comment-out-lines-in-user_socketjs)
+    - [Storing Chat Message Data/History](#storing-chat-message-datahistory)
   - [5. Generate Database Schema to Store Chat History](#5-generate-database-schema-to-store-chat-history)
-  - [6. Run the Ecto Migration (Create The Database Table)](#6-run-the-ecto-migration-create-the-database-table)
+  - [6. Run the Ecto Migration (_Create The Database Table_)](#6-run-the-ecto-migration-create-the-database-table)
+    - [6.1 Review the Messages Table Schema](#61-review-the-messages-table-schema)
   - [7. Insert Messages into Database](#7-insert-messages-into-database)
-  - [8. Load Existing Messages (When Someone Joins the Chat)](#8-load-existing-messages-when-someone-joins-the-chat)
+  - [8. Load _Existing_ Messages (_When Someone Joins the Chat_)](#8-load-existing-messages-when-someone-joins-the-chat)
   - [9. Send Existing Messages to the Client when they Join](#9-send-existing-messages-to-the-client-when-they-join)
-  - [10. Checkpoint: Our Chat App Saves Messages!! (Try it!)](#10-checkpoint-our-chat-app-saves-messages-try-it)
-- [Testing our App (Automated Testing)](#testing-our-app-automated-testing)
+  - [10. _Checkpoint_: Our Chat App Saves Messages!! (_Try it_!)](#10-checkpoint-our-chat-app-saves-messages-try-it)
+- [Testing our App (_Automated Testing_)](#testing-our-app-automated-testing)
   - [11. Run the Default/Generated Tests](#11-run-the-defaultgenerated-tests)
   - [12. Understanding The Channel Tests](#12-understanding-the-channel-tests)
-  - [13. What is Not Tested?](#13-what-is-not-tested)
-    - [13.1 Add excoveralls as a (Development) Dependency to mix.exs](#131-add-excoveralls-as-a-development-dependency-to-mixexs)
-    - [13.2 Create a New File Called coveralls.json](#132-create-a-new-file-called-coverallsjson)
+    - [12.1 _Analyse_ a Test](#121-analyse-a-test)
+  - [13. What is _Not_ Tested?](#13-what-is-not-tested)
+    - [13.1 Add `excoveralls` as a (Development) Dependency to `mix.exs`](#131-add-excoveralls-as-a-development-dependency-to-mixexs)
+    - [13.2 Create a _New File_ Called `coveralls.json`](#132-create-a-new-file-called-coverallsjson)
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
+- [14. Tailwind CSS Stylin'](#14-tailwind-css-stylin)
+- [Authentication](#authentication)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
-- [Inspiration](#inspiration)
-- [Recommended Reading/Learning](#recommended-reading--learning)
+  - [What _Next_?](#what-next)
+  - [Inspiration](#inspiration)
+  - [Recommended Reading / Learning](#recommended-reading--learning)
 
 ## Why?
 
-Chat apps are the "Hello World" of "real time" examples. <br />
+Chat apps are the 
+[`"Hello World"`](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) 
+of 
+[real time](https://en.wikipedia.org/wiki/Real-time_computing)
+examples. <br />
 
-_Sadly, most_ example apps show a few basics and then _ignore_ "_the rest_" ... <br />
-So "_beginners_" are often left "_lost_" or "_confused_" as to
+Sadly, **_most_ example apps** show a few **basics**
+and then **ignore the rest** ... 🤷‍♀️<br />
+So **beginners** are often left **lost** or **confused** as to
 what they should _do_ or learn _next_! <br />
-Very _few_ tutorials consider **Testing,
-Deployment, Documentation** or _other_ "**Enhancements**" which are
-all part of the "***Real World***" of building and running apps;
+Very _few_ tutorials consider 
+**Testing, Deployment, Documentation** or _other_ "**Enhancements**" 
+which are all part of the "***Real World***" 
+of building and running apps;
 so those are topics we **_will_ cover** to "_fill in the gaps_".
 
-We wrote _this_ tutorial to be _easiest_ way to learn Phoenix,
-Ecto and "Channels" with a _practical_ example _anyone_ can follow.
+We wrote _this_ tutorial to be **_easiest_ way to learn `Phoenix`**,
+`Ecto` and `Channels` with a **_practical_ example _anyone_ can follow**.
 
+This is the example/tutorial we _wished_ we had 
+when we were learning `Elixir`, `Phoenix` ...
+If you find it useful, please ⭐ 🙏 Thanks!
 
 
 ## What?
@@ -79,8 +98,9 @@ A simple step-by-step tutorial showing you how to:
 
 + **Create** a **Phoenix App** from _scratch_
 (_using the `mix phx.new chat` "generator" command_)
-+ Add a "Channel" so your app can communicate over "**WebSockets**".
-+ Implement a _basic_ "***front-end***" in "_plain_" JavaScript
++ Add a "Channel" so your app can communicate over 
+  [**WebSockets**](https://en.wikipedia.org/wiki/WebSocket).
++ Implement a _basic_ ***front-end*** in _plain_ JavaScript
 (_ES5 without any libraries_) to interact with Phoenix
 (_send/receive messages via WebSockets_)
 + Add a simple "**Ecto**" **schema** to define
@@ -88,7 +108,7 @@ the **Database Table** (_to store messages_)
 + **Write** the functions ("CRUD") to _save_
 message/sender data to a database table.
 + **Test** that everything is working as expected.
-+ ***Deploy*** to Heroku so you can _show_ people your creation!
++ ***Deploy*** to **`Fly.io`** so you can _show_ people your creation!
 
 _Initially_, we _deliberately_ skip over configuration files
 and "_Phoenix Internals_"
@@ -114,9 +134,9 @@ so don't be afraid/shy. <br />
 Also, by asking questions, you are helping everyone
 that is or might be stuck with the _same_ thing!
 + **Chat App _specific_** questions:
-https://github.com/dwyl/phoenix-chat-example/issues
+[dwyl/**phoenix-chat-example**/issues](https://github.com/dwyl/phoenix-chat-example/issues)
 + **General** Learning Phoenix questions:
-https://github.com/dwyl/learn-phoenix-framework/issues
+[dwyl/learn-**phoenix-framework**/issues](https://github.com/dwyl/learn-phoenix-framework/issues)
 
 
 # _How_?
@@ -131,9 +151,11 @@ scroll down to the "Clone Repo and Run on Localhost" section instead.
 ## 0. Pre-requisites (_Before you Start_)
 
 1. **Elixir _Installed_** on your **local machine**. <br />
-  see: https://github.com/dwyl/learn-elixir#installation <br />
-  e.g: <br />
-```
+see: 
+[dwyl/learn-elixir#**installation**](https://github.com/dwyl/learn-elixir#installation) <br />
+e.g:
+
+```sh
 brew install elixir
 ```
 > _**Note**: if you already have `Elixir` installed on your Mac,
@@ -141,37 +163,43 @@ brew install elixir
   **`brew upgrade elixir`**
 
 
-2. **Phoenix** framework **installed**.
-  see: https://hexdocs.pm/phoenix/installation.html <br />
-  e.g: <br />
-```
+1. **Phoenix** framework **installed**.
+see: 
+[hexdocs.pm/phoenix/installation.html](https://hexdocs.pm/phoenix/installation.html) <br />
+e.g:
+
+```sh
 mix archive.install hex phx_new
 ```
 
-3. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
-see: [https://github.com/dwyl/**learn-postgresql#installation**](https://github.com/dwyl/learn-postgresql#installation)
+1. PostgreSQL (Database Server) installed (_to save chat messages_) <br />
+see: 
+[dwyl/**learn-postgresql#installation**](https://github.com/dwyl/learn-postgresql#installation)
 
 <!-- update instructions to https://hexdocs.pm/phoenix/installation.html -->
 
-4. Basic **Elixir Syntax** knowledge will help,<br />
+1. Basic **Elixir Syntax** knowledge will help,<br />
 please see:
-[https://github.com/dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir)
+[dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir)
 
-5. Basic **JavaScript** knowledge is _advantageous_
+1. Basic **JavaScript** knowledge is _advantageous_
 (_but not essential as the "front-end" code
 is quite basic and well-commented_).
-see: https://github.com/iteles/Javascript-the-Good-Parts-notes
+see: 
+[dwyl/Javascript-the-Good-Parts-notes](https://github.com/dwyl/Javascript-the-Good-Parts-notes)
 
 
 ### _Check_ You Have Everything _Before_ Starting
 
 Check you have the _latest version_ of **Elixir**
 (_run the following command in your terminal_):
+
 ```sh
 elixir -v
 ```
 
 You should see something like:
+
 ```sh
 Erlang/OTP 25 [erts-13.1.1] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
 
@@ -179,29 +207,46 @@ Elixir 1.14.1 (compiled with Erlang/OTP 25)
 ```
 
 Check you have the **latest** version of **Phoenix**:
+
 ```sh
 mix phx.new -v
 ```
+
 You should see:
+
 ```sh
-Phoenix installer v1.6.14
+Phoenix installer v1.6.15
 ```
+
+> **Note**: if your `Phoenix` version is _newer_,
+> Please feel free to update this doc! 📝
+> We try our best to keep it updated ...
+> but _your_ contributions are always welcome!
+
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
 run the following command:
+
 ```sh
 lsof -i :5432
 ```
+
 You should see output _similar_ to the following:
+
 ```sh
 COMMAND  PID  USER   FD  TYPE DEVICE                  SIZE/OFF NODE NAME
 postgres 529 Nelson  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
 postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
 ```
+
 This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
 (_the default port_)
 
-With all those "pre-flight checks" performed, let's get _going_!
+With all those 
+["pre-flight checks"](https://en.wikipedia.org/wiki/Preflight_checklist) 
+performed, let's _fly_! 🚀
+
+<br />
 
 ## First _Run_ the _Finished_ App
 
@@ -246,7 +291,7 @@ you can see the chat messages
 displayed in all of them
 as soon as you hit the <kbd>Enter</kbd> key:
 
-![phoenix-chat-localhost-demo-optimised](https://user-images.githubusercontent.com/194400/84203142-d861d180-aaa0-11ea-8f10-abff03c3b4d2.gif)
+![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
 
 <br />
 
@@ -289,6 +334,7 @@ cd chat
 ```
 
 Now run the following command:
+
 ```sh
 mix setup
 ```
@@ -1099,59 +1145,260 @@ and the `Enum.each` will be invoked at least once.
 
 With that our app is fully tested!
 
+<br />
+
+# 14. Tailwind CSS Stylin'
+
+As it stands, the app is _fine_.
+However, we can give it a bit of pizzazz :sparkles:.
+Let's style our view templates a bit
+so the app looks awesome!
+
+If you're new to `Tailwind`,
+please see: 
+[dwyl/**learn-tailwind**](https://github.com/dwyl/learn-tailwind)
+
+> **Note**: We're aren't repeating the setup steps here
+as **`Phoenix 1.7`** will include Tailwind by default. <br />
+But if you are following this guide 
+with an earlier version of **`Phoenix`**,
+see: 
+[**`Tailwind` in `Phoenix`**](https://github.com/dwyl/learn-tailwind#part-2-tailwind-in-phoenix)
+
+
+Open 
+`lib/chat_web/templates/layout/app.html.heex`
+and change the contents to the following:
+
+```html
+<main class="w-full">
+  <%= @inner_content %>
+</main>
+```
+
+Open the 
+`lib/chat_web/templates/layout/index.html.heex`
+file 
+and replace the contents with the following:
+
+```html
+<ul id='msg-list' phx-update="append" class="pa-1"> </ul>
+<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
+  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
+    <%= if @loggedin do %>
+      <input type="text" disabled class="hidden" id="name"
+        placeholder={person_name(@person)} value={person_name(@person)}
+      />
+    <% else %>
+      <input type="text" id="name" placeholder="Name" required
+        class="grow-0 w-1/6 px-1.5 py-1.5"/>
+    <% end %>
+
+    <input type="text" id="msg" placeholder="Your message" required
+      class="grow w-2/3 mx-1 px-2 py-1.5"/>
+
+    <button id="send" class="text-white bold rounded px-3 py-1.5
+        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
+      Send
+    </button>
+  </div>
+</footer>
+```
+
+Replace the contents of 
+`assets/js/app.js`
+with the following:
+
+```javascript
+import socket from "./user_socket.js"
+
+const ul = document.getElementById('msg-list');    // list of messages.
+const name = document.getElementById('name');      // name of message sender
+const msg = document.getElementById('msg');        // message input field
+const send = document.getElementById('send');      // send button
+const channel = socket.channel('room:lobby', {});  // connect to chat "room"
+
+channel.on('shout', function (payload) {           // listen for 'shout' event
+  render_message(payload)
+});
+
+channel.join(); // join the channel.
+
+function sendMessage() {
+  channel.push('shout', {        // send the message to the server on "shout" channel
+    name: name.value || "guest", // get value of "name" of person sending the message. Set guest as default
+    message: msg.value,          // get message text (value) from msg input field.
+    inserted_at: new Date()      // date + time of when the message was sent
+  });
+  msg.value = '';                // reset the message input field for next message.
+  window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
+}
+
+function render_message(payload) {
+  const li = document.createElement("li"); // create new list item DOM element
+  // Message HTML with Tailwind CSS Classes for layout/style:
+  li.innerHTML = `
+  <div class="flex flex-row w-[95%] mx-2 border-b-[1px] border-slate-300 py-2">
+    <div class="text-left w-1/5 font-semibold text-slate-800 break-words">
+      ${payload.name}
+      <div class="text-xs mr-1">
+        <span class="font-thin">${formatDate(payload.inserted_at)}</span> 
+        <span>${formatTime(payload.inserted_at)}</span>
+      </div>
+    </div>
+    <div class="flex w-3/5 mx-1 grow">
+      ${payload.message}
+    </div>
+  </div>
+  `
+  // Append to list
+  ul.appendChild(li);
+}
+
+// "listen" for the [Enter] keypress event to send a message:
+msg.addEventListener('keypress', function (event) {
+  if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
+    sendMessage()
+  }
+});
+
+send.addEventListener('click', function (event) {
+  if (msg.value.length > 0) { // don't sent empty msg.
+    sendMessage()
+  }
+});
+
+// Date & Time Formatting 
+function formatDate(datetime) {
+  const m = new Date(datetime);
+  return m.getUTCFullYear() + "/" 
+    + ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" 
+    + ("0" + m.getUTCDate()).slice(-2);
+}
+
+function formatTime(datetime) {
+  const m = new Date(datetime);
+  return ("0" + m.getUTCHours()).slice(-2) + ":"
+    + ("0" + m.getUTCMinutes()).slice(-2) + ":"
+    + ("0" + m.getUTCSeconds()).slice(-2);
+}
+```
+
+We added the `formatDate()` and `formatTime()`
+functions to format the `Date` object to 
+show beneath each message.
+
+We've also made some changes to 
+how the form is submitted.
+Previously, every time the `Send` button or
+the button `Enter` was pressed,
+a form submit event was triggered,
+which cause a reload of the page.
+This is not pretty. 
+With these changes, we no longer have a form
+and now added an event listener to the 
+`Send` button.
+
+Finally, let's make some changes to the navbar.
+In the `lib/chat_web/templates/layout/root.html.heex`,
+change it so it looks like the following.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="csrf-token" content={csrf_token_value()}>
+    <%= live_title_tag assigns[:page_title] || "Phoenix Chat", suffix: " · Tutorial!" %>
+    <script defer phx-track-static type="text/javascript"
+      src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
+      <nav class="flex flex-row justify-between items-center text-white">
+        <h1 class="w-4/5 md:text-3xl text-center font-mono ml-4">
+          Phoenix Chat Example
+        </h1>
+        <div class="float-right mr-3">
+          <%= if @loggedin do %>
+            <div class="flex flex-row justify-center items-center">
+              <img width="42px" src={@person.picture} class="rounded-full"/>
+              <%= link "logout", to: "/logout", class: "bg-red-600 rounded px-2 py-2 ml-2 mr-1" %>
+            </div>
+          <% else %>
+            <div class="bg-green-500  rounded px-3 py-2 w-full font-bold">
+              <%= link "Login", to: "/login" %>
+            </div>
+          <% end %>
+        </div>
+      </nav>
+    </header>
+    <main class="mt-[4rem]">
+        <%= @inner_content %>
+    </main>
+  </body>
+</html>
+```
+
+You should now have a UI/layout that looks like this:
+
+![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
+
+
+If you have questions about any 
+of the **`Tailwind`** classes used,
+please spend 2 mins Googling 
+or searching the official (superb!) docs:
+[tailwindcss.com/docs](https://tailwindcss.com/docs) 
+and then if you're still stuck, please
+[open an issue](https://github.com/dwyl/learn-tailwind/issues).
+
+<br />
+
+# Authentication
+
+You may have noticed in the previous step,
+that the template adds a **`Login`** button. 
+If you want to _understand_ 
+how Authentication is implemented the _easy/fast_ way,
+see:
+[auth.md](https://github.com/dwyl/phoenix-chat-example/blob/main/auth.md)
 
 
 <br />
 
 # Continuous Integration
 
-Continuous integration lets you _automate_ running the tests
-to check/confirm that your app is working as _expected_ (_before deploying_).
+Continuous integration 
+lets you _automate_ running the tests
+to check/confirm that your app 
+is working as _expected_ (_before deploying_).
 This prevents accidentally "_breaking_" your app.
 
 _Thankfully_ the steps are quite simple.
 
-> _If you are `new` to Continuous Integration, or need a refresher,
-we wrote a step-by-step tutorial for it!
-see_:
-[github.com/dwyl/**learn-travis**](https://github.com/dwyl/learn-travis)
+Please see:
 
-The Elixir-specific section is:
-https://github.com/dwyl/learn-travis#elixir-lang
+For an example `ci.yml`, see:
 
-We only need to add `.travis.yml` file to the project
-with the following lines:
-```yml
-language: elixir
-elixir: # Latest version of Elixir
-  - 1.12.3
-services: # ensure that Travis-CI provisions a DB for our test:
-  - postgresql
-env:
-  - MIX_ENV=test
-script: # run the tests:
-  - mix test
-```
-
-You will need to _enable_ your project on Travis-CI
-for the build to run. <br />
-Please see: https://github.com/dwyl/learn-travis#getting-started
+[`.github/workflows/ci.yml`](https://github.com/dwyl/phoenix-chat-example/blob/main/.github/workflows/ci.yml)
 
 <br />
 
 # Deployment!
 
-Deployment to Heroku takes a few minutes,
-but has a few "steps",
-therefore we have created a _separate_
-guide for it:
- [elixir-phoenix-app-deployment.md](https://github.com/dwyl/learn-heroku/blob/master/elixir-phoenix-app-deployment.md)
+Deployment to Fly.io takes a couple of minutes,
+we recommend following the official guide:
+[fly.io/docs/elixir/**getting-started**](https://fly.io/docs/elixir/getting-started/)
 
 Once you have _deployed_ you will will be able
 to view/use your app in any Web/Mobile Browser.
 
-e.g: https://phxchat.herokuapp.com <br />
-![phxchat](https://user-images.githubusercontent.com/194400/36480000-9c6fe768-1702-11e8-86d6-c8703883096c.png)
+e.g:
+[**phoenix-chat**.fly.dev/](https://phoenix-chat.fly.dev/) <br />
 
 <br />
 

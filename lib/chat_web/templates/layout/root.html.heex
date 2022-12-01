@@ -5,19 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="csrf-token" content={csrf_token_value()}>
-    <%= live_title_tag assigns[:page_title] || "Chat", suffix: " · Phoenix Framework" %>
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
-    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <%= live_title_tag assigns[:page_title] || "Phoenix Chat", suffix: " · Tutorial!" %>
+    <script defer phx-track-static type="text/javascript"
+      src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <h1 style="padding-top: 15px">Chat Example</h1>
-        </nav>
-          <img src={Routes.static_path(@conn, "/images/phoenix.png")} width="500px" alt="Phoenix Framework Logo" />
-      </section>
+    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
+      <nav class="flex flex-row justify-between items-center text-white">
+        <h1 class="w-4/5 md:text-3xl text-center font-mono ml-4">
+          Phoenix Chat Example
+        </h1>
+        <div class="float-right mr-3">
+          <%= if @loggedin do %>
+            <div class="flex flex-row justify-center items-center">
+              <img width="42px" src={@person.picture} class="rounded-full"/>
+              <%= link "logout", to: "/logout", class: "bg-red-600 rounded px-2 py-2 ml-2 mr-1" %>
+            </div>
+          <% else %>
+            <div class="bg-green-500  rounded px-3 py-2 w-full font-bold">
+              <%= link "Login", to: "/login" %>
+            </div>
+          <% end %>
+        </div>
+      </nav>
     </header>
-    <%= @inner_content %>
+    <main class="mt-[4rem]">
+        <%= @inner_content %>
+    </main>
   </body>
 </html>

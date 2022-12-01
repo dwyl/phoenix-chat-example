@@ -1,12 +1,21 @@
-<!-- The list of messages will appear here: -->
-<ul id="msg-list" style="list-style: none; min-height:200px;">
-</ul>
+<ul id='msg-list' phx-update="append" class="pa-1"> </ul>
+<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
+  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
+    <%= if @loggedin do %>
+      <input type="text" disabled class="hidden" id="name"
+        placeholder={person_name(@person)} value={person_name(@person)}
+      />
+    <% else %>
+      <input type="text" id="name" placeholder="Name" required
+        class="grow-0 w-1/6 px-1.5 py-1.5"/>
+    <% end %>
 
-<div class="row">
-  <div class="col-xs-3" style="width: 20%; margin-left: 0;">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" style="border: 1px black solid; font-size: 1.3em;" autofocus>
+    <input type="text" id="msg" placeholder="Your message" required
+      class="grow w-2/3 mx-1 px-2 py-1.5"/>
+
+    <button id="send" class="text-white bold rounded px-3 py-1.5
+        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
+      Send
+    </button>
   </div>
-  <div class="col-xs-9" style="width: 100%; margin-left: 1%; ">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message" style="border: 1px black solid; font-size: 1.3em;">
-  </div>
-</div>
+</footer>

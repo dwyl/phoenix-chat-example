@@ -2,7 +2,7 @@ defmodule ChatWeb.RoomChannel do
   use ChatWeb, :channel
 
   @impl true
-  def join("room:lobby", payload, socket) do
+  def join("room:lobby", _payload, socket) do
     #if authorized?(payload) do
       send(self(), :after_join)
       {:ok, socket}
@@ -33,12 +33,14 @@ defmodule ChatWeb.RoomChannel do
   #   true
   # end
 
+  @impl true
   def handle_info(:after_join, socket) do
     Chat.Message.get_messages()
     |> Enum.reverse() # reverse to display the latest message at the bottom of the page
     |> Enum.each(fn msg -> push(socket, "shout", %{
         name: msg.name,
         message: msg.message,
+        inserted_at: msg.inserted_at
       }) end)
     {:noreply, socket} # :noreply
   end
