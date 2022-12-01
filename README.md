@@ -62,7 +62,6 @@ and _deploying_ a Chat app in Phoenix!
 - [Authentication](#authentication)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
-- [Todo: Update Screenshot!](#todo-update-screenshot)
   - [What _Next_?](#what-next)
   - [Inspiration](#inspiration)
   - [Recommended Reading / Learning](#recommended-reading--learning)
@@ -1400,10 +1399,6 @@ to view/use your app in any Web/Mobile Browser.
 
 e.g:
 [**phoenix-chat**.fly.dev/](https://phoenix-chat.fly.dev/) <br />
-
-# Todo: Update Screenshot!
-
-![phxchat](https://user-images.githubusercontent.com/194400/36480000-9c6fe768-1702-11e8-86d6-c8703883096c.png)
 
 <br />
 
