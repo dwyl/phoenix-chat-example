@@ -58,7 +58,7 @@ defmodule Chat.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.4"},
-      {:plug_cowboy, "~> 2.5.2"},
+      {:plug_cowboy, "~> 2.6.0"},
 
       # See: github.com/dwyl/auth_plug
       {:auth_plug, "~> 1.5"},
