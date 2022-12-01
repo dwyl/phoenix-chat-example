@@ -48,7 +48,7 @@ defmodule Chat.MixProject do
       {:ecto_sql, "~> 3.9.0"},
       {:postgrex, ">= 0.16.5"},
       {:phoenix_html, "~> 3.2.0"},
-      {:phoenix_live_reload, "~> 1.3.3", only: :dev},
+      {:phoenix_live_reload, "~> 1.4.1", only: :dev},
       {:phoenix_live_view, "~> 0.18.2"},
       {:floki, ">= 0.33.1", only: :test},
       {:phoenix_live_dashboard, "~> 0.7.1"},
