@@ -9,7 +9,6 @@
     "lib/chat/release.ex",
     "lib/chat_web.ex",
     "lib/chat_web/gettext.ex",
-    "lib/chat_web/router.ex",
     "lib/chat_web/views/error_helpers.ex",
     "lib/chat_web/telemetry.ex",
     "lib/chat_web/channels/user_socket.ex"

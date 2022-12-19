@@ -4,8 +4,7 @@
 
 ![phoenix-chat-logo](https://user-images.githubusercontent.com/194400/39481553-c448aa1c-4d63-11e8-9389-47789833a96e.png)
 
-
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dwyl/phoenix-chat-example/Elixir%20CI?label=build&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/phoenix-chat-example/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/phoenix-chat-example/main.svg?style=flat-square)](https://codecov.io/github/dwyl/phoenix-chat-example?branch=main)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/phoenix-chat-example/issues)
 [![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example.svg)](https://github.com/dwyl/phoenix-chat-example)
