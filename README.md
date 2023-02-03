@@ -1068,7 +1068,7 @@ defp deps do
 Add a comma to the end of the last line, then add the following line to the end
 of the List:
 ```elixir
-{:excoveralls, "~> 0.13.0", only: [:test, :dev]} # tracking test coverage
+{:excoveralls, "~> 0.15.2", only: [:test, :dev]} # tracking test coverage
 ```
 
 Additionally, find the `def project do` section (_towards the top of `mix.exs`_)
@@ -1076,8 +1076,12 @@ and add the following lines to the List:
 
 ```elixir
 test_coverage: [tool: ExCoveralls],
-preferred_cli_env: [coveralls: :test, "coveralls.detail": :test,
-  "coveralls.post": :test, "coveralls.html": :test]
+preferred_cli_env: [
+  coveralls: :test,
+  "coveralls.detail": :test,
+  "coveralls.post": :test,
+  "coveralls.html": :test
+]
 ```
 
 _Then_, ***install*** the dependency on `excoveralls`
@@ -1107,14 +1111,23 @@ create a new file called `coveralls.json` and _copy-paste_ the following:
     "minimum_coverage": 100
   },
   "skip_files": [
-    "test/"
+    "test/",
+    "lib/chat/application.ex",
+    "lib/chat_web.ex",
+    "lib/chat_web/telemetry.ex",
+    "lib/chat_web/components/core_components.ex",
+    "lib/chat_web/channels/user_socket.ex"
   ]
 }
+
 ```
 This file is quite basic, it instructs the `coveralls` app
 to require a **`minimum_coverage`** of **100%**
 (_i.e. **everything is tested**<sup>1</sup>_)
 and to _ignore_ the files in the `test/` directory for coverage checking.
+We also ignore files such as `application.ex`,
+`telemetry.ex`, `core_components.ex` and `user_socket.ex`
+because they are not relevant for the functionality of our project.
 
 > <small>_<sup>1</sup>We believe that **investing**
 a little **time up-front** to write tests for **all** our **code**
@@ -1135,25 +1148,25 @@ MIX_ENV=test mix do coveralls.json
 You should see: <br />
 
 ```
-Randomized with seed 68194
+Randomized with seed 527109
 ----------------
 COV    FILE                                        LINES RELEVANT   MISSED
 100.0% lib/chat.ex                                     9        0        0
-100.0% lib/chat/message.ex                            22        3        0
+100.0% lib/chat/message.ex                            26        4        0
 100.0% lib/chat/repo.ex                                5        0        0
- 66.7% lib/chat_web/channels/room_channel.ex          45        9        3
-100.0% lib/chat_web/channels/user_socket.ex           35        0        0
-100.0% lib/chat_web/controllers/page_controller        7        1        0
-100.0% lib/chat_web/endpoint.ex                       54        0        0
-100.0% lib/chat_web/gettext.ex                        24        0        0
-100.0% lib/chat_web/views/error_view.ex               16        1        0
-100.0% lib/chat_web/views/layout_view.ex               3        0        0
-100.0% lib/chat_web/views/page_view.ex                 3        0        0
-[TOTAL]  78.6%
+ 70.0% lib/chat_web/channels/room_channel.ex          46       10        3
+100.0% lib/chat_web/components/layouts.ex              5        0        0
+100.0% lib/chat_web/controllers/error_html.ex         19        1        0
+100.0% lib/chat_web/controllers/error_json.ex         15        1        0
+100.0% lib/chat_web/controllers/page_controller        9        1        0
+100.0% lib/chat_web/controllers/page_html.ex           5        0        0
+100.0% lib/chat_web/endpoint.ex                       49        0        0
+ 66.7% lib/chat_web/router.ex                         27        3        1
+[TOTAL]  80.0%
 ----------------
 ```
 
-As we can se here, only **78.6%** of lines of code in `/lib`
+As we can se here, only **80%** of lines of code in `/lib`
 are being "covered" by the tests we have written.
 
 To **view** the coverage in a web browser run the following:
@@ -1166,7 +1179,7 @@ MIX_ENV=test mix coveralls.html ; open cover/excoveralls.html
 
 This will open the Coverage Report (HTML) in your default Web Browser: <br />
 
-![coverage-66-percent](https://user-images.githubusercontent.com/194400/83980823-a6ba0080-a910-11ea-93ab-46aba8b8ece3.png)
+![coverage-80-percent](https://user-images.githubusercontent.com/17494745/216605436-45956f51-8bc1-41ce-b13e-8926364bd419.png)
 
 
 <!-- I think I'm at a point where I need to take a "Detour"
@@ -1192,24 +1205,36 @@ test ":after_join sends all existing messages", %{socket: socket} do
 end
 ```
 
+Finally, inside `lib/chat_web/router.ex`,
+comment the following piece of code.
+
+```elixir
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+```
+
+Since we are not using this `:api` in this project,
+there is no need to test it.
+
 Now when you run `MIX_ENV=test mix do coveralls.json`
 you should see:
 
 ```
-Randomized with seed 232886
+Randomized with seed 15920
 ----------------
 COV    FILE                                        LINES RELEVANT   MISSED
 100.0% lib/chat.ex                                     9        0        0
-100.0% lib/chat/message.ex                            22        3        0
+100.0% lib/chat/message.ex                            26        4        0
 100.0% lib/chat/repo.ex                                5        0        0
-100.0% lib/chat_web/channels/room_channel.ex          46        9        0
-100.0% lib/chat_web/channels/user_socket.ex           35        0        0
-100.0% lib/chat_web/controllers/page_controller        7        1        0
-100.0% lib/chat_web/endpoint.ex                       54        0        0
-100.0% lib/chat_web/gettext.ex                        24        0        0
-100.0% lib/chat_web/views/error_view.ex               16        1        0
-100.0% lib/chat_web/views/layout_view.ex               3        0        0
-100.0% lib/chat_web/views/page_view.ex                 3        0        0
+100.0% lib/chat_web/channels/room_channel.ex          46       10        0
+100.0% lib/chat_web/components/layouts.ex              5        0        0
+100.0% lib/chat_web/controllers/error_html.ex         19        1        0
+100.0% lib/chat_web/controllers/error_json.ex         15        1        0
+100.0% lib/chat_web/controllers/page_controller        9        1        0
+100.0% lib/chat_web/controllers/page_html.ex           5        0        0
+100.0% lib/chat_web/endpoint.ex                       49        0        0
+100.0% lib/chat_web/router.ex                         27        2        0
 [TOTAL] 100.0%
 ----------------
 ```
