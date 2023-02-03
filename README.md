@@ -258,6 +258,20 @@ postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgre
 This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
 (_the default port_)
 
+If the `lsof` command does not yield any result
+in your terminal,
+run:
+
+```sh
+pg_isready
+```
+
+It should print the following:
+
+```sh
+/tmp:5432 - accepting connections
+```
+
 With all those 
 ["pre-flight checks"](https://en.wikipedia.org/wiki/Preflight_checklist) 
 performed, let's _fly_! 🚀
