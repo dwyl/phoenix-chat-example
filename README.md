@@ -817,14 +817,11 @@ mix ecto.migrate
 ```
 You should see the following in your terminal:
 ```sh
-Compiling 16 files (.ex)
-Generated chat app
+11:42:10.130 [info] == Running 20230203114114 Chat.Repo.Migrations.CreateMessages.change/0 forward
 
-19:47:14.215 [info]  == Running 20200607184409 Chat.Repo.Migrations.CreateMessages.change/0 forward
+11:42:10.137 [info] create table messages
 
-19:47:14.219 [info]  create table messages
-
-19:47:14.275 [info]  == Migrated 20200607184409 in 0.0s
+11:42:10.144 [info] == Migrated 20230203114114 in 0.0s
 ```
 
 <br />
@@ -905,6 +902,7 @@ def handle_info(:after_join, socket) do
   |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
       message: msg.message,
+      inserted_at: msg.inserted_at,
     }) end)
   {:noreply, socket} # :noreply
 end
@@ -952,7 +950,7 @@ is running on TCP Port `4000`!
 (_if your machine only has one browser try using one "incognito" tab_)
 
 You should be able to send messages between the two browser windows: <br />
-![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/194400/35188398-9998e10a-fe2c-11e7-9f69-2a3dfbae754d.gif)
+![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/17494745/216601498-dd925c84-d8a5-497f-8235-96509b445654.gif)
 
 Congratulations! You have a _working_ (_basic_) Chat App written in Phoenix!
 
