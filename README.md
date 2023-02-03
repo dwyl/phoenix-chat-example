@@ -466,9 +466,10 @@ to:
 channel "room:lobby", ChatWeb.RoomChannel
 ```
 
-Check the change [here](https://github.com/dwyl/phoenix-chat-example/blob/0faa7f18ea6d7790e027ace5147cd1740040a75e/lib/chat_web/channels/user_socket.ex#L11)
+Check the change [here](https://github.com/dwyl/phoenix-chat-example/blob/0faa7f18ea6d7790e027ace5147cd1740040a75e/lib/chat_web/channels/user_socket.ex#L11).
 
 This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
+
 The previous `"room.*` meant that any subtopic within `"room"` were routed. 
 But for now, let's narrow down to just one subtopic :smile:.
 
@@ -510,12 +511,10 @@ and _copy-paste_ (_or type_) the following code:
 
 This is the _basic_ form we will use to input Chat messages. <br />
 The classes e.g. `w-full` and `items-center`
-are [`TailwindCSS](https://tailwindcss.com/)
+are [`TailwindCSS`](https://tailwindcss.com/)
 classes to _style_ the form. <br />
 Phoenix includes Tailwind by default so you can get up-and-running
 with your App/Idea/"MVP"! <br />
-If you are unfamiliar with Tailwind,
-read: https://tailwindcss.com/docs/utility-first.
 
 > If you're new to `Tailwind`,
 please see: 
@@ -757,8 +756,8 @@ these commented lines from the file. <br />
 We are just keeping them for reference
 of how to join channels and receive messages.
 
-Your app should look like the following.
-Try to fill the `username` and `message` fields
+If you are running the app,
+try to fill the `username` and `message` fields
 and click `Enter` (or press `Send`).
 
 The message should appear
@@ -779,9 +778,10 @@ and we'd be done! <br />
 
 > In fact, it could be a "_use-case_" / "_feature_"
 to have "_ephemeral_" chat without _any_ history ...
-> see: http://www.psstchat.com/
+> see: http://www.psstchat.com/.
 ![psst-chat](https://user-images.githubusercontent.com/194400/35284714-6e338596-0053-11e8-998a-83b917ec90ae.png)
-> but we are _assuming_ that _most_ chat apps save history
+> 
+> But we are _assuming_ that _most_ chat apps save history
 > so that `new` people joining the "channel" can see the history
 > and people who are briefly "absent" can "catch up" on the history.
 
