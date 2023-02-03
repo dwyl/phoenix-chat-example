@@ -962,7 +962,7 @@ is running on TCP Port `4000`!
 (_if your machine only has one browser try using one "incognito" tab_)
 
 You should be able to send messages between the two browser windows: <br />
-![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/17494745/216601498-dd925c84-d8a5-497f-8235-96509b445654.gif)
+![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/17494745/216617288-31ab0fbf-9b0e-456f-995a-bfb8499e8847.gif)
 
 Congratulations! You have a _working_ (_basic_) Chat App written in Phoenix!
 
