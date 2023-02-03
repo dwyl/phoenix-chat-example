@@ -896,6 +896,7 @@ and limit is the maximum number of records to fetch.
 
 In the `/lib/chat_web/channels/room_channel.ex` file create a new function:
 ```elixir
+@impl true
 def handle_info(:after_join, socket) do
   Chat.Message.get_messages()
   |> Enum.reverse() # revers to display the latest message at the bottom of the page
@@ -992,16 +993,14 @@ Phoenix _generates_ a new test for you.
 We _run_ the tests using the **`mix test`** command:
 
 ```elixir
-22:37:03.724 [info]  Already up
-......
+........
+Finished in 0.1 seconds (0.05s async, 0.06s sync)
+8 tests, 0 failures
 
-Finished in 0.1 seconds
-6 tests, 0 failures
-
-Randomized with seed 906499
+Randomized with seed 157426
 ```
 
-In this case _none_ of these tests fails. (_6 tests, **0 failure**_)
+In this case _none_ of these tests fails. (_8 tests, **0 failure**_)
 
 
 ## 12. Understanding The Channel Tests
