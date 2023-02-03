@@ -785,7 +785,7 @@ mix phx.gen.schema Message messages name:string message:string
 You should see the following output:
 ```sh
 * creating lib/chat/message.ex
-* creating priv/repo/migrations/20200607184409_create_messages.exs
+* creating priv/repo/migrations/20230203114114_create_messages.exs
 
 Remember to update your repository by running migrations:
 
@@ -803,7 +803,7 @@ The line `creating lib/chat/message.ex` creates the "schema"
 for our Message database table.
 
 Additionally a migration file is created, e.g:
-`creating priv/repo/migrations/20200607184409_create_messages.exs`
+`creating priv/repo/migrations/20230203114114_create_messages.exs`
 The "_migration_" actually _creates_ the database table in our database.
 
 <br />
