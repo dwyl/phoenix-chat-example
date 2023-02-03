@@ -467,8 +467,7 @@ to:
 channel "room:lobby", ChatWeb.RoomChannel
 ```
 
-//CHANGEHERE
-Check the change [here](/lib/chat_web/channels/user_socket.ex#L11)
+Check the change [here](https://github.com/dwyl/phoenix-chat-example/blob/0faa7f18ea6d7790e027ace5147cd1740040a75e/lib/chat_web/channels/user_socket.ex#L11)
 
 This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
 The previous `"room.*` meant that any subtopic within `"room"` were routed. 
