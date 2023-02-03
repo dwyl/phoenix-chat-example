@@ -1264,8 +1264,8 @@ With that our app is fully tested!
 
 # Authentication
 
-You may have noticed in the previous step,
-that the template adds a **`Login`** button. 
+We can *extend* this project
+to support basic authentication.
 If you want to _understand_ 
 how Authentication is implemented the _easy/fast_ way,
 see:

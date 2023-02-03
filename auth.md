@@ -5,9 +5,9 @@
 </div>
 
 Adding protected routes and authentication 
-to a `Phoenix` App can be quite a few steps ... ⏳ <br />
-Luckily, there there is a package 
-[we built; yes, shameless plug =]
+to a `Phoenix` App can have quite a few steps ... ⏳ <br />
+Luckily, there is a package 
+(we built; yes, shameless plug =])
 that can **_significantly_ simplify** the process!
 
 In this guide we'll show the steps 
@@ -27,8 +27,9 @@ Let's do this!
   - [3. Create the _Optional_ Auth Pipeline in `router.ex`](#3-create-the-optional-auth-pipeline-in-routerex)
   - [4. Create `AuthController`](#4-create-authcontroller)
   - [5. Create `AuthControllerTest`](#5-create-authcontrollertest)
-  - [6. Execute the `AuthControllerTest`](#6-execute-the-authcontrollertest)
-  - [7. Update the UI Template with `Auth`](#7-update-the-ui-template-with-auth)
+  - [6. Update the UI Template with `Auth`](#6-update-the-ui-template-with-auth)
+  - [7. Execute the `AuthControllerTest`](#7-execute-the-authcontrollertest)
+  - [8. Congratulations!](#8-congratulations)
 
 <br />
 
@@ -105,7 +106,7 @@ pipeline :authOptional, do: plug(AuthPlugOptional)
 scope "/", AppWeb do
   pipe_through [:browser, :authOptional]
 
-  live "/", MessageLive
+  get "/", PageController, :home
   get "/login", AuthController, :login
   get "/logout", AuthController, :logout
 end
@@ -135,10 +136,14 @@ defmodule ChatWeb.AuthController do
 end
 ```
 
-The login/2 function redirects to the dwyl auth app. Read more about how to use the AuthPlug.get_auth_url/2 function. 
-Once authenticated the user will be redirected to the / endpoint and a jwt session is created on the client.
+The `login/2` function redirects to the dwyl auth app. 
+Read more about how to use the `AuthPlug.get_auth_url/2` function. 
+Once authenticated,
+ the user will be redirected to the `/` endpoint
+and a `jwt` session is created on the client.
 
-The logout/2 function invokes AuthPlug.logout/1 which removes the (JWT) session and redirects back to the homepage.
+The `logout/2` function invokes `AuthPlug.logout/1`, 
+which removes the (JWT) session and redirects back to the homepage.
 
 ## 5. Create `AuthControllerTest`
 
@@ -187,7 +192,131 @@ end
 ```
 <br />
 
-## 6. Execute the `AuthControllerTest`
+## 6. Update the UI Template with `Auth`
+
+Now that we've implemented the authentication flow,
+we need to show it to the user!
+
+Let's first properly show the username
+of the logged in user.
+Inside `lib/chat_web/controllers/page_html.ex`,
+add the following function.
+
+```elixir
+  def person_name(person) do
+    person.givenName || person.username || "guest"
+  end
+```
+
+The HEEX template inside 
+`lib/chat_web/controllers/page_html/home.html.heex`
+will have access to the functions
+inside `lib/chat_web/controllers/page_html.ex`,
+as it is managed by it.
+
+`page_html.ex` is the **view**
+(that is represented by 
+the files inside `page_html/*`),
+whereas `page_controller.ex` is the **controller**.
+
+After adding this function,
+head over to `lib/chat_web/controllers/page_html/home.html.heex`
+and change it to the following.
+
+```elixir
+<!-- The list of messages will appear here: -->
+<ul id='msg-list' phx-update="append" class="pa-1">
+</ul>
+
+<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
+  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
+    <%= if @loggedin do %>
+      <input type="text" disabled class="hidden" id="name"
+        placeholder={person_name(@person)} value={person_name(@person)}
+      />
+    <% else %>
+      <input type="text" id="name" placeholder="Name" required
+        class="grow-0 w-1/6 px-1.5 py-1.5"/>
+    <% end %>
+
+    <input type="text" id="msg" placeholder="Your message" required
+      class="grow w-2/3 mx-1 px-2 py-1.5"/>
+
+    <button id="send" class="text-white bold rounded px-3 py-1.5 w-fit
+        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
+      Send
+    </button>
+  </div>
+</footer>
+```
+
+We are now using the `@loggedin` assigns
+that is made accessible by `auth_plug` 
+to check if a user is logged in.
+
+We are using this property to
+show the logged in username.
+If no user is logged in,
+we show the field in which he can type the wanted name
+to send messages.
+
+Notice how we use `person_name/1` function
+we defined in `page_html.ex` 
+in this file, 
+to show the username as placeholder.
+
+Finally,
+we need to change the `<header>`
+to show a `"Login"` and `"Logout"` button.
+
+Inside `lib/chat_web/components/layouts/root.html.heex`,
+change the `<header>` tag to look like so.
+
+```elixir
+    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
+      <div class="flex flex-row justify-center items-center">
+        <h1 class="w-4/5 md:text-3xl text-center font-mono text-white">
+          Phoenix Chat Example
+        </h1>
+        <div class="float-right mr-3">
+          <%= if @loggedin do %>
+            <div class="flex flex-row justify-center items-center">
+              <img width="42px" src={@person.picture} class="rounded-full"/>
+              <.link
+                class= "bg-red-600 text-white rounded px-2 py-2 ml-2 mr-1"
+                href="/logout"
+              >
+                Logout
+              </.link>
+            </div>
+          <% else %>
+              <.link
+                class="bg-green-500 text-white rounded px-3 py-2 w-full font-bold"
+                href="/login"
+              >
+                Login
+              </.link>
+          <% end %>
+        </div>
+      </div>
+    </header>
+```
+
+We are now checking if any user is logged in.
+
+If it is, we show the profile picture
+and a `"Logout"` button.
+Otherwise, we show a `"Login"` button.
+These buttons redirect the user
+to the `/logout` and `/login` paths, 
+respectively, 
+which are handled by `AuthController`
+we've just created.
+
+And that's it! 🎉
+These are all the UI changes we need to make.
+
+## 7. Execute the `AuthControllerTest`
 
 In your terminal,
 run the tests with the following command:
@@ -211,7 +340,7 @@ All tests should pass.
 If you run the tests with coverage e.g:
 
 ```sh
-mix c
+MIX_ENV=test mix coveralls.html
 ```
 
 You should see **`100%` Coverage** :
@@ -222,25 +351,27 @@ COV    FILE                                        LINES RELEVANT   MISSED
 100.0% lib/chat.ex                                     9        0        0
 100.0% lib/chat/message.ex                            26        4        0
 100.0% lib/chat/repo.ex                                5        0        0
-100.0% lib/chat_web/channels/room_channel.ex          47        8        0
+100.0% lib/chat_web/channels/room_channel.ex          46       10        0
+100.0% lib/chat_web/components/layouts.ex              5        0        0
 100.0% lib/chat_web/controllers/auth_controller       14        2        0
-100.0% lib/chat_web/controllers/page_controller        8        2        0
-100.0% lib/chat_web/endpoint.ex                       54        0        0
-100.0% lib/chat_web/views/error_view.ex               16        1        0
-100.0% lib/chat_web/views/layout_view.ex               7        0        0
-100.0% lib/chat_web/views/page_view.ex                 7        1        0
+100.0% lib/chat_web/controllers/error_html.ex         19        1        0
+100.0% lib/chat_web/controllers/error_json.ex         15        1        0
+100.0% lib/chat_web/controllers/page_controller        9        1        0
+100.0% lib/chat_web/controllers/page_html.ex           9        1        0
+100.0% lib/chat_web/endpoint.ex                       49        0        0
+100.0% lib/chat_web/router.ex                         32        5        0
 [TOTAL] 100.0%
 ----------------
 ```
 
-With all that in-place,
-we can now update the UI!
+## 8. Congratulations!
 
-## 7. Update the UI Template with `Auth`
+Awesome job! 👏
 
+We've just added authentication to our app.
+It should look like this.
 
-
-
+![auth_demo](https://user-images.githubusercontent.com/17494745/216612794-9064f4a5-2a31-4068-b82d-4d8ad45d6e3c.gif)
 
 
 [![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example-auth.svg)](https://github.com/dwyl/phoenix-chat-example)
