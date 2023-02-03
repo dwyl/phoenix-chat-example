@@ -1284,8 +1284,6 @@ This prevents accidentally "_breaking_" your app.
 
 _Thankfully_ the steps are quite simple.
 
-Please see:
-
 For an example `ci.yml`, see:
 
 [`.github/workflows/ci.yml`](https://github.com/dwyl/phoenix-chat-example/blob/main/.github/workflows/ci.yml)
