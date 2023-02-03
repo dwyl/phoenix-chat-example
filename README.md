@@ -710,8 +710,7 @@ Hopefully the in-line comments are self-explanatory,
 but if _anything_ is unclear, please ask!
 
 At this point your `app.js` file should look like this:
-[`/assets/js/app.js`](/assets/js/app.js)
-//CHANGEHERE
+[`/assets/js/app.js`](https://github.com/dwyl/phoenix-chat-example/blob/f45afee52570e07d43b7e3652564d24857a32bd7/assets/js/app.js)
 
 
 ### 4.1 Comment Out Lines in `user_socket.js`
@@ -740,8 +739,7 @@ Comment out the lines so they will not be executed:
 ```
 
 Your `user_socket.js` should now look like this:
-[`/assets/js/user_socket.js`](/assets/js/user_socket.js)
-//CHANGEHERE
+[`/assets/js/user_socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/f45afee52570e07d43b7e3652564d24857a32bd7/assets/js/user_socket.js)
 
 > If you later decide to tidy up your chat app, you can **`delete`**
 these commented lines from the file. <br />
