@@ -519,8 +519,7 @@ If you are unfamiliar with Tailwind,
 read: https://tailwindcss.com/docs/utility-first.
 
 Your `home.html.heex` template file should look like this:
-[`/lib/chat_web/controllers/page_html/home.html.heex`](/lib/chat_web/controllers/page_html/home.html.heex)
-//CHANGEHERE
+[`/lib/chat_web/controllers/page_html/home.html.heex`](https://github.com/dwyl/phoenix-chat-example/blob/6d070dd27a69572cca6e35f0703aa535c0201a3c/lib/chat_web/controllers/page_html/home.html.heex)
 
 
 ### 3.1 Update Layout Template
@@ -545,8 +544,7 @@ Replace the contents of the `<body>` with the following code:
 ```
 
 Your `root.html.heex` template file should look like this:
-[`/lib/chat_web/components/layouts/root.html.heex`](/lib/chat_web/components/layouts/root.html.heex`)
-//CHANGEHERE
+[`/lib/chat_web/components/layouts/root.html.heex`](https://github.com/dwyl/phoenix-chat-example/blob/6d070dd27a69572cca6e35f0703aa535c0201a3c/lib/chat_web/components/layouts/root.html.heex)
 
 At the end of this step, if you run the Phoenix Server `mix phx.server`,
 and view the App in your browser it will look like this:
