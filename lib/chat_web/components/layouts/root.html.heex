@@ -12,6 +12,15 @@
     </script>
   </head>
   <body class="bg-white antialiased">
-    <%= @inner_content %>
+    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
+      <div class="flex flex-row justify-center items-center">
+        <h1 class="w-4/5 md:text-3xl text-center font-mono text-white">
+          Phoenix Chat Example
+        </h1>
+      </div>
+    </header>
+    <main class="mt-[4rem]">
+        <%= @inner_content %>
+    </main>
   </body>
 </html>

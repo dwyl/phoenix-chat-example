@@ -483,65 +483,78 @@ https://hexdocs.pm/phoenix/channels.html
 ## 3. Update the Template File (UI)
 
 Open the the
-[`/lib/chat_web/templates/page/index.html.heex`](/lib/chat_web/templates/page/index.html.heex)
+[`/lib/chat_web/controllers/page_html/home.html.heex`](/lib/chat_web/controllers/page_html/home.html.heex)
 file <br />
 and _copy-paste_ (_or type_) the following code:
 
 ```html
 <!-- The list of messages will appear here: -->
-<ul id="msg-list" style="list-style: none; min-height:200px;">
+<ul id='msg-list' phx-update="append" class="pa-1">
 </ul>
 
-<div class="row">
-  <div class="col-xs-3" style="width: 20%; margin-left: 0;">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" style="border: 1px black solid; font-size: 1.3em;" autofocus>
+<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
+  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
+    <input type="text" id="name" placeholder="Name" required
+        class="grow-0 w-1/6 px-1.5 py-1.5"/>
+
+    <input type="text" id="msg" placeholder="Your message" required
+      class="grow w-2/3 mx-1 px-2 py-1.5"/>
+
+    <button id="send" class="text-white bold rounded px-3 py-1.5 w-fit
+        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
+      Send
+    </button>
   </div>
-  <div class="col-xs-9" style="width: 100%; margin-left: 1%; ">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message" style="border: 1px black solid; font-size: 1.3em;">
-  </div>
-</div>
+</footer>
+
 ```
 
 This is the _basic_ form we will use to input Chat messages. <br />
-The classes e.g: `"column"` and `"column-20"`
-are [Milligram CSS](https://milligram.io/grids.html)
+The classes e.g. `w-full` and `items-center`
+are [`TailwindCSS](https://tailwindcss.com/)
 classes to _style_ the form. <br />
-Phoenix includes Milligram by default so you can get up-and-running
+Phoenix includes Tailwind by default so you can get up-and-running
 with your App/Idea/"MVP"! <br />
-If you are unfamiliar with Milligram,
-read: https://milligram.io/#typography <br />
-and if you _specifically_ want to understand the Milligram _forms_,
-see: https://milligram.io/#forms
+If you are unfamiliar with Tailwind,
+read: https://tailwindcss.com/docs/utility-first.
 
-Your `index.html.heex` template file should look like this:
-[`/lib/chat_web/templates/page/index.html.heex`](/lib/chat_web/templates/page/index.html.heex)
+Your `home.html.heex` template file should look like this:
+[`/lib/chat_web/controllers/page_html/home.html.heex`](/lib/chat_web/controllers/page_html/home.html.heex)
+//CHANGEHERE
 
 
 ### 3.1 Update Layout Template
 
-Open the `lib/chat_web/templates/layout/root.html.heex` file
-and locate the `<header>` tag.
-Replace the contents of the `<header>` with the following code:
+Open the `lib/chat_web/components/layouts/root.html.heex` file
+and locate the `<body>` tag.
+Replace the contents of the `<body>` with the following code:
 
 ```html
-<section class="container">
-  <nav role="navigation">
-    <h1 style="padding-top: 15px">Chat Example</h1>
-  </nav>
-    <img src={Routes.static_path(@conn, "/images/phoenix.png")} width="500px" alt="Phoenix Framework Logo" />
-</section>
+  <body class="bg-white antialiased">
+    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
+      <div class="flex flex-row justify-center items-center">
+        <h1 class="w-4/5 md:text-3xl text-center font-mono text-white">
+          Phoenix Chat Example
+        </h1>
+      </div>
+    </header>
+    <main class="mt-[4rem]">
+        <%= @inner_content %>
+    </main>
+  </body>
 ```
 
 Your `root.html.heex` template file should look like this:
-[`/lib/chat_web/templates/layout/root.html.heex`](/lib/chat_web/templates/layout/root.html.heex)
+[`/lib/chat_web/components/layouts/root.html.heex`](/lib/chat_web/components/layouts/root.html.heex`)
+//CHANGEHERE
 
 At the end of this step, if you run the Phoenix Server `mix phx.server`,
 and view the App in your browser it will look like this:
 
-![phoenix-chat-blank](https://user-images.githubusercontent.com/194400/82498454-ef3b8680-9ae7-11ea-9d1f-8cf593deacba.png)
+![phoenix-chat-blank](https://user-images.githubusercontent.com/17494745/216590189-95923e9a-0956-4468-be8b-63b986d32f14.png)
 
 So it's already starting to look like a basic Chat App.
-Sadly, since we changed the copy of the `index.html.heex`
+Sadly, since we changed the copy of the `home.html.heex`
 our `page_controller_test.exs` now fails:
 
 Run the command:
@@ -554,7 +567,7 @@ mix test
 1) test GET / (ChatWeb.PageControllerTest)
      test/chat_web/controllers/page_controller_test.exs:4
      Assertion with =~ failed
-     code:  assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+     code:  assert html_response(conn, 200) =~ "Peace of mind from prototype to production"
 ```
 
 Thankfully this is easy to fix.
@@ -572,7 +585,7 @@ assert html_response(conn, 200) =~ "Welcome to Phoenix!"
 With:
 
 ```elixir
-assert html_response(conn, 200) =~ "Chat Example"
+assert html_response(conn, 200) =~ "Phoenix Chat Example"
 ```
 
 Now if you run the tests again, they will pass:
@@ -583,11 +596,11 @@ mix test
 Sample output:
 
 ```
-22:22:43.076 [info]  Already up
-......
+........
+Finished in 0.1 seconds (0.09s async, 0.06s sync)
+8 tests, 0 failures
 
-Finished in 0.1 seconds
-6 tests, 0 failures
+Randomized with seed 275786
 ```
 
 <br />
