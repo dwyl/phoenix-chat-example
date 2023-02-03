@@ -214,13 +214,31 @@ mix phx.new -v
 You should see:
 
 ```sh
-Phoenix installer v1.6.15
+Phoenix installer v1.7.0-rc.2
 ```
 
 > **Note**: if your `Phoenix` version is _newer_,
 > Please feel free to update this doc! 📝
 > We try our best to keep it updated ...
 > but _your_ contributions are always welcome!
+
+> In this tutorial, 
+> we are using 
+> [Phoenix 1.7-rc2](https://github.com/phoenixframework/phoenix/blob/master/CHANGELOG.md#170-rc2-2023-01-13),
+> the second release candidate 
+> for `Phoenix 1.7`.
+> At the time of writing, 
+> if you install Phoenix,
+> the *latest stable version* is not `v1.7`.
+> To use this version,
+> follow the official guide (don't worry, it's just running one command!)
+> -> https://www.phoenixframework.org/blog/phoenix-1.7-released
+> 
+> However, if you are reading this after its release,
+> `v1.7` will be installed for you, 
+> and you should see
+> `Phoenix installer v1.7.0`
+> in your terminal.
 
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -315,10 +333,18 @@ In your terminal program on your localhost,
 type the following command to create the app:
 
 ```sh
-mix phx.new chat
+mix phx.new chat --no-mailer --no-dashboard --no-gettext
 ```
 That will create the directory structure and project files. <br />
 
+> We are running the 
+> [`mix phx.new` command](https://hexdocs.pm/phoenix/Mix.Tasks.Phx.New.html)
+> with the `--no-mailer` `--no-dashboard` `--no-gettext` arguments
+> because we don't want our project
+> to generate mailer files, 
+> to include a `Phoenix.LiveDashboard` 
+> and generate `gettext` files 
+> (for [`i18n`](https://en.wikipedia.org/wiki/Internationalization_and_localization)).
 
 When asked to "***Fetch and install dependencies***? [Yn]",<br />
 Type <kbd>Y</kbd> in your terminal,
@@ -349,7 +375,7 @@ in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 
-![welcome-to-phoenix](https://user-images.githubusercontent.com/194400/82494801-11caa100-9ae2-11ea-821d-8181580201cb.png)
+![welcome-to-phoenix](https://user-images.githubusercontent.com/17494745/216576178-a227a6ef-ad12-4b74-9b29-4913b5e298bc.png)
 
 Shut down the Phoenix server in your terminal
 with the
@@ -368,14 +394,11 @@ You should see output similar to the following:
 
 ```sh
 Generated chat app
+.....
+Finished in 0.02 seconds (0.02s async, 0.00s sync)
+5 tests, 0 failures
 
-21:41:27.079 [info]  Already up
-...
-
-Finished in 0.07 seconds
-3 tests, 0 failures
-
-Randomized with seed 273499
+Randomized with seed 84184
 ```
 
 Now that we have confirmed that everything is working (all tests pass),
