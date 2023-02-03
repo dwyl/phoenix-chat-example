@@ -417,11 +417,12 @@ mix phx.gen.channel Room
 > If you are prompted to confirm installation of a new socket handler
 type `y` and hit the `[Enter]` key.
 
-This will create **two files**:<br />
+This will create **three files**:<br />
 
 ```sh
 * creating lib/chat_web/channels/room_channel.ex
 * creating test/chat_web/channels/room_channel_test.exs
+* creating test/support/channel_case.ex
 ```
 
 in addition to creating **two more files**:
@@ -466,6 +467,7 @@ to:
 channel "room:lobby", ChatWeb.RoomChannel
 ```
 
+//CHANGEHERE
 Check the change [here](/lib/chat_web/channels/user_socket.ex#L11)
 
 This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
