@@ -57,7 +57,6 @@ and _deploying_ a Chat app in Phoenix!
     - [13.2 Create a _New File_ Called `coveralls.json`](#132-create-a-new-file-called-coverallsjson)
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
-- [14. Tailwind CSS Stylin'](#14-tailwind-css-stylin)
 - [Authentication](#authentication)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
@@ -517,6 +516,18 @@ Phoenix includes Tailwind by default so you can get up-and-running
 with your App/Idea/"MVP"! <br />
 If you are unfamiliar with Tailwind,
 read: https://tailwindcss.com/docs/utility-first.
+
+> If you're new to `Tailwind`,
+please see: 
+[dwyl/**learn-tailwind**](https://github.com/dwyl/learn-tailwind)
+> 
+> If you have questions about any 
+of the **`Tailwind`** classes used,
+please spend 2 mins Googling 
+or searching the official (superb!) docs:
+[tailwindcss.com/docs](https://tailwindcss.com/docs) 
+and then if you're still stuck, please
+[open an issue](https://github.com/dwyl/learn-tailwind/issues).
 
 Your `home.html.heex` template file should look like this:
 [`/lib/chat_web/controllers/page_html/home.html.heex`](https://github.com/dwyl/phoenix-chat-example/blob/6d070dd27a69572cca6e35f0703aa535c0201a3c/lib/chat_web/controllers/page_html/home.html.heex)
@@ -1250,216 +1261,6 @@ With that our app is fully tested!
 
 <br />
 
-# 14. Tailwind CSS Stylin'
-
-As it stands, the app is _fine_.
-However, we can give it a bit of pizzazz :sparkles:.
-Let's style our view templates a bit
-so the app looks awesome!
-
-If you're new to `Tailwind`,
-please see: 
-[dwyl/**learn-tailwind**](https://github.com/dwyl/learn-tailwind)
-
-> **Note**: We're aren't repeating the setup steps here
-as **`Phoenix 1.7`** will include Tailwind by default. <br />
-But if you are following this guide 
-with an earlier version of **`Phoenix`**,
-see: 
-[**`Tailwind` in `Phoenix`**](https://github.com/dwyl/learn-tailwind#part-2-tailwind-in-phoenix)
-
-
-Open 
-`lib/chat_web/templates/layout/app.html.heex`
-and change the contents to the following:
-
-```html
-<main class="w-full">
-  <%= @inner_content %>
-</main>
-```
-
-Open the 
-`lib/chat_web/templates/layout/index.html.heex`
-file 
-and replace the contents with the following:
-
-```html
-<ul id='msg-list' phx-update="append" class="pa-1"> </ul>
-<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
-  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
-    <%= if @loggedin do %>
-      <input type="text" disabled class="hidden" id="name"
-        placeholder={person_name(@person)} value={person_name(@person)}
-      />
-    <% else %>
-      <input type="text" id="name" placeholder="Name" required
-        class="grow-0 w-1/6 px-1.5 py-1.5"/>
-    <% end %>
-
-    <input type="text" id="msg" placeholder="Your message" required
-      class="grow w-2/3 mx-1 px-2 py-1.5"/>
-
-    <button id="send" class="text-white bold rounded px-3 py-1.5
-        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
-      Send
-    </button>
-  </div>
-</footer>
-```
-
-Replace the contents of 
-`assets/js/app.js`
-with the following:
-
-```javascript
-import socket from "./user_socket.js"
-
-const ul = document.getElementById('msg-list');    // list of messages.
-const name = document.getElementById('name');      // name of message sender
-const msg = document.getElementById('msg');        // message input field
-const send = document.getElementById('send');      // send button
-const channel = socket.channel('room:lobby', {});  // connect to chat "room"
-
-channel.on('shout', function (payload) {           // listen for 'shout' event
-  render_message(payload)
-});
-
-channel.join(); // join the channel.
-
-function sendMessage() {
-  channel.push('shout', {        // send the message to the server on "shout" channel
-    name: name.value || "guest", // get value of "name" of person sending the message. Set guest as default
-    message: msg.value,          // get message text (value) from msg input field.
-    inserted_at: new Date()      // date + time of when the message was sent
-  });
-  msg.value = '';                // reset the message input field for next message.
-  window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
-}
-
-function render_message(payload) {
-  const li = document.createElement("li"); // create new list item DOM element
-  // Message HTML with Tailwind CSS Classes for layout/style:
-  li.innerHTML = `
-  <div class="flex flex-row w-[95%] mx-2 border-b-[1px] border-slate-300 py-2">
-    <div class="text-left w-1/5 font-semibold text-slate-800 break-words">
-      ${payload.name}
-      <div class="text-xs mr-1">
-        <span class="font-thin">${formatDate(payload.inserted_at)}</span> 
-        <span>${formatTime(payload.inserted_at)}</span>
-      </div>
-    </div>
-    <div class="flex w-3/5 mx-1 grow">
-      ${payload.message}
-    </div>
-  </div>
-  `
-  // Append to list
-  ul.appendChild(li);
-}
-
-// "listen" for the [Enter] keypress event to send a message:
-msg.addEventListener('keypress', function (event) {
-  if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
-    sendMessage()
-  }
-});
-
-send.addEventListener('click', function (event) {
-  if (msg.value.length > 0) { // don't sent empty msg.
-    sendMessage()
-  }
-});
-
-// Date & Time Formatting 
-function formatDate(datetime) {
-  const m = new Date(datetime);
-  return m.getUTCFullYear() + "/" 
-    + ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" 
-    + ("0" + m.getUTCDate()).slice(-2);
-}
-
-function formatTime(datetime) {
-  const m = new Date(datetime);
-  return ("0" + m.getUTCHours()).slice(-2) + ":"
-    + ("0" + m.getUTCMinutes()).slice(-2) + ":"
-    + ("0" + m.getUTCSeconds()).slice(-2);
-}
-```
-
-We added the `formatDate()` and `formatTime()`
-functions to format the `Date` object to 
-show beneath each message.
-
-We've also made some changes to 
-how the form is submitted.
-Previously, every time the `Send` button or
-the button `Enter` was pressed,
-a form submit event was triggered,
-which cause a reload of the page.
-This is not pretty. 
-With these changes, we no longer have a form
-and now added an event listener to the 
-`Send` button.
-
-Finally, let's make some changes to the navbar.
-In the `lib/chat_web/templates/layout/root.html.heex`,
-change it so it looks like the following.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="csrf-token" content={csrf_token_value()}>
-    <%= live_title_tag assigns[:page_title] || "Phoenix Chat", suffix: " · Tutorial!" %>
-    <script defer phx-track-static type="text/javascript"
-      src={Routes.static_path(@conn, "/assets/app.js")}></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
-      <nav class="flex flex-row justify-between items-center text-white">
-        <h1 class="w-4/5 md:text-3xl text-center font-mono ml-4">
-          Phoenix Chat Example
-        </h1>
-        <div class="float-right mr-3">
-          <%= if @loggedin do %>
-            <div class="flex flex-row justify-center items-center">
-              <img width="42px" src={@person.picture} class="rounded-full"/>
-              <%= link "logout", to: "/logout", class: "bg-red-600 rounded px-2 py-2 ml-2 mr-1" %>
-            </div>
-          <% else %>
-            <div class="bg-green-500  rounded px-3 py-2 w-full font-bold">
-              <%= link "Login", to: "/login" %>
-            </div>
-          <% end %>
-        </div>
-      </nav>
-    </header>
-    <main class="mt-[4rem]">
-        <%= @inner_content %>
-    </main>
-  </body>
-</html>
-```
-
-You should now have a UI/layout that looks like this:
-
-![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
-
-
-If you have questions about any 
-of the **`Tailwind`** classes used,
-please spend 2 mins Googling 
-or searching the official (superb!) docs:
-[tailwindcss.com/docs](https://tailwindcss.com/docs) 
-and then if you're still stuck, please
-[open an issue](https://github.com/dwyl/learn-tailwind/issues).
-
-<br />
 
 # Authentication
 
