@@ -56,8 +56,9 @@ defmodule Chat.MixProject do
       {:plug_cowboy, "~> 2.5"},
 
       # Testing
-      {:excoveralls, "~> 0.15.2", only: [:test, :dev]}, # tracking test coverage
-      {:auth_plug, "~> 1.5"},
+      # tracking test coverage
+      {:excoveralls, "~> 0.15.2", only: [:test, :dev]},
+      {:auth_plug, "~> 1.5"}
     ]
   end
 
