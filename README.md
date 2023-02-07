@@ -506,7 +506,7 @@ and _copy-paste_ (_or type_) the following code:
 <ul id='msg-list' phx-update="append" class="pa-1">
 </ul>
 
-<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
+<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center sticky">
   <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
     <input type="text" id="name" placeholder="Name" required
         class="grow-0 w-1/6 px-1.5 py-1.5"/>
