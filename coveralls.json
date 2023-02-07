@@ -5,6 +5,7 @@
   "skip_files": [
     "test/",
     "lib/chat/application.ex",
+    "lib/chat/release.ex",
     "lib/chat_web.ex",
     "lib/chat_web/telemetry.ex",
     "lib/chat_web/components/core_components.ex",
