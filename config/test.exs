@@ -17,14 +17,11 @@ config :chat, Chat.Repo,
 # you can enable the server option below.
 config :chat, ChatWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "6Mk6IXsjaiUOcDJaao5MJDvz0mIfcNAbaUfxkXpXtEKXD8nkmmpB3Lk7nfsaWiNq",
+  secret_key_base: "Q1WJjPpcI6Vs2ieJQMcs1DjL4JPZ0HafQ3afIzEUMx7fN/K0HO0+85e02OhUQS9n",
   server: false
 
-# In test we don't send emails.
-config :chat, Chat.Mailer, adapter: Swoosh.Adapters.Test
-
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime

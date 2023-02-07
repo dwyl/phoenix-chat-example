@@ -1,5 +1,7 @@
-defmodule ChatWeb.PageView do
-  use ChatWeb, :view
+defmodule ChatWeb.PageHTML do
+  use ChatWeb, :html
+
+  embed_templates "page_html/*"
 
   def person_name(person) do
     person.givenName || person.username || "guest"

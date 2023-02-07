@@ -57,7 +57,6 @@ and _deploying_ a Chat app in Phoenix!
     - [13.2 Create a _New File_ Called `coveralls.json`](#132-create-a-new-file-called-coverallsjson)
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
-- [14. Tailwind CSS Stylin'](#14-tailwind-css-stylin)
 - [Authentication](#authentication)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
@@ -214,13 +213,31 @@ mix phx.new -v
 You should see:
 
 ```sh
-Phoenix installer v1.6.15
+Phoenix installer v1.7.0-rc.2
 ```
 
 > **Note**: if your `Phoenix` version is _newer_,
 > Please feel free to update this doc! 📝
 > We try our best to keep it updated ...
 > but _your_ contributions are always welcome!
+
+> In this tutorial, 
+> we are using 
+> [Phoenix 1.7-rc2](https://github.com/phoenixframework/phoenix/blob/master/CHANGELOG.md#170-rc2-2023-01-13),
+> the second release candidate 
+> for `Phoenix 1.7`.
+> At the time of writing, 
+> if you install Phoenix,
+> the *latest stable version* is not `v1.7`.
+> To use this version,
+> follow the official guide (don't worry, it's just running one command!)
+> -> https://www.phoenixframework.org/blog/phoenix-1.7-released
+> 
+> However, if you are reading this after its release,
+> `v1.7` will be installed for you, 
+> and you should see
+> `Phoenix installer v1.7.0`
+> in your terminal.
 
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -240,6 +257,20 @@ postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgre
 
 This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
 (_the default port_)
+
+If the `lsof` command does not yield any result
+in your terminal,
+run:
+
+```sh
+pg_isready
+```
+
+It should print the following:
+
+```sh
+/tmp:5432 - accepting connections
+```
 
 With all those 
 ["pre-flight checks"](https://en.wikipedia.org/wiki/Preflight_checklist) 
@@ -315,10 +346,18 @@ In your terminal program on your localhost,
 type the following command to create the app:
 
 ```sh
-mix phx.new chat
+mix phx.new chat --no-mailer --no-dashboard --no-gettext
 ```
 That will create the directory structure and project files. <br />
 
+> We are running the 
+> [`mix phx.new` command](https://hexdocs.pm/phoenix/Mix.Tasks.Phx.New.html)
+> with the `--no-mailer` `--no-dashboard` `--no-gettext` arguments
+> because we don't want our project
+> to generate mailer files, 
+> to include a `Phoenix.LiveDashboard` 
+> and generate `gettext` files 
+> (for [`i18n`](https://en.wikipedia.org/wiki/Internationalization_and_localization)).
 
 When asked to "***Fetch and install dependencies***? [Yn]",<br />
 Type <kbd>Y</kbd> in your terminal,
@@ -349,7 +388,7 @@ in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 
-![welcome-to-phoenix](https://user-images.githubusercontent.com/194400/82494801-11caa100-9ae2-11ea-821d-8181580201cb.png)
+![welcome-to-phoenix](https://user-images.githubusercontent.com/17494745/216576178-a227a6ef-ad12-4b74-9b29-4913b5e298bc.png)
 
 Shut down the Phoenix server in your terminal
 with the
@@ -368,14 +407,11 @@ You should see output similar to the following:
 
 ```sh
 Generated chat app
+.....
+Finished in 0.02 seconds (0.02s async, 0.00s sync)
+5 tests, 0 failures
 
-21:41:27.079 [info]  Already up
-...
-
-Finished in 0.07 seconds
-3 tests, 0 failures
-
-Randomized with seed 273499
+Randomized with seed 84184
 ```
 
 Now that we have confirmed that everything is working (all tests pass),
@@ -394,11 +430,12 @@ mix phx.gen.channel Room
 > If you are prompted to confirm installation of a new socket handler
 type `y` and hit the `[Enter]` key.
 
-This will create **two files**:<br />
+This will create **three files**:<br />
 
 ```sh
 * creating lib/chat_web/channels/room_channel.ex
 * creating test/chat_web/channels/room_channel_test.exs
+* creating test/support/channel_case.ex
 ```
 
 in addition to creating **two more files**:
@@ -443,9 +480,10 @@ to:
 channel "room:lobby", ChatWeb.RoomChannel
 ```
 
-Check the change [here](/lib/chat_web/channels/user_socket.ex#L11)
+Check the change [here](https://github.com/dwyl/phoenix-chat-example/blob/0faa7f18ea6d7790e027ace5147cd1740040a75e/lib/chat_web/channels/user_socket.ex#L11).
 
 This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
+
 The previous `"room.*` meant that any subtopic within `"room"` were routed. 
 But for now, let's narrow down to just one subtopic :smile:.
 
@@ -459,65 +497,86 @@ https://hexdocs.pm/phoenix/channels.html
 ## 3. Update the Template File (UI)
 
 Open the the
-[`/lib/chat_web/templates/page/index.html.heex`](/lib/chat_web/templates/page/index.html.heex)
+[`/lib/chat_web/controllers/page_html/home.html.heex`](/lib/chat_web/controllers/page_html/home.html.heex)
 file <br />
 and _copy-paste_ (_or type_) the following code:
 
 ```html
 <!-- The list of messages will appear here: -->
-<ul id="msg-list" style="list-style: none; min-height:200px;">
+<ul id='msg-list' phx-update="append" class="pa-1">
 </ul>
 
-<div class="row">
-  <div class="col-xs-3" style="width: 20%; margin-left: 0;">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" style="border: 1px black solid; font-size: 1.3em;" autofocus>
+<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
+  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
+    <input type="text" id="name" placeholder="Name" required
+        class="grow-0 w-1/6 px-1.5 py-1.5"/>
+
+    <input type="text" id="msg" placeholder="Your message" required
+      class="grow w-2/3 mx-1 px-2 py-1.5"/>
+
+    <button id="send" class="text-white bold rounded px-3 py-1.5 w-fit
+        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
+      Send
+    </button>
   </div>
-  <div class="col-xs-9" style="width: 100%; margin-left: 1%; ">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message" style="border: 1px black solid; font-size: 1.3em;">
-  </div>
-</div>
+</footer>
+
 ```
 
 This is the _basic_ form we will use to input Chat messages. <br />
-The classes e.g: `"column"` and `"column-20"`
-are [Milligram CSS](https://milligram.io/grids.html)
+The classes e.g. `w-full` and `items-center`
+are [`TailwindCSS`](https://tailwindcss.com/)
 classes to _style_ the form. <br />
-Phoenix includes Milligram by default so you can get up-and-running
+Phoenix includes Tailwind by default so you can get up-and-running
 with your App/Idea/"MVP"! <br />
-If you are unfamiliar with Milligram,
-read: https://milligram.io/#typography <br />
-and if you _specifically_ want to understand the Milligram _forms_,
-see: https://milligram.io/#forms
 
-Your `index.html.heex` template file should look like this:
-[`/lib/chat_web/templates/page/index.html.heex`](/lib/chat_web/templates/page/index.html.heex)
+> If you're new to `Tailwind`,
+please see: 
+[dwyl/**learn-tailwind**](https://github.com/dwyl/learn-tailwind)
+> 
+> If you have questions about any 
+of the **`Tailwind`** classes used,
+please spend 2 mins Googling 
+or searching the official (superb!) docs:
+[tailwindcss.com/docs](https://tailwindcss.com/docs) 
+and then if you're still stuck, please
+[open an issue](https://github.com/dwyl/learn-tailwind/issues).
+
+Your `home.html.heex` template file should look like this:
+[`/lib/chat_web/controllers/page_html/home.html.heex`](https://github.com/dwyl/phoenix-chat-example/blob/6d070dd27a69572cca6e35f0703aa535c0201a3c/lib/chat_web/controllers/page_html/home.html.heex)
 
 
 ### 3.1 Update Layout Template
 
-Open the `lib/chat_web/templates/layout/root.html.heex` file
-and locate the `<header>` tag.
-Replace the contents of the `<header>` with the following code:
+Open the `lib/chat_web/components/layouts/root.html.heex` file
+and locate the `<body>` tag.
+Replace the contents of the `<body>` with the following code:
 
 ```html
-<section class="container">
-  <nav role="navigation">
-    <h1 style="padding-top: 15px">Chat Example</h1>
-  </nav>
-    <img src={Routes.static_path(@conn, "/images/phoenix.png")} width="500px" alt="Phoenix Framework Logo" />
-</section>
+  <body class="bg-white antialiased">
+    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
+      <div class="flex flex-row justify-center items-center">
+        <h1 class="w-4/5 md:text-3xl text-center font-mono text-white">
+          Phoenix Chat Example
+        </h1>
+      </div>
+    </header>
+    <main class="mt-[4rem]">
+        <%= @inner_content %>
+    </main>
+  </body>
 ```
 
 Your `root.html.heex` template file should look like this:
-[`/lib/chat_web/templates/layout/root.html.heex`](/lib/chat_web/templates/layout/root.html.heex)
+[`/lib/chat_web/components/layouts/root.html.heex`](https://github.com/dwyl/phoenix-chat-example/blob/6d070dd27a69572cca6e35f0703aa535c0201a3c/lib/chat_web/components/layouts/root.html.heex)
 
 At the end of this step, if you run the Phoenix Server `mix phx.server`,
 and view the App in your browser it will look like this:
 
-![phoenix-chat-blank](https://user-images.githubusercontent.com/194400/82498454-ef3b8680-9ae7-11ea-9d1f-8cf593deacba.png)
+![phoenix-chat-blank](https://user-images.githubusercontent.com/17494745/216590189-95923e9a-0956-4468-be8b-63b986d32f14.png)
 
 So it's already starting to look like a basic Chat App.
-Sadly, since we changed the copy of the `index.html.heex`
+Sadly, since we changed the copy of the `home.html.heex`
 our `page_controller_test.exs` now fails:
 
 Run the command:
@@ -530,7 +589,7 @@ mix test
 1) test GET / (ChatWeb.PageControllerTest)
      test/chat_web/controllers/page_controller_test.exs:4
      Assertion with =~ failed
-     code:  assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+     code:  assert html_response(conn, 200) =~ "Peace of mind from prototype to production"
 ```
 
 Thankfully this is easy to fix.
@@ -548,7 +607,7 @@ assert html_response(conn, 200) =~ "Welcome to Phoenix!"
 With:
 
 ```elixir
-assert html_response(conn, 200) =~ "Chat Example"
+assert html_response(conn, 200) =~ "Phoenix Chat Example"
 ```
 
 Now if you run the tests again, they will pass:
@@ -559,57 +618,114 @@ mix test
 Sample output:
 
 ```
-22:22:43.076 [info]  Already up
-......
+........
+Finished in 0.1 seconds (0.09s async, 0.06s sync)
+8 tests, 0 failures
 
-Finished in 0.1 seconds
-6 tests, 0 failures
+Randomized with seed 275786
 ```
 
 <br />
 
 ## 4. Update the "Client" code in App.js
 
-Open the
-`/assets/js/app.js`
-file and uncomment the line:
+Open
+`assets/js/app.js`,
+uncomment and change the line:
 
 ```js
 import socket from "./user_socket.js"
 ```
 
-with the line _uncommented_ our app will import the `socket.js` file
+With the line _uncommented_,
+our app will import the `socket.js` file
 which will give us WebSocket functionality.
 
-Then add the following JavaScript ("Client") code:
+Then add the following JavaScript ("Client") code
+to the bottom of the file:
 
 ```js
-let channel = socket.channel('room:lobby', {}); // connect to chat "room"
+/* Message list code */
+const ul = document.getElementById('msg-list');    // list of messages.
+const name = document.getElementById('name');      // name of message sender
+const msg = document.getElementById('msg');        // message input field
+const send = document.getElementById('send');      // send button
 
-channel.on('shout', function (payload) { // listen to the 'shout' event
-  let li = document.createElement("li"); // create new list item DOM element
-  let name = payload.name || 'guest';    // get name from payload or set default
-  li.innerHTML = '<b>' + name + '</b>: ' + payload.message; // set li contents
-  ul.appendChild(li);                    // append to list
-});
-
+const channel = socket.channel('room:lobby', {});  // connect to chat "room"
 channel.join(); // join the channel.
 
+// Listening to 'shout' events
+channel.on('shout', function (payload) {
+  render_message(payload)
+});
 
-let ul = document.getElementById('msg-list');        // list of messages.
-let name = document.getElementById('name');          // name of message sender
-let msg = document.getElementById('msg');            // message input field
 
-// "listen" for the [Enter] keypress event to send a message:
+// Send the message to the server on "shout" channel
+function sendMessage() {
+
+  channel.push('shout', {        
+    name: name.value || "guest", // get value of "name" of person sending the message. Set guest as default
+    message: msg.value,          // get message text (value) from msg input field.
+    inserted_at: new Date()      // date + time of when the message was sent
+  });
+
+  msg.value = '';                // reset the message input field for next message.
+  window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
+}
+
+// Render the message with Tailwind styles
+function render_message(payload) {
+
+  const li = document.createElement("li"); // create new list item DOM element
+
+  // Message HTML with Tailwind CSS Classes for layout/style:
+  li.innerHTML = `
+  <div class="flex flex-row w-[95%] mx-2 border-b-[1px] border-slate-300 py-2">
+    <div class="text-left w-1/5 font-semibold text-slate-800 break-words">
+      ${payload.name}
+      <div class="text-xs mr-1">
+        <span class="font-thin">${formatDate(payload.inserted_at)}</span> 
+        <span>${formatTime(payload.inserted_at)}</span>
+      </div>
+    </div>
+    <div class="flex w-3/5 mx-1 grow">
+      ${payload.message}
+    </div>
+  </div>
+  `
+  // Append to list
+  ul.appendChild(li);
+}
+
+// Listen for the [Enter] keypress event to send a message:
 msg.addEventListener('keypress', function (event) {
   if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
-    channel.push('shout', { // send the message to the server on "shout" channel
-      name: name.value || "guest",     // get value of "name" of person sending the message. Set guest as default
-      message: msg.value    // get message text (value) from msg input field.
-    });
-    msg.value = '';         // reset the message input field for next message.
+    sendMessage()
   }
 });
+
+// On "Send" button press
+send.addEventListener('click', function (event) {
+  if (msg.value.length > 0) { // don't sent empty msg.
+    sendMessage()
+  }
+});
+
+// Date formatting
+function formatDate(datetime) {
+  const m = new Date(datetime);
+  return m.getUTCFullYear() + "/" 
+    + ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" 
+    + ("0" + m.getUTCDate()).slice(-2);
+}
+
+// Time formatting
+function formatTime(datetime) {
+  const m = new Date(datetime);
+  return ("0" + m.getUTCHours()).slice(-2) + ":"
+    + ("0" + m.getUTCMinutes()).slice(-2) + ":"
+    + ("0" + m.getUTCSeconds()).slice(-2);
+}
 ```
 
 > Take a moment to read the JavaScript code
@@ -618,7 +734,7 @@ Hopefully the in-line comments are self-explanatory,
 but if _anything_ is unclear, please ask!
 
 At this point your `app.js` file should look like this:
-[`/assets/js/app.js`](/assets/js/app.js)
+[`/assets/js/app.js`](https://github.com/dwyl/phoenix-chat-example/blob/f45afee52570e07d43b7e3652564d24857a32bd7/assets/js/app.js)
 
 
 ### 4.1 Comment Out Lines in `user_socket.js`
@@ -632,7 +748,7 @@ by simply commenting out a few lines in the `user_socket.js` file.
 Open the file in your editor and locate the following lines:
 
 ```JavaScript
-let channel = socket.channel("topic:subtopic", {})
+let channel = socket.channel("room:42", {})
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
@@ -640,42 +756,32 @@ channel.join()
 Comment out the lines so they will not be executed:
 
 ```JavaScript
-// let channel = socket.channel("topic:subtopic", {})
-// channel.join()
-//   .receive("ok", resp => { console.log("Joined successfully", resp) })
-//   .receive("error", resp => { console.log("Unable to join", resp) })
+//let channel = socket.channel("room:42", {})
+//channel.join()
+//  .receive("ok", resp => { console.log("Joined successfully", resp) })
+//  .receive("error", resp => { console.log("Unable to join", resp) })
 ```
 
 Your `user_socket.js` should now look like this:
-[`/assets/js/user_socket.js`](/assets/js/user_socket.js)
+[`/assets/js/user_socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/f45afee52570e07d43b7e3652564d24857a32bd7/assets/js/user_socket.js)
 
 > If you later decide to tidy up your chat app, you can **`delete`**
 these commented lines from the file. <br />
 We are just keeping them for reference
 of how to join channels and receive messages.
 
-Once that's done, proceed to the next step!
+If you are running the app,
+try to fill the `username` and `message` fields
+and click `Enter` (or press `Send`).
+
+The message should appear
+on different windows!
+
+<img width="905" alt="ephemeral_chat" src="https://user-images.githubusercontent.com/17494745/216594102-f39af9c2-25c2-45f0-97bb-feecc434be5a.png">
+
+With this done, we can proceed.
 
 <br />
-
-<!-- Remove if no longer required as mix setup in step 1 covers this.
-## 5. Install the Node.js Dependencies
-
-In order to use JavaScript in your Phoenix project,
-you need to install the node.js dependencies:
-
-```sh
-mix setup
-```
-
-That might take a few seconds (_depending on your internet connection speed_)
-
-But once it completes you should see:
-```sh
-added 1022 packages from 600 contributors and audited 14893 packages in 32.079s
-found 0 vulnerabilities
-```
- -->
 
 
 ### Storing Chat Message Data/History
@@ -686,9 +792,10 @@ and we'd be done! <br />
 
 > In fact, it could be a "_use-case_" / "_feature_"
 to have "_ephemeral_" chat without _any_ history ...
-> see: http://www.psstchat.com/
+> see: http://www.psstchat.com/.
 ![psst-chat](https://user-images.githubusercontent.com/194400/35284714-6e338596-0053-11e8-998a-83b917ec90ae.png)
-> but we are _assuming_ that _most_ chat apps save history
+> 
+> But we are _assuming_ that _most_ chat apps save history
 > so that `new` people joining the "channel" can see the history
 > and people who are briefly "absent" can "catch up" on the history.
 
@@ -703,7 +810,7 @@ mix phx.gen.schema Message messages name:string message:string
 You should see the following output:
 ```sh
 * creating lib/chat/message.ex
-* creating priv/repo/migrations/20200607184409_create_messages.exs
+* creating priv/repo/migrations/20230203114114_create_messages.exs
 
 Remember to update your repository by running migrations:
 
@@ -721,7 +828,7 @@ The line `creating lib/chat/message.ex` creates the "schema"
 for our Message database table.
 
 Additionally a migration file is created, e.g:
-`creating priv/repo/migrations/20200607184409_create_messages.exs`
+`creating priv/repo/migrations/20230203114114_create_messages.exs`
 The "_migration_" actually _creates_ the database table in our database.
 
 <br />
@@ -735,14 +842,11 @@ mix ecto.migrate
 ```
 You should see the following in your terminal:
 ```sh
-Compiling 16 files (.ex)
-Generated chat app
+11:42:10.130 [info] == Running 20230203114114 Chat.Repo.Migrations.CreateMessages.change/0 forward
 
-19:47:14.215 [info]  == Running 20200607184409 Chat.Repo.Migrations.CreateMessages.change/0 forward
+11:42:10.137 [info] create table messages
 
-19:47:14.219 [info]  create table messages
-
-19:47:14.275 [info]  == Migrated 20200607184409 in 0.0s
+11:42:10.144 [info] == Migrated 20230203114114 in 0.0s
 ```
 
 <br />
@@ -817,12 +921,14 @@ and limit is the maximum number of records to fetch.
 
 In the `/lib/chat_web/channels/room_channel.ex` file create a new function:
 ```elixir
+@impl true
 def handle_info(:after_join, socket) do
   Chat.Message.get_messages()
   |> Enum.reverse() # revers to display the latest message at the bottom of the page
   |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
       message: msg.message,
+      inserted_at: msg.inserted_at,
     }) end)
   {:noreply, socket} # :noreply
 end
@@ -870,7 +976,7 @@ is running on TCP Port `4000`!
 (_if your machine only has one browser try using one "incognito" tab_)
 
 You should be able to send messages between the two browser windows: <br />
-![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/194400/35188398-9998e10a-fe2c-11e7-9f69-2a3dfbae754d.gif)
+![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/17494745/216617288-31ab0fbf-9b0e-456f-995a-bfb8499e8847.gif)
 
 Congratulations! You have a _working_ (_basic_) Chat App written in Phoenix!
 
@@ -912,16 +1018,14 @@ Phoenix _generates_ a new test for you.
 We _run_ the tests using the **`mix test`** command:
 
 ```elixir
-22:37:03.724 [info]  Already up
-......
+........
+Finished in 0.1 seconds (0.05s async, 0.06s sync)
+8 tests, 0 failures
 
-Finished in 0.1 seconds
-6 tests, 0 failures
-
-Randomized with seed 906499
+Randomized with seed 157426
 ```
 
-In this case _none_ of these tests fails. (_6 tests, **0 failure**_)
+In this case _none_ of these tests fails. (_8 tests, **0 failure**_)
 
 
 ## 12. Understanding The Channel Tests
@@ -989,7 +1093,7 @@ defp deps do
 Add a comma to the end of the last line, then add the following line to the end
 of the List:
 ```elixir
-{:excoveralls, "~> 0.13.0", only: [:test, :dev]} # tracking test coverage
+{:excoveralls, "~> 0.15.2", only: [:test, :dev]} # tracking test coverage
 ```
 
 Additionally, find the `def project do` section (_towards the top of `mix.exs`_)
@@ -997,8 +1101,12 @@ and add the following lines to the List:
 
 ```elixir
 test_coverage: [tool: ExCoveralls],
-preferred_cli_env: [coveralls: :test, "coveralls.detail": :test,
-  "coveralls.post": :test, "coveralls.html": :test]
+preferred_cli_env: [
+  coveralls: :test,
+  "coveralls.detail": :test,
+  "coveralls.post": :test,
+  "coveralls.html": :test
+]
 ```
 
 _Then_, ***install*** the dependency on `excoveralls`
@@ -1028,14 +1136,23 @@ create a new file called `coveralls.json` and _copy-paste_ the following:
     "minimum_coverage": 100
   },
   "skip_files": [
-    "test/"
+    "test/",
+    "lib/chat/application.ex",
+    "lib/chat_web.ex",
+    "lib/chat_web/telemetry.ex",
+    "lib/chat_web/components/core_components.ex",
+    "lib/chat_web/channels/user_socket.ex"
   ]
 }
+
 ```
 This file is quite basic, it instructs the `coveralls` app
 to require a **`minimum_coverage`** of **100%**
 (_i.e. **everything is tested**<sup>1</sup>_)
 and to _ignore_ the files in the `test/` directory for coverage checking.
+We also ignore files such as `application.ex`,
+`telemetry.ex`, `core_components.ex` and `user_socket.ex`
+because they are not relevant for the functionality of our project.
 
 > <small>_<sup>1</sup>We believe that **investing**
 a little **time up-front** to write tests for **all** our **code**
@@ -1056,25 +1173,25 @@ MIX_ENV=test mix do coveralls.json
 You should see: <br />
 
 ```
-Randomized with seed 68194
+Randomized with seed 527109
 ----------------
 COV    FILE                                        LINES RELEVANT   MISSED
 100.0% lib/chat.ex                                     9        0        0
-100.0% lib/chat/message.ex                            22        3        0
+100.0% lib/chat/message.ex                            26        4        0
 100.0% lib/chat/repo.ex                                5        0        0
- 66.7% lib/chat_web/channels/room_channel.ex          45        9        3
-100.0% lib/chat_web/channels/user_socket.ex           35        0        0
-100.0% lib/chat_web/controllers/page_controller        7        1        0
-100.0% lib/chat_web/endpoint.ex                       54        0        0
-100.0% lib/chat_web/gettext.ex                        24        0        0
-100.0% lib/chat_web/views/error_view.ex               16        1        0
-100.0% lib/chat_web/views/layout_view.ex               3        0        0
-100.0% lib/chat_web/views/page_view.ex                 3        0        0
-[TOTAL]  78.6%
+ 70.0% lib/chat_web/channels/room_channel.ex          46       10        3
+100.0% lib/chat_web/components/layouts.ex              5        0        0
+100.0% lib/chat_web/controllers/error_html.ex         19        1        0
+100.0% lib/chat_web/controllers/error_json.ex         15        1        0
+100.0% lib/chat_web/controllers/page_controller        9        1        0
+100.0% lib/chat_web/controllers/page_html.ex           5        0        0
+100.0% lib/chat_web/endpoint.ex                       49        0        0
+ 66.7% lib/chat_web/router.ex                         27        3        1
+[TOTAL]  80.0%
 ----------------
 ```
 
-As we can se here, only **78.6%** of lines of code in `/lib`
+As we can se here, only **80%** of lines of code in `/lib`
 are being "covered" by the tests we have written.
 
 To **view** the coverage in a web browser run the following:
@@ -1087,7 +1204,7 @@ MIX_ENV=test mix coveralls.html ; open cover/excoveralls.html
 
 This will open the Coverage Report (HTML) in your default Web Browser: <br />
 
-![coverage-66-percent](https://user-images.githubusercontent.com/194400/83980823-a6ba0080-a910-11ea-93ab-46aba8b8ece3.png)
+![coverage-80-percent](https://user-images.githubusercontent.com/17494745/216605436-45956f51-8bc1-41ce-b13e-8926364bd419.png)
 
 
 <!-- I think I'm at a point where I need to take a "Detour"
@@ -1113,24 +1230,36 @@ test ":after_join sends all existing messages", %{socket: socket} do
 end
 ```
 
+Finally, inside `lib/chat_web/router.ex`,
+comment the following piece of code.
+
+```elixir
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+```
+
+Since we are not using this `:api` in this project,
+there is no need to test it.
+
 Now when you run `MIX_ENV=test mix do coveralls.json`
 you should see:
 
 ```
-Randomized with seed 232886
+Randomized with seed 15920
 ----------------
 COV    FILE                                        LINES RELEVANT   MISSED
 100.0% lib/chat.ex                                     9        0        0
-100.0% lib/chat/message.ex                            22        3        0
+100.0% lib/chat/message.ex                            26        4        0
 100.0% lib/chat/repo.ex                                5        0        0
-100.0% lib/chat_web/channels/room_channel.ex          46        9        0
-100.0% lib/chat_web/channels/user_socket.ex           35        0        0
-100.0% lib/chat_web/controllers/page_controller        7        1        0
-100.0% lib/chat_web/endpoint.ex                       54        0        0
-100.0% lib/chat_web/gettext.ex                        24        0        0
-100.0% lib/chat_web/views/error_view.ex               16        1        0
-100.0% lib/chat_web/views/layout_view.ex               3        0        0
-100.0% lib/chat_web/views/page_view.ex                 3        0        0
+100.0% lib/chat_web/channels/room_channel.ex          46       10        0
+100.0% lib/chat_web/components/layouts.ex              5        0        0
+100.0% lib/chat_web/controllers/error_html.ex         19        1        0
+100.0% lib/chat_web/controllers/error_json.ex         15        1        0
+100.0% lib/chat_web/controllers/page_controller        9        1        0
+100.0% lib/chat_web/controllers/page_html.ex           5        0        0
+100.0% lib/chat_web/endpoint.ex                       49        0        0
+100.0% lib/chat_web/router.ex                         27        2        0
 [TOTAL] 100.0%
 ----------------
 ```
@@ -1146,221 +1275,11 @@ With that our app is fully tested!
 
 <br />
 
-# 14. Tailwind CSS Stylin'
-
-As it stands, the app is _fine_.
-However, we can give it a bit of pizzazz :sparkles:.
-Let's style our view templates a bit
-so the app looks awesome!
-
-If you're new to `Tailwind`,
-please see: 
-[dwyl/**learn-tailwind**](https://github.com/dwyl/learn-tailwind)
-
-> **Note**: We're aren't repeating the setup steps here
-as **`Phoenix 1.7`** will include Tailwind by default. <br />
-But if you are following this guide 
-with an earlier version of **`Phoenix`**,
-see: 
-[**`Tailwind` in `Phoenix`**](https://github.com/dwyl/learn-tailwind#part-2-tailwind-in-phoenix)
-
-
-Open 
-`lib/chat_web/templates/layout/app.html.heex`
-and change the contents to the following:
-
-```html
-<main class="w-full">
-  <%= @inner_content %>
-</main>
-```
-
-Open the 
-`lib/chat_web/templates/layout/index.html.heex`
-file 
-and replace the contents with the following:
-
-```html
-<ul id='msg-list' phx-update="append" class="pa-1"> </ul>
-<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center">
-  <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
-    <%= if @loggedin do %>
-      <input type="text" disabled class="hidden" id="name"
-        placeholder={person_name(@person)} value={person_name(@person)}
-      />
-    <% else %>
-      <input type="text" id="name" placeholder="Name" required
-        class="grow-0 w-1/6 px-1.5 py-1.5"/>
-    <% end %>
-
-    <input type="text" id="msg" placeholder="Your message" required
-      class="grow w-2/3 mx-1 px-2 py-1.5"/>
-
-    <button id="send" class="text-white bold rounded px-3 py-1.5
-        transition-colors duration-150 bg-sky-500 hover:bg-sky-600">
-      Send
-    </button>
-  </div>
-</footer>
-```
-
-Replace the contents of 
-`assets/js/app.js`
-with the following:
-
-```javascript
-import socket from "./user_socket.js"
-
-const ul = document.getElementById('msg-list');    // list of messages.
-const name = document.getElementById('name');      // name of message sender
-const msg = document.getElementById('msg');        // message input field
-const send = document.getElementById('send');      // send button
-const channel = socket.channel('room:lobby', {});  // connect to chat "room"
-
-channel.on('shout', function (payload) {           // listen for 'shout' event
-  render_message(payload)
-});
-
-channel.join(); // join the channel.
-
-function sendMessage() {
-  channel.push('shout', {        // send the message to the server on "shout" channel
-    name: name.value || "guest", // get value of "name" of person sending the message. Set guest as default
-    message: msg.value,          // get message text (value) from msg input field.
-    inserted_at: new Date()      // date + time of when the message was sent
-  });
-  msg.value = '';                // reset the message input field for next message.
-  window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
-}
-
-function render_message(payload) {
-  const li = document.createElement("li"); // create new list item DOM element
-  // Message HTML with Tailwind CSS Classes for layout/style:
-  li.innerHTML = `
-  <div class="flex flex-row w-[95%] mx-2 border-b-[1px] border-slate-300 py-2">
-    <div class="text-left w-1/5 font-semibold text-slate-800 break-words">
-      ${payload.name}
-      <div class="text-xs mr-1">
-        <span class="font-thin">${formatDate(payload.inserted_at)}</span> 
-        <span>${formatTime(payload.inserted_at)}</span>
-      </div>
-    </div>
-    <div class="flex w-3/5 mx-1 grow">
-      ${payload.message}
-    </div>
-  </div>
-  `
-  // Append to list
-  ul.appendChild(li);
-}
-
-// "listen" for the [Enter] keypress event to send a message:
-msg.addEventListener('keypress', function (event) {
-  if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
-    sendMessage()
-  }
-});
-
-send.addEventListener('click', function (event) {
-  if (msg.value.length > 0) { // don't sent empty msg.
-    sendMessage()
-  }
-});
-
-// Date & Time Formatting 
-function formatDate(datetime) {
-  const m = new Date(datetime);
-  return m.getUTCFullYear() + "/" 
-    + ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" 
-    + ("0" + m.getUTCDate()).slice(-2);
-}
-
-function formatTime(datetime) {
-  const m = new Date(datetime);
-  return ("0" + m.getUTCHours()).slice(-2) + ":"
-    + ("0" + m.getUTCMinutes()).slice(-2) + ":"
-    + ("0" + m.getUTCSeconds()).slice(-2);
-}
-```
-
-We added the `formatDate()` and `formatTime()`
-functions to format the `Date` object to 
-show beneath each message.
-
-We've also made some changes to 
-how the form is submitted.
-Previously, every time the `Send` button or
-the button `Enter` was pressed,
-a form submit event was triggered,
-which cause a reload of the page.
-This is not pretty. 
-With these changes, we no longer have a form
-and now added an event listener to the 
-`Send` button.
-
-Finally, let's make some changes to the navbar.
-In the `lib/chat_web/templates/layout/root.html.heex`,
-change it so it looks like the following.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="csrf-token" content={csrf_token_value()}>
-    <%= live_title_tag assigns[:page_title] || "Phoenix Chat", suffix: " · Tutorial!" %>
-    <script defer phx-track-static type="text/javascript"
-      src={Routes.static_path(@conn, "/assets/app.js")}></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
-      <nav class="flex flex-row justify-between items-center text-white">
-        <h1 class="w-4/5 md:text-3xl text-center font-mono ml-4">
-          Phoenix Chat Example
-        </h1>
-        <div class="float-right mr-3">
-          <%= if @loggedin do %>
-            <div class="flex flex-row justify-center items-center">
-              <img width="42px" src={@person.picture} class="rounded-full"/>
-              <%= link "logout", to: "/logout", class: "bg-red-600 rounded px-2 py-2 ml-2 mr-1" %>
-            </div>
-          <% else %>
-            <div class="bg-green-500  rounded px-3 py-2 w-full font-bold">
-              <%= link "Login", to: "/login" %>
-            </div>
-          <% end %>
-        </div>
-      </nav>
-    </header>
-    <main class="mt-[4rem]">
-        <%= @inner_content %>
-    </main>
-  </body>
-</html>
-```
-
-You should now have a UI/layout that looks like this:
-
-![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
-
-
-If you have questions about any 
-of the **`Tailwind`** classes used,
-please spend 2 mins Googling 
-or searching the official (superb!) docs:
-[tailwindcss.com/docs](https://tailwindcss.com/docs) 
-and then if you're still stuck, please
-[open an issue](https://github.com/dwyl/learn-tailwind/issues).
-
-<br />
 
 # Authentication
 
-You may have noticed in the previous step,
-that the template adds a **`Login`** button. 
+We can *extend* this project
+to support basic authentication.
 If you want to _understand_ 
 how Authentication is implemented the _easy/fast_ way,
 see:
@@ -1378,8 +1297,6 @@ is working as _expected_ (_before deploying_).
 This prevents accidentally "_breaking_" your app.
 
 _Thankfully_ the steps are quite simple.
-
-Please see:
 
 For an example `ci.yml`, see:
 

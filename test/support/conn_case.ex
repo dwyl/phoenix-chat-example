@@ -19,15 +19,15 @@ defmodule ChatWeb.ConnCase do
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint ChatWeb.Endpoint
+
+      use ChatWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
       import ChatWeb.ConnCase
-
-      alias ChatWeb.Router.Helpers, as: Routes
-
-      # The default endpoint for testing
-      @endpoint ChatWeb.Endpoint
     end
   end
 

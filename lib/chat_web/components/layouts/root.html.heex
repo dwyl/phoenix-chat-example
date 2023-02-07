@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" style="scrollbar-gutter: stable;">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title suffix=" · Phoenix Framework">
+      <%= assigns[:page_title] || "Chat" %>
+    </.live_title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+  </head>
+  <body class="bg-white antialiased">
+    <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
+      <div class="flex flex-row justify-center items-center">
+        <h1 class="w-4/5 md:text-3xl text-center font-mono text-white">
+          Phoenix Chat Example
+        </h1>
+        <div class="float-right mr-3">
+          <%= if @loggedin do %>
+            <div class="flex flex-row justify-center items-center">
+              <img width="42px" src={@person.picture} class="rounded-full" />
+              <.link class="bg-red-600 text-white rounded px-2 py-2 ml-2 mr-1" href="/logout">
+                Logout
+              </.link>
+            </div>
+          <% else %>
+            <.link
+              class="bg-green-500 text-white rounded px-3 py-2 w-full font-bold"
+              href="/login"
+            >
+              Login
+            </.link>
+          <% end %>
+        </div>
+      </div>
+    </header>
+    <main class="mt-[4rem]">
+      <%= @inner_content %>
+    </main>
+  </body>
+</html>

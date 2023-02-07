@@ -4,22 +4,18 @@ defmodule Chat.MixProject do
   def project do
     [
       app: :chat,
-      version: "1.6.15",
-      elixir: "~> 1.12",
+      version: "0.1.0",
+      elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
-        c: :test,
         coveralls: :test,
         "coveralls.detail": :test,
-        "coveralls.json": :test,
         "coveralls.post": :test,
-        "coveralls.html": :test,
-        t: :test
+        "coveralls.html": :test
       ]
     ]
   end
@@ -43,38 +39,26 @@ defmodule Chat.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.14"},
+      {:phoenix, "~> 1.7.0-rc.2", override: true},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.9.0"},
-      {:postgrex, ">= 0.16.5"},
-      {:phoenix_html, "~> 3.2.0"},
-      {:phoenix_live_reload, "~> 1.4.1", only: :dev},
-      {:phoenix_live_view, "~> 0.18.2"},
-      {:floki, ">= 0.33.1", only: :test},
-      {:phoenix_live_dashboard, "~> 0.7.1"},
+      {:ecto_sql, "~> 3.6"},
+      {:postgrex, ">= 0.0.0"},
+      {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_view, "~> 0.18.3"},
+      {:heroicons, "~> 0.5"},
+      {:floki, ">= 0.30.0", only: :test},
       {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.1.8", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.20"},
-      {:jason, "~> 1.4"},
-      {:plug_cowboy, "~> 2.6.0"},
+      {:jason, "~> 1.2"},
+      {:plug_cowboy, "~> 2.5"},
 
-      # See: github.com/dwyl/auth_plug
-      {:auth_plug, "~> 1.5"},
-
-      # See: github.com/dwyl/learn-tailwind
-      {:tailwind, "~> 0.1.9", runtime: Mix.env() == :dev},
-
-      # sanitise data to avoid XSS see: https://git.io/fjpGZ
-      {:html_sanitize_ex, "~> 1.4.2"},
-
-      # The rest of the dependendencies are for testing/reporting
+      # Testing
       # tracking test coverage
-      {:excoveralls, "~> 0.15.0", only: [:test, :dev]},
-      # documentation
-      {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
-      # github.com/dwyl/learn-pre-commit
-      {:pre_commit, "~> 0.3.4", only: :dev}
+      {:excoveralls, "~> 0.15.2", only: [:test, :dev]},
+      {:auth_plug, "~> 1.5"}
     ]
   end
 
@@ -86,14 +70,12 @@ defmodule Chat.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
-      c: ["coveralls.html"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      setup: ["deps.get", "ecto.setup", "assets.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      s: ["phx.server"],
-      setup: ["deps.get", "ecto.setup"],
-      t: ["test"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
 end

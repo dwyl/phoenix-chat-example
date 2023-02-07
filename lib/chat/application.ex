@@ -8,10 +8,10 @@ defmodule Chat.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      Chat.Repo,
       # Start the Telemetry supervisor
       ChatWeb.Telemetry,
+      # Start the Ecto repository
+      Chat.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Chat.PubSub},
       # Start the Endpoint (http/https)

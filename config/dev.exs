@@ -23,9 +23,8 @@ config :chat, ChatWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "lfPaJoRglbLPP/s2Oh+dLISajevzQrvfPXlu9mFJaeRqMuQQXIrVEOkApqtOCEVd",
+  secret_key_base: "odMGQmHhvRQ8crBIH3IN31hahkw6hD0RJwvmr5i3+Up96Hs4//+tkgzNdg3HSxLI",
   watchers: [
-    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
@@ -38,7 +37,6 @@ config :chat, ChatWeb.Endpoint,
 #
 #     mix phx.gen.cert
 #
-# Note that this task requires Erlang/OTP 20 or later.
 # Run `mix help phx.gen.cert` for more information.
 #
 # The `http:` config above can be replaced with:
@@ -59,11 +57,12 @@ config :chat, ChatWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/chat_web/(live|views)/.*(ex)$",
-      ~r"lib/chat_web/templates/.*(eex)$"
+      ~r"lib/chat_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
+
+# Enable dev routes for dashboard and mailbox
+config :chat, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
