@@ -503,10 +503,11 @@ and _copy-paste_ (_or type_) the following code:
 
 ```html
 <!-- The list of messages will appear here: -->
-<ul id='msg-list' phx-update="append" class="pa-1">
-</ul>
+<div class="mt-[4rem]">
+  <ul id="msg-list" phx-update="append" class="pa-1"></ul>
+</div>
 
-<footer class="bg-slate-800 p-2 h-[3rem] fixed bottom-0 w-full flex justify-center sticky">
+<footer class="bg-slate-800 p-2 h-[3rem] bottom-0 w-full flex justify-center sticky mt-[auto]">
   <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
     <input type="text" id="name" placeholder="Name" required
         class="grow-0 w-1/6 px-1.5 py-1.5"/>
@@ -553,7 +554,7 @@ and locate the `<body>` tag.
 Replace the contents of the `<body>` with the following code:
 
 ```html
-  <body class="bg-white antialiased">
+  <body class="bg-white antialiased min-h-screen flex flex-col">
     <header class="bg-slate-800 w-full h-[4rem] top-0 fixed flex flex-col justify-center z-10">
       <div class="flex flex-row justify-center items-center">
         <h1 class="w-4/5 md:text-3xl text-center font-mono text-white">
@@ -561,9 +562,7 @@ Replace the contents of the `<body>` with the following code:
         </h1>
       </div>
     </header>
-    <main class="mt-[4rem]">
-        <%= @inner_content %>
-    </main>
+    <%= @inner_content %>
   </body>
 ```
 
@@ -670,7 +669,7 @@ function sendMessage() {
   });
 
   msg.value = '';                // reset the message input field for next message.
-  window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
+  window.scrollTo(0, document.documentElement.scrollHeight) // scroll to the end of the page on send
 }
 
 // Render the message with Tailwind styles

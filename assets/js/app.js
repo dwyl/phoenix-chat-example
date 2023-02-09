@@ -65,7 +65,7 @@ function sendMessage() {
   });
 
   msg.value = '';                // reset the message input field for next message.
-  window.scrollTo(0, document.body.scrollHeight); // scroll to the end of the page on send
+  window.scrollTo(0, document.documentElement.scrollHeight) // scroll to the end of the page on send
 }
 
 // Render the message with Tailwind styles
