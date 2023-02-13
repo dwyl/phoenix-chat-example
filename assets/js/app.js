@@ -54,6 +54,15 @@ channel.on('shout', function (payload) {
   render_message(payload)
 });
 
+// Listening to presence events
+channel.on('presence_diff', function (payload) {
+  console.log(payload)
+});
+
+channel.on('presence_state', function (payload) {
+  console.log(payload)
+});
+
 
 // Send the message to the server on "shout" channel
 function sendMessage() {
