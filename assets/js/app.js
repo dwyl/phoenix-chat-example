@@ -59,7 +59,7 @@ channel.join(); // join the channel.
 // This function will be probably caught when the user first enters the page
 channel.on('presence_state', function (payload) {
   const currentlyOnlineUsers = Object.keys(payload)
-  updateOnlineList(currentlyOnlineUsers)
+  updateOnlineUsersList(currentlyOnlineUsers)
 })
 
 // Listening to presence events whenever a user leaves or joins
