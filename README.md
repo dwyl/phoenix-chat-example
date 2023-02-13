@@ -58,6 +58,7 @@ and _deploying_ a Chat app in Phoenix!
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
 - [Authentication](#authentication)
+- [Adding `Presence` to track who's online](#adding-presence-to-track-whos-online)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
   - [What _Next_?](#what-next)
@@ -1283,6 +1284,25 @@ If you want to _understand_
 how Authentication is implemented the _easy/fast_ way,
 see:
 [auth.md](https://github.com/dwyl/phoenix-chat-example/blob/main/auth.md)
+
+
+<br />
+
+# Adding `Presence` to track who's online
+
+One of the great advantages
+of using `Phoenix`
+is that you can 
+*easily track processes*
+and channels.
+
+This paves the way of *easily*
+showing who's online or not!
+
+If you are interested in 
+developing this feature,
+we have created a guide in 
+[`presence.md`](./presence.md)
 
 
 <br />
