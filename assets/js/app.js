@@ -40,26 +40,79 @@ liveSocket.connect()
 window.liveSocket = liveSocket
 
 
-/* Message list code */
+/* INITIAL SETUP OF VARIABLES AND JOINING CHANNEL -------------- */
 const ul = document.getElementById('msg-list');                       // list of messages.
 const name = document.getElementById('name');                         // name of message sender
 const msg = document.getElementById('msg');                           // message input field
 const send = document.getElementById('send');                         // send button
-const users_list = document.getElementById('users_online-list');      // online users list 
+const usersListMobile = document.getElementById('users_online-list-mobile');      // online users list mobile
+const usersListDesktop = document.getElementById('users_online-list-desktop');      // online users list desktop
 
 const channel = socket.channel('room:lobby', {});  // connect to chat "room"
 channel.join(); // join the channel.
+
+
+
+/* ONLINE USERS/PRESENCE FUNCTIONS -------------- */
+
+
+// This function will be probably caught when the user first enters the page
+channel.on('presence_state', function (payload) {
+  const currentlyOnlineUsers = Object.keys(payload)
+  updateOnlineList(currentlyOnlineUsers)
+})
+
+// Listening to presence events whenever a user leaves or joins
+channel.on('presence_diff', function (payload) {
+  if(payload.joins && payload.leaves) {
+    const currentlyOnlineUsers = Object.keys(payload.joins)
+    const usersThatLeft = Object.keys(payload.leaves)
+
+    updateOnlineUsersList(currentlyOnlineUsers)
+    removeUsersThatLeft(usersThatLeft)
+  }
+});
+
+function updateOnlineUsersList(currentlyOnlineUsers) {
+    // Add joined users
+    for (var i = currentlyOnlineUsers.length - 1; i >= 0; i--) {
+      const userName = currentlyOnlineUsers[i]
+  
+      if (document.getElementById(userName) == null) {
+        var liMobile = document.createElement("li"); // create new user list item DOM element for mobile
+        var liDesktop = document.createElement("li"); // create new user list item DOM element for desktop
+        
+        liMobile.id = userName + '_mobile'
+        liDesktop.id = userName + '_desktop'
+        liMobile.innerHTML = `<caption>${sanitizeString(userName)}</caption>`
+        liDesktop.innerHTML = `<caption>${sanitizeString(userName)}</caption>`
+
+        usersListMobile.appendChild(liMobile);                    // append to  userslist
+        usersListDesktop.appendChild(liDesktop);                    // append to  userslist
+      }
+    }
+}
+
+function removeUsersThatLeft(usersThatLeft) {
+  // Remove users that left
+  for (var i = usersThatLeft.length - 1; i >= 0; i--) {
+    const userName = usersThatLeft[i]
+
+    const userThatLeftMobile = document.getElementById(userName + '_mobile')
+    const userThatLeftDesktop = document.getElementById(userName +  '_desktop')
+    if (userThatLeftMobile != null && userThatLeftDesktop != null) {
+      usersListMobile.removeChild(userThatLeftMobile);         // remove the user from list mobile
+      usersListDesktop.removeChild(userThatLeftDesktop);        // remove the user from list desktop
+    }
+  }
+}
+
+/* SENDING MESSAGES FUNCTIONS ------------- */
 
 // Listening to 'shout' events
 channel.on('shout', function (payload) {
   render_message(payload)
 });
-
-// Listening to presence events
-channel.on('presence_state', function (payload) {
-  console.log(payload)
-});
-
 
 // Send the message to the server on "shout" channel
 function sendMessage() {
@@ -113,6 +166,9 @@ send.addEventListener('click', function (event) {
   }
 });
 
+
+/* UTILS ------------ */
+
 // Date formatting
 function formatDate(datetime) {
   const m = new Date(datetime);
@@ -129,3 +185,8 @@ function formatTime(datetime) {
     + ("0" + m.getUTCSeconds()).slice(-2);
 }
 
+// Sanitize string 
+function sanitizeString(str){
+  str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+  return str.trim();
+}
