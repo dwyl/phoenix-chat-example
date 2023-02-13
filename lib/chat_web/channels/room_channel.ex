@@ -59,21 +59,16 @@ defmodule ChatWeb.RoomChannel do
     true
   end
 
-
-  # Add a track in Presence when user joins the channel
-  # Ideally this should be on joining "room:lobby" but the socket has no info as of now
-  # to associate with a user.
-
-  defp track_presence(socket) do
-    case do_track(socket) do
-      {:ok, _ref} -> socket
-      {:error, {:already_tracked, _pid, _channel, _user}} -> socket
-    end
-  end
-
-  defp do_track(%{assigns: %{user_name: user_name}} = socket) when not is_nil(user_name) do
+  # This creates a Presence track when the user joins the channel.
+  # Normally this is done when joining the channel,
+  # but the socket doesn't know the username so we wait for a message to be sent
+  # with the username to begin tracking.
+  defp track_presence(%{assigns: %{user_name: user_name}} = socket) do
     Presence.track(socket, user_name, %{
       online_at: inspect(System.system_time(:second))
     })
+
+    socket
   end
+
 end

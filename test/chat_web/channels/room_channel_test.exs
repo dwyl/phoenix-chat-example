@@ -15,9 +15,9 @@ defmodule ChatWeb.RoomChannelTest do
     assert_reply ref, :ok, %{"hello" => "there"}
   end
 
-  test "shout broadcasts to room:lobby", %{socket: socket} do
-    push(socket, "shout", %{"hello" => "all"})
-    assert_broadcast "shout", %{"hello" => "all"}
+  test "shout broadcasts to room:lobby a message with username", %{socket: socket} do
+    push(socket, "shout", %{"name" => "test_username", "message" => "hey all"})
+    assert_broadcast "shout", %{"name" => "test_username", "message" => "hey all"}
   end
 
   test "broadcasts are pushed to the client", %{socket: socket} do

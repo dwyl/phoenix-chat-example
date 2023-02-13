@@ -2,13 +2,11 @@
 <div class="mt-[5rem] p-4 ml-4 mr-4 mb-4 border-2 radius rounded-md lg:hidden">
   <div class="flex justify-start flex-col overflow-hidden whitespace-nowrap">
     <h5 class="text-md leading-tight font-medium mb-2 text-green-700">Users online</h5>
-    <ul id="users_online-list-mobile" phx-update="append" class="pa-1">
-    </ul>
+    <ul id="users_online-list-mobile" phx-update="append" class="pa-1"></ul>
   </div>
 </div>
 
 <div id="chat-container" class="max-h-screen flex flex-col lg:flex-row lg:min-h-screen ">
-
   <div class="flex flex-col lg:flex-grow">
     <!-- The list of messages will appear here: -->
     <ul id="msg-list" phx-update="append" class="pa-1 lg:mt-[4rem] overflow-y-auto"></ul>
@@ -25,7 +23,13 @@
             value={person_name(@person)}
           />
         <% else %>
-          <input type="text" id="name" placeholder="Name" required class="grow-0 w-1/6 px-1.5 py-1.5" />
+          <input
+            type="text"
+            id="name"
+            placeholder="Name"
+            required
+            class="grow-0 w-1/6 px-1.5 py-1.5"
+          />
         <% end %>
 
         <input
@@ -45,17 +49,14 @@
         </button>
       </div>
     </footer>
-
   </div>
-
-    <!-- Online users will only be shown here on desktop devices -->
-    <div class="hidden lg:flex">
-      <div class="mt-[5rem] p-4 ml-4 mr-4 mb-4 border-2 radius rounded-md max-w-[20vw]">
-        <div class="flex justify-start flex-col overflow-hidden whitespace-nowrap">
-          <h5 class="text-md leading-tight font-medium mb-2 text-green-700">Users online</h5>
-          <ul id="users_online-list-desktop" phx-update="append" class="pa-1">
-          </ul>
-        </div>
+  <!-- Online users will only be shown here on desktop devices -->
+  <div class="hidden lg:flex">
+    <div class="mt-[5rem] p-4 ml-4 mr-4 mb-4 border-2 radius rounded-md max-w-[20vw]">
+      <div class="flex justify-start flex-col overflow-hidden whitespace-nowrap">
+        <h5 class="text-md leading-tight font-medium mb-2 text-green-700">Users online</h5>
+        <ul id="users_online-list-desktop" phx-update="append" class="pa-1"></ul>
       </div>
     </div>
+  </div>
 </div>
