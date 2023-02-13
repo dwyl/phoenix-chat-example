@@ -41,10 +41,11 @@ window.liveSocket = liveSocket
 
 
 /* Message list code */
-const ul = document.getElementById('msg-list');    // list of messages.
-const name = document.getElementById('name');      // name of message sender
-const msg = document.getElementById('msg');        // message input field
-const send = document.getElementById('send');      // send button
+const ul = document.getElementById('msg-list');                       // list of messages.
+const name = document.getElementById('name');                         // name of message sender
+const msg = document.getElementById('msg');                           // message input field
+const send = document.getElementById('send');                         // send button
+const users_list = document.getElementById('users_online-list');      // online users list 
 
 const channel = socket.channel('room:lobby', {});  // connect to chat "room"
 channel.join(); // join the channel.
@@ -55,10 +56,6 @@ channel.on('shout', function (payload) {
 });
 
 // Listening to presence events
-channel.on('presence_diff', function (payload) {
-  console.log(payload)
-});
-
 channel.on('presence_state', function (payload) {
   console.log(payload)
 });
@@ -74,7 +71,8 @@ function sendMessage() {
   });
 
   msg.value = '';                // reset the message input field for next message.
-  window.scrollTo(0, document.documentElement.scrollHeight) // scroll to the end of the page on send
+  window.scrollTo(0, document.documentElement.scrollHeight) // scroll to the end of the page on send for desktop
+  ul.scrollTo(0, ul.scrollHeight)                           // scroll to the end of the page on send for mobile
 }
 
 // Render the message with Tailwind styles
