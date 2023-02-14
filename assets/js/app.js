@@ -58,7 +58,6 @@ channel.join(); // join the channel.
 
 // This function will be probably caught when the user first enters the page
 channel.on('presence_state', function (payload) {
-  console.log(payload)
   // Array of objects with id and username
   const currentlyOnlineUsers = Object.entries(payload).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
     
@@ -92,8 +91,8 @@ function updateOnlineUsersList(currentlyOnlineUsers) {
         liMobile.innerHTML = `<caption>${sanitizeString(userName)}</caption>`
         liDesktop.innerHTML = `<caption>${sanitizeString(userName)}</caption>`
 
-        usersListMobile.appendChild(liMobile);                    // append to  userslist
-        usersListDesktop.appendChild(liDesktop);                    // append to  userslist
+        usersListMobile.appendChild(liMobile);                    // append to users list
+        usersListDesktop.appendChild(liDesktop);                    // append to users list
       }
     }
 }
