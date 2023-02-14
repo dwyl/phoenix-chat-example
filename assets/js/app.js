@@ -58,15 +58,19 @@ channel.join(); // join the channel.
 
 // This function will be probably caught when the user first enters the page
 channel.on('presence_state', function (payload) {
-  const currentlyOnlineUsers = Object.keys(payload)
+  console.log(payload)
+  // Array of objects with id and username
+  const currentlyOnlineUsers = Object.entries(payload).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
+    
   updateOnlineUsersList(currentlyOnlineUsers)
 })
 
 // Listening to presence events whenever a user leaves or joins
 channel.on('presence_diff', function (payload) {
   if(payload.joins && payload.leaves) {
-    const currentlyOnlineUsers = Object.keys(payload.joins)
-    const usersThatLeft = Object.keys(payload.leaves)
+    // Array of objects with id and username
+    const currentlyOnlineUsers = Object.entries(payload.joins).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
+    const usersThatLeft = Object.entries(payload.leaves).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
 
     updateOnlineUsersList(currentlyOnlineUsers)
     removeUsersThatLeft(usersThatLeft)
@@ -76,14 +80,15 @@ channel.on('presence_diff', function (payload) {
 function updateOnlineUsersList(currentlyOnlineUsers) {
     // Add joined users
     for (var i = currentlyOnlineUsers.length - 1; i >= 0; i--) {
-      const userName = currentlyOnlineUsers[i]
+      const userName = currentlyOnlineUsers[i].username
+      const id = userName + "-" + currentlyOnlineUsers[i].id
   
       if (document.getElementById(userName) == null) {
         var liMobile = document.createElement("li"); // create new user list item DOM element for mobile
         var liDesktop = document.createElement("li"); // create new user list item DOM element for desktop
         
-        liMobile.id = userName + '_mobile'
-        liDesktop.id = userName + '_desktop'
+        liMobile.id = id + '_mobile'
+        liDesktop.id = id + '_desktop'
         liMobile.innerHTML = `<caption>${sanitizeString(userName)}</caption>`
         liDesktop.innerHTML = `<caption>${sanitizeString(userName)}</caption>`
 
@@ -96,10 +101,12 @@ function updateOnlineUsersList(currentlyOnlineUsers) {
 function removeUsersThatLeft(usersThatLeft) {
   // Remove users that left
   for (var i = usersThatLeft.length - 1; i >= 0; i--) {
-    const userName = usersThatLeft[i]
+    const userName = usersThatLeft[i].username
+    const id = userName + "-" + usersThatLeft[i].id
 
-    const userThatLeftMobile = document.getElementById(userName + '_mobile')
-    const userThatLeftDesktop = document.getElementById(userName +  '_desktop')
+    const userThatLeftMobile = document.getElementById(id + '_mobile')
+    const userThatLeftDesktop = document.getElementById(id +  '_desktop')
+
     if (userThatLeftMobile != null && userThatLeftDesktop != null) {
       usersListMobile.removeChild(userThatLeftMobile);         // remove the user from list mobile
       usersListDesktop.removeChild(userThatLeftDesktop);        // remove the user from list desktop
