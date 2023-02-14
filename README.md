@@ -1296,14 +1296,14 @@ is that you can
 *easily track processes*
 and channels.
 
-This paves the way of *easily*
+This paves the way to *effortlessly*
 showing who's online or not!
 
 If you are interested in 
 developing this feature,
 we have created a guide in 
 [`presence.md`](./presence.md)
-
+just for you! 😀
 
 <br />
 

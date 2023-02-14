@@ -59,7 +59,7 @@ to the supervision tree
 in `lib/chat/application.ex`.
 Make sure to add `ChatWeb.Presence`
 **before `ChatWeb.Endpoint`**
-and **after the `PubSub` child.
+and **after the `PubSub` child**.
 
 ```elixir
     children = [
@@ -104,12 +104,13 @@ By allowing users to have multiple usernames,
 there might be some cases where two different users
 can have the same username.
 Therefore, we need to properly 
-*remove one username pertained to one process*
+*remove one username pertaining to one process*
 *whenever it leaves the room*,
 **while maintaining the other same username for the other process in the online users list**.
 
 Let's start implementing `Presence` into our application
 so it satisfies these needs!
+
 In `lib/chat_web/channels/room_channel.ex`, 
 let's import `Presence` 
 and start tracking processes.
@@ -143,7 +144,7 @@ We have added the `push/3` function
 that the current presence information for the socket's topic 
 is pushed to the client as a `"presence_state"` event.
 
-Nesxt, 
+Next, 
 in `handle_in("shout", payload, socket)`,
 change it like so:
 
@@ -275,9 +276,9 @@ We have made some changed to the layout of the image
 so it works better on both mobile and desktop devices.
 
 What's important is 
-that **we've added a `<ul>` element with id `users_online-list`**
-for both mobile and desktop.
-We've it like this because this list needs to be in
+that **we've added two `<ul>` elements with `id` `users_online-list`**,
+one for both mobile and another for desktop.
+We've done it like this because this list needs to be in
 different places depending on the device.
 We've achieved this by *hiding* one list on mobile devices
 and showing it on desktops,
@@ -307,7 +308,7 @@ the list gets "pushed" to the top of the page.
 
 The only thing that's left 
 is *populating the list*
-with items (online users).
+with `<li>` elements (online users) inside the `<ul>` list.
 
 We are going to make these changes
 in `assets/js/app.js`.
@@ -319,7 +320,6 @@ const usersListDesktop = document.getElementById('users_online-list-desktop');  
 
 // This function will be probably caught when the user first enters the page
 channel.on('presence_state', function (payload) {
-  console.log(payload)
   // Array of objects with id and username
   const currentlyOnlineUsers = Object.entries(payload).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
     
@@ -398,6 +398,9 @@ function sanitizeString(str){
 }
 ```
 
+e.g.
+[`assets/js/app.js`](https://github.com/dwyl/phoenix-chat-example/blob/add_presence-%2314/assets/js/app.js)
+
 That's a lot!
 To understand the code,
 we need to understand
@@ -460,7 +463,7 @@ When a user sends a message,
 the browser should scroll down.
 
 This behaviour already existed.
-But now that we've changed the UI, 
+But now that we've changes the UI, 
 scrolling no longer works.
 This is because scrolling
 *is now done on the list of messages element in mobile devices*.
@@ -474,13 +477,13 @@ in `assets/js/app.js`.
 ```js
 function sendMessage() {
 
-  channel.push('shout', {       
+  channel.push('shout', {
     name: name.value || "guest",
-    message: msg.value,         
-    inserted_at: new Date()     
+    message: msg.value,
+    inserted_at: new Date()
   });
 
-  msg.value = '';              
+  msg.value = '';
   window.scrollTo(0, document.documentElement.scrollHeight) // scroll to the end of the page on send for desktop
   ul.scrollTo(0, ul.scrollHeight)                           // scroll to the end of the page on send for mobile (THIS IS THE NEW LINE)
 }
@@ -527,7 +530,7 @@ This also works for *authenticated users*.
 
 Check the gif below for a quick demo!
 
-![final_demo](https://user-images.githubusercontent.com/17494745/218735285-aeab436e-f0f5-4f8c-9076-e71a2c2ec5a0.gif)
+![final_demo](https://user-images.githubusercontent.com/17494745/218738594-b1b8f853-f9cd-4bed-a301-ea68479386f0.gif)
 
 Notice how the anonymonus user
 goes under two different usernames.
