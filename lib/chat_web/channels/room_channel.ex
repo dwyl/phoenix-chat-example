@@ -28,9 +28,9 @@ defmodule ChatWeb.RoomChannel do
 
     # Assigning name to socket assigns and tracking presence
     socket
-      |> assign(:username, msg.name)
-      |> track_presence()
-      |> broadcast("shout", Map.put_new(payload, :id, msg.id))
+    |> assign(:username, msg.name)
+    |> track_presence()
+    |> broadcast("shout", Map.put_new(payload, :id, msg.id))
 
     {:noreply, socket}
   end
@@ -39,7 +39,8 @@ defmodule ChatWeb.RoomChannel do
   def handle_info(:after_join, socket) do
     # Get messages and list them
     Chat.Message.get_messages()
-    |> Enum.reverse()     # reverts the enum to display the latest message at the bottom of the page
+    # reverts the enum to display the latest message at the bottom of the page
+    |> Enum.reverse()
     |> Enum.each(fn msg ->
       push(socket, "shout", %{
         name: msg.name,
@@ -70,5 +71,4 @@ defmodule ChatWeb.RoomChannel do
 
     socket
   end
-
 end
