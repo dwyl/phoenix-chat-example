@@ -58,6 +58,7 @@ and _deploying_ a Chat app in Phoenix!
     - [13.3 Run the Tests with Coverage Checking](#133-run-the-tests-with-coverage-checking)
     - [13.4 Write a Test for the Untested Function](#134-write-a-test-for-the-untested-function)
 - [Authentication](#authentication)
+- [Adding `Presence` to track who's online](#adding-presence-to-track-whos-online)
 - [Continuous Integration](#continuous-integration)
 - [Deployment!](#deployment)
   - [What _Next_?](#what-next)
@@ -770,7 +771,7 @@ We are just keeping them for reference
 of how to join channels and receive messages.
 
 If you are running the app,
-try to fill the `username` and `message` fields
+try to fill the `name` and `message` fields
 and click `Enter` (or press `Send`).
 
 The message should appear
@@ -1222,7 +1223,7 @@ test ":after_join sends all existing messages", %{socket: socket} do
   Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert()
 
   {:ok, _, socket2} = ChatWeb.UserSocket
-    |> socket("user_id", %{some: :assign})
+    |> socket("person_id", %{some: :assign})
     |> subscribe_and_join(ChatWeb.RoomChannel, "room:lobby")
 
   assert socket2.join_ref != socket.join_ref
@@ -1284,6 +1285,25 @@ how Authentication is implemented the _easy/fast_ way,
 see:
 [auth.md](https://github.com/dwyl/phoenix-chat-example/blob/main/auth.md)
 
+
+<br />
+
+# Adding `Presence` to track who's online
+
+One of the great advantages
+of using `Phoenix`
+is that you can 
+*easily track processes*
+and channels.
+
+This paves the way to *effortlessly*
+showing who's online or not!
+
+If you are interested in 
+developing this feature,
+we have created a guide in 
+[`presence.md`](./presence.md)
+just for you! 😀
 
 <br />
 
