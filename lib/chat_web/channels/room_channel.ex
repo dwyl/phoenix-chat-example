@@ -26,9 +26,9 @@ defmodule ChatWeb.RoomChannel do
     # Insert message in database
     {:ok, msg} = Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert()
 
-    # Assigning username to socket assigns and tracking presence
+    # Assigning name to socket assigns and tracking presence
     socket
-      |> assign(:user_name, msg.name)
+      |> assign(:username, msg.name)
       |> track_presence()
       |> broadcast("shout", Map.put_new(payload, :id, msg.id))
 
@@ -48,7 +48,7 @@ defmodule ChatWeb.RoomChannel do
       })
     end)
 
-    # Send currently online users in lobby
+    # Send currently online people in lobby
     push(socket, "presence_state", Presence.list("room:lobby"))
 
     {:noreply, socket}
@@ -59,12 +59,12 @@ defmodule ChatWeb.RoomChannel do
     true
   end
 
-  # This creates a Presence track when the user joins the channel.
+  # This creates a Presence track when the person joins the channel.
   # Normally this is done when joining the channel,
-  # but the socket doesn't know the username so we wait for a message to be sent
-  # with the username to begin tracking.
-  defp track_presence(%{assigns: %{user_name: user_name}} = socket) do
-    Presence.track(socket, user_name, %{
+  # but the socket doesn't know the name so we wait for a message to be sent
+  # with the name to begin tracking.
+  defp track_presence(%{assigns: %{username: username}} = socket) do
+    Presence.track(socket, username, %{
       online_at: inspect(System.system_time(:second))
     })
 

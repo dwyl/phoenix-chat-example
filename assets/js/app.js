@@ -1,19 +1,4 @@
-// If you want to use Phoenix channels, run `mix help phx.gen.channel`
-// to get started and then uncomment the line below.
 import socket from "./user_socket.js"
-
-// You can include dependencies in two ways.
-//
-// The simplest option is to put them in assets/vendor and
-// import them using relative paths:
-//
-//     import "../vendor/some-package.js"
-//
-// Alternatively, you can `npm install some-package --prefix assets` and import
-// them using a path starting with the package name:
-//
-//     import "some-package"
-//
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
@@ -45,70 +30,70 @@ const ul = document.getElementById('msg-list');                       // list of
 const name = document.getElementById('name');                         // name of message sender
 const msg = document.getElementById('msg');                           // message input field
 const send = document.getElementById('send');                         // send button
-const usersListMobile = document.getElementById('users_online-list-mobile');      // online users list mobile
-const usersListDesktop = document.getElementById('users_online-list-desktop');      // online users list desktop
+const peopleListMobile = document.getElementById('people_online-list-mobile');      // online people list mobile
+const peopleListDesktop = document.getElementById('people_online-list-desktop');      // online people list desktop
 
 const channel = socket.channel('room:lobby', {});  // connect to chat "room"
 channel.join(); // join the channel.
 
 
 
-/* ONLINE USERS/PRESENCE FUNCTIONS -------------- */
+/* ONLINE people / PRESENCE FUNCTIONS -------------- */
 
 
-// This function will be probably caught when the user first enters the page
+// This function will be probably caught when the person first enters the page
 channel.on('presence_state', function (payload) {
   // Array of objects with id and username
-  const currentlyOnlineUsers = Object.entries(payload).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
+  const currentlyOnlinePeople = Object.entries(payload).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
     
-  updateOnlineUsersList(currentlyOnlineUsers)
+  updateOnlinePeopleList(currentlyOnlinePeople)
 })
 
-// Listening to presence events whenever a user leaves or joins
+// Listening to presence events whenever a person leaves or joins
 channel.on('presence_diff', function (payload) {
   if(payload.joins && payload.leaves) {
     // Array of objects with id and username
-    const currentlyOnlineUsers = Object.entries(payload.joins).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
-    const usersThatLeft = Object.entries(payload.leaves).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
+    const currentlyOnlinePeople = Object.entries(payload.joins).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
+    const peopleThatLeft = Object.entries(payload.leaves).map(elem => ({username: elem[0], id: elem[1].metas[0].phx_ref}))
 
-    updateOnlineUsersList(currentlyOnlineUsers)
-    removeUsersThatLeft(usersThatLeft)
+    updateOnlinePeopleList(currentlyOnlinePeople)
+    removePeopleThatLeft(peopleThatLeft)
   }
 });
 
-function updateOnlineUsersList(currentlyOnlineUsers) {
-    // Add joined users
-    for (var i = currentlyOnlineUsers.length - 1; i >= 0; i--) {
-      const userName = currentlyOnlineUsers[i].username
-      const id = userName + "-" + currentlyOnlineUsers[i].id
+function updateOnlinePeopleList(currentlyOnlinePeople) {
+    // Add joined people
+    for (var i = currentlyOnlinePeople.length - 1; i >= 0; i--) {
+      const name = currentlyOnlinePeople[i].username
+      const id = name + "-" + currentlyOnlinePeople[i].id
   
-      if (document.getElementById(userName) == null) {
-        var liMobile = document.createElement("li"); // create new user list item DOM element for mobile
-        var liDesktop = document.createElement("li"); // create new user list item DOM element for desktop
+      if (document.getElementById(name) == null) {
+        var liMobile = document.createElement("li"); // create new person list item DOM element for mobile
+        var liDesktop = document.createElement("li"); // create new person list item DOM element for desktop
         
         liMobile.id = id + '_mobile'
         liDesktop.id = id + '_desktop'
-        liMobile.innerHTML = `<caption>${sanitizeString(userName)}</caption>`
-        liDesktop.innerHTML = `<caption>${sanitizeString(userName)}</caption>`
+        liMobile.innerHTML = `<caption>${sanitizeString(name)}</caption>`
+        liDesktop.innerHTML = `<caption>${sanitizeString(name)}</caption>`
 
-        usersListMobile.appendChild(liMobile);                    // append to users list
-        usersListDesktop.appendChild(liDesktop);                    // append to users list
+        peopleListMobile.appendChild(liMobile);                    // append to people list
+        peopleListDesktop.appendChild(liDesktop);                    // append to people list
       }
     }
 }
 
-function removeUsersThatLeft(usersThatLeft) {
-  // Remove users that left
-  for (var i = usersThatLeft.length - 1; i >= 0; i--) {
-    const userName = usersThatLeft[i].username
-    const id = userName + "-" + usersThatLeft[i].id
+function removePeopleThatLeft(peopleThatLeft) {
+  // Remove people that left
+  for (var i = peopleThatLeft.length - 1; i >= 0; i--) {
+    const name = peopleThatLeft[i].name
+    const id = name + "-" + peopleThatLeft[i].id
 
-    const userThatLeftMobile = document.getElementById(id + '_mobile')
-    const userThatLeftDesktop = document.getElementById(id +  '_desktop')
+    const personThatLeftMobile = document.getElementById(id + '_mobile')
+    const personThatLeftDesktop = document.getElementById(id +  '_desktop')
 
-    if (userThatLeftMobile != null && userThatLeftDesktop != null) {
-      usersListMobile.removeChild(userThatLeftMobile);         // remove the user from list mobile
-      usersListDesktop.removeChild(userThatLeftDesktop);        // remove the user from list desktop
+    if (personThatLeftMobile != null && personThatLeftDesktop != null) {
+      peopleListMobile.removeChild(personThatLeftMobile);         // remove the person from list mobile
+      peopleListDesktop.removeChild(personThatLeftDesktop);        // remove the person from list desktop
     }
   }
 }
@@ -130,8 +115,13 @@ function sendMessage() {
   });
 
   msg.value = '';                // reset the message input field for next message.
-  window.scrollTo(0, document.documentElement.scrollHeight) // scroll to the end of the page on send for desktop
-  ul.scrollTo(0, ul.scrollHeight)                           // scroll to the end of the page on send for mobile
+}
+
+// The page does not automatically scroll to show the latest message
+// So invoke this after rendering messages to ensure the last one is in view:
+function scroll_latest_message_into_view() {
+  window.scrollTo(0, document.documentElement.scrollHeight) // desktop
+  ul.scrollTo(0, ul.scrollHeight)                           // mobile
 }
 
 // Render the message with Tailwind styles
@@ -156,6 +146,7 @@ function render_message(payload) {
   `
   // Append to list
   ul.appendChild(li);
+  scroll_latest_message_into_view();
 }
 
 // Listen for the [Enter] keypress event to send a message:
@@ -191,7 +182,8 @@ function formatTime(datetime) {
     + ("0" + m.getUTCSeconds()).slice(-2);
 }
 
-// Sanitize string 
+// Sanitize string input borrowed from:
+// stackoverflow.com/questions/23187013/sanitize-javascript-string
 function sanitizeString(str){
   str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
   return str.trim();

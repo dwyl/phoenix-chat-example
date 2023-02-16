@@ -17,7 +17,7 @@ in **5 minutes**. <br />
 We'll add **_optional_ `auth`**
 that will let people authenticate 
 with their **`GitHub`** or **`Google`** Account
-and use their Account username and Avatar in the Chat. 
+and use their Account name and Avatar in the Chat. 
 
 Let's do this!
 
@@ -61,13 +61,13 @@ Visit [authdemo.fly.dev](https://authdemo.fly.dev/apps/new),
 sign in with your `GitHub` or `Google` account,
 and create your app with `localhost:4000` as the `URL`:
 
-<img width="1089" alt="image" src="https://user-images.githubusercontent.com/194400/202419197-80e082d0-1ab0-497c-a095-6764e6df9b64.png">
+<img width="1089" alt="image" src="https://person-images.githubpersoncontent.com/194400/202419197-80e082d0-1ab0-497c-a095-6764e6df9b64.png">
 
 When you click "**Save**" 
 you will be see a screen 
 similar to the following:
 
-<img width="1162" alt="image" src="https://user-images.githubusercontent.com/194400/202419365-e06c43d6-c537-4646-a1a3-90320fb3aa59.png">
+<img width="1162" alt="image" src="https://person-images.githubpersoncontent.com/194400/202419365-e06c43d6-c537-4646-a1a3-90320fb3aa59.png">
 
 > **Note**: don't worry this is **not** a **valid** key,
 > it's just for illustration purposes. 
@@ -139,7 +139,7 @@ end
 The `login/2` function redirects to the dwyl auth app. 
 Read more about how to use the `AuthPlug.get_auth_url/2` function. 
 Once authenticated,
- the user will be redirected to the `/` endpoint
+ the person will be redirected to the `/` endpoint
 and a `jwt` session is created on the client.
 
 The `logout/2` function invokes `AuthPlug.logout/1`, 
@@ -195,16 +195,16 @@ end
 ## 6. Update the UI Template with `Auth`
 
 Now that we've implemented the authentication flow,
-we need to show it to the user!
+we need to show it to the person!
 
-Let's first properly show the username
-of the logged in user.
+Let's first properly show the name
+of the logged in person.
 Inside `lib/chat_web/controllers/page_html.ex`,
 add the following function.
 
 ```elixir
   def person_name(person) do
-    person.givenName || person.username || "guest"
+    person.givenName || person.name || "guest"
   end
 ```
 
@@ -252,18 +252,18 @@ and change it to the following.
 
 We are now using the `@loggedin` assigns
 that is made accessible by `auth_plug` 
-to check if a user is logged in.
+to check if a person is logged in.
 
 We are using this property to
-show the logged in username.
-If no user is logged in,
+show the logged in name.
+If no person is logged in,
 we show the field in which he can type the wanted name
 to send messages.
 
 Notice how we use `person_name/1` function
 we defined in `page_html.ex` 
 in this file, 
-to show the username as placeholder.
+to show the name as placeholder.
 
 Finally,
 we need to change the `<header>`
@@ -302,12 +302,12 @@ change the `<header>` tag to look like so.
     </header>
 ```
 
-We are now checking if any user is logged in.
+We are now checking if any person is logged in.
 
 If it is, we show the profile picture
 and a `"Logout"` button.
 Otherwise, we show a `"Login"` button.
-These buttons redirect the user
+These buttons redirect the person
 to the `/logout` and `/login` paths, 
 respectively, 
 which are handled by `AuthController`
@@ -371,7 +371,7 @@ Awesome job! 👏
 We've just added authentication to our app.
 It should look like this.
 
-![auth_demo](https://user-images.githubusercontent.com/17494745/216612794-9064f4a5-2a31-4068-b82d-4d8ad45d6e3c.gif)
+![auth_demo](https://person-images.githubpersoncontent.com/17494745/216612794-9064f4a5-2a31-4068-b82d-4d8ad45d6e3c.gif)
 
 
 [![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example-auth.svg)](https://github.com/dwyl/phoenix-chat-example)

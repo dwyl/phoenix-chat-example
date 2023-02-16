@@ -2,7 +2,7 @@
 
 # Phoenix Chat Example
 
-![phoenix-chat-logo](https://user-images.githubusercontent.com/194400/39481553-c448aa1c-4d63-11e8-9389-47789833a96e.png)
+![phoenix-chat-logo](https://person-images.githubpersoncontent.com/194400/39481553-c448aa1c-4d63-11e8-9389-47789833a96e.png)
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/phoenix-chat-example/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/phoenix-chat-example/main.svg?style=flat-square)](https://codecov.io/github/dwyl/phoenix-chat-example?branch=main)
@@ -39,7 +39,7 @@ and _deploying_ a Chat app in Phoenix!
     - [3.1 Update Layout Template](#31-update-layout-template)
     - [3.2 Update the `page_controller_test.exs`](#32-update-the-page_controller_testexs)
   - [4. Update the "Client" code in App.js](#4-update-the-client-code-in-appjs)
-    - [4.1 Comment Out Lines in `user_socket.js`](#41-comment-out-lines-in-user_socketjs)
+    - [4.1 Comment Out Lines in `person_socket.js`](#41-comment-out-lines-in-person_socketjs)
     - [Storing Chat Message Data/History](#storing-chat-message-datahistory)
   - [5. Generate Database Schema to Store Chat History](#5-generate-database-schema-to-store-chat-history)
   - [6. Run the Ecto Migration (_Create The Database Table_)](#6-run-the-ecto-migration-create-the-database-table)
@@ -251,7 +251,7 @@ lsof -i :5432
 You should see output _similar_ to the following:
 
 ```sh
-COMMAND  PID  USER   FD  TYPE DEVICE                  SIZE/OFF NODE NAME
+COMMAND  PID  person   FD  TYPE DEVICE                  SIZE/OFF NODE NAME
 postgres 529 Nelson  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
 postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
 ```
@@ -322,7 +322,7 @@ you can see the chat messages
 displayed in all of them
 as soon as you hit the <kbd>Enter</kbd> key:
 
-![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
+![phoenix-chat-example-tailwind-ui-with-auth](https://person-images.githubpersoncontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
 
 <br />
 
@@ -365,7 +365,7 @@ Type <kbd>Y</kbd> in your terminal,
 followed by the <kbd>Enter</kbd> (<kbd>Return</kbd>) key.
 
 You should see: <br />
-![fetch-and-install-dependencies](https://user-images.githubusercontent.com/194400/34833220-d219221c-f6e6-11e7-88d6-87aa4c3054e4.png)
+![fetch-and-install-dependencies](https://person-images.githubpersoncontent.com/194400/34833220-d219221c-f6e6-11e7-88d6-87aa4c3054e4.png)
 
 Change directory into the `chat` directory by running the suggested command:
 ```sh
@@ -389,7 +389,7 @@ in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 
-![welcome-to-phoenix](https://user-images.githubusercontent.com/17494745/216576178-a227a6ef-ad12-4b74-9b29-4913b5e298bc.png)
+![welcome-to-phoenix](https://person-images.githubpersoncontent.com/17494745/216576178-a227a6ef-ad12-4b74-9b29-4913b5e298bc.png)
 
 Shut down the Phoenix server in your terminal
 with the
@@ -441,8 +441,8 @@ This will create **three files**:<br />
 
 in addition to creating **two more files**:
 ```sh
-* creating lib/chat_web/channels/user_socket.ex
-* creating assets/js/user_socket.js
+* creating lib/chat_web/channels/person_socket.ex
+* creating assets/js/person_socket.js
 ```
 
 
@@ -455,20 +455,20 @@ We are informed that we need to update a piece of code in our app:
 ```sh
 Add the socket handler to your `lib/chat_web/endpoint.ex`, for example:
 
-    socket "/socket", ChatWeb.UserSocket,
+    socket "/socket", ChatWeb.peopleocket,
       websocket: true,
       longpoll: false
 
-For the front-end integration, you need to import the `user_socket.js`
+For the front-end integration, you need to import the `person_socket.js`
 in your `assets/js/app.js` file:
 
-    import "./user_socket.js"
+    import "./person_socket.js"
 ```
 
 The generator asks us to import the client code in the frontend.
 Let's do that later. For now, open the `lib/chat_web/endpoint.ex` file and follow the instructions.
 
-After this, open the file called `/lib/chat_web/channels/user_socket.ex` <br >
+After this, open the file called `/lib/chat_web/channels/person_socket.ex` <br >
 and change the line:
 
 ```elixir
@@ -481,7 +481,7 @@ to:
 channel "room:lobby", ChatWeb.RoomChannel
 ```
 
-Check the change [here](https://github.com/dwyl/phoenix-chat-example/blob/0faa7f18ea6d7790e027ace5147cd1740040a75e/lib/chat_web/channels/user_socket.ex#L11).
+Check the change [here](https://github.com/dwyl/phoenix-chat-example/blob/0faa7f18ea6d7790e027ace5147cd1740040a75e/lib/chat_web/channels/person_socket.ex#L11).
 
 This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
 
@@ -573,7 +573,7 @@ Your `root.html.heex` template file should look like this:
 At the end of this step, if you run the Phoenix Server `mix phx.server`,
 and view the App in your browser it will look like this:
 
-![phoenix-chat-blank](https://user-images.githubusercontent.com/17494745/216590189-95923e9a-0956-4468-be8b-63b986d32f14.png)
+![phoenix-chat-blank](https://person-images.githubpersoncontent.com/17494745/216590189-95923e9a-0956-4468-be8b-63b986d32f14.png)
 
 So it's already starting to look like a basic Chat App.
 Sadly, since we changed the copy of the `home.html.heex`
@@ -634,7 +634,7 @@ Open
 uncomment and change the line:
 
 ```js
-import socket from "./user_socket.js"
+import socket from "./person_socket.js"
 ```
 
 With the line _uncommented_,
@@ -737,14 +737,14 @@ At this point your `app.js` file should look like this:
 [`/assets/js/app.js`](https://github.com/dwyl/phoenix-chat-example/blob/f45afee52570e07d43b7e3652564d24857a32bd7/assets/js/app.js)
 
 
-### 4.1 Comment Out Lines in `user_socket.js`
+### 4.1 Comment Out Lines in `person_socket.js`
 
 By default the phoenix channel (client)
 will subscribe to the generic room: `"topic:subtopic"`.
 Since we aren't going to be using this,
 we can avoid seeing any
 **`"unable to join: unmatched topic"`** errors in our browser/console
-by simply commenting out a few lines in the `user_socket.js` file.
+by simply commenting out a few lines in the `person_socket.js` file.
 Open the file in your editor and locate the following lines:
 
 ```JavaScript
@@ -762,8 +762,8 @@ Comment out the lines so they will not be executed:
 //  .receive("error", resp => { console.log("Unable to join", resp) })
 ```
 
-Your `user_socket.js` should now look like this:
-[`/assets/js/user_socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/f45afee52570e07d43b7e3652564d24857a32bd7/assets/js/user_socket.js)
+Your `person_socket.js` should now look like this:
+[`/assets/js/person_socket.js`](https://github.com/dwyl/phoenix-chat-example/blob/f45afee52570e07d43b7e3652564d24857a32bd7/assets/js/person_socket.js)
 
 > If you later decide to tidy up your chat app, you can **`delete`**
 these commented lines from the file. <br />
@@ -771,13 +771,13 @@ We are just keeping them for reference
 of how to join channels and receive messages.
 
 If you are running the app,
-try to fill the `username` and `message` fields
+try to fill the `name` and `message` fields
 and click `Enter` (or press `Send`).
 
 The message should appear
 on different windows!
 
-<img width="905" alt="ephemeral_chat" src="https://user-images.githubusercontent.com/17494745/216594102-f39af9c2-25c2-45f0-97bb-feecc434be5a.png">
+<img width="905" alt="ephemeral_chat" src="https://person-images.githubpersoncontent.com/17494745/216594102-f39af9c2-25c2-45f0-97bb-feecc434be5a.png">
 
 With this done, we can proceed.
 
@@ -793,7 +793,7 @@ and we'd be done! <br />
 > In fact, it could be a "_use-case_" / "_feature_"
 to have "_ephemeral_" chat without _any_ history ...
 > see: http://www.psstchat.com/.
-![psst-chat](https://user-images.githubusercontent.com/194400/35284714-6e338596-0053-11e8-998a-83b917ec90ae.png)
+![psst-chat](https://person-images.githubpersoncontent.com/194400/35284714-6e338596-0053-11e8-998a-83b917ec90ae.png)
 > 
 > But we are _assuming_ that _most_ chat apps save history
 > so that `new` people joining the "channel" can see the history
@@ -857,12 +857,12 @@ If you open your PostgreSQL GUI (_e.g: [pgadmin](https://www.pgadmin.org)_)
 you will see that the messages table has been created
 in the `chat_dev` database:
 
-![pgadmin-messages-table](https://user-images.githubusercontent.com/194400/35624169-deaa7fd4-0696-11e8-8dd0-584eba3a2037.png)
+![pgadmin-messages-table](https://person-images.githubpersoncontent.com/194400/35624169-deaa7fd4-0696-11e8-8dd0-584eba3a2037.png)
 
 You can view the table schema by "_right-clicking_" (_`ctrl + click` on Mac_)
 on the `messages` table and selecting "properties":
 
-![pgadmin-messages-schema-columns-view](https://user-images.githubusercontent.com/194400/35623295-c3a4df5c-0693-11e8-8484-199c2bcab458.png)
+![pgadmin-messages-schema-columns-view](https://person-images.githubpersoncontent.com/194400/35623295-c3a4df5c-0693-11e8-8484-199c2bcab458.png)
 
 <br />
 
@@ -976,7 +976,7 @@ is running on TCP Port `4000`!
 (_if your machine only has one browser try using one "incognito" tab_)
 
 You should be able to send messages between the two browser windows: <br />
-![phoenix-chat-example-basic-cropped](https://user-images.githubusercontent.com/17494745/216617288-31ab0fbf-9b0e-456f-995a-bfb8499e8847.gif)
+![phoenix-chat-example-basic-cropped](https://person-images.githubpersoncontent.com/17494745/216617288-31ab0fbf-9b0e-456f-995a-bfb8499e8847.gif)
 
 Congratulations! You have a _working_ (_basic_) Chat App written in Phoenix!
 
@@ -1141,7 +1141,7 @@ create a new file called `coveralls.json` and _copy-paste_ the following:
     "lib/chat_web.ex",
     "lib/chat_web/telemetry.ex",
     "lib/chat_web/components/core_components.ex",
-    "lib/chat_web/channels/user_socket.ex"
+    "lib/chat_web/channels/person_socket.ex"
   ]
 }
 
@@ -1151,7 +1151,7 @@ to require a **`minimum_coverage`** of **100%**
 (_i.e. **everything is tested**<sup>1</sup>_)
 and to _ignore_ the files in the `test/` directory for coverage checking.
 We also ignore files such as `application.ex`,
-`telemetry.ex`, `core_components.ex` and `user_socket.ex`
+`telemetry.ex`, `core_components.ex` and `person_socket.ex`
 because they are not relevant for the functionality of our project.
 
 > <small>_<sup>1</sup>We believe that **investing**
@@ -1204,7 +1204,7 @@ MIX_ENV=test mix coveralls.html ; open cover/excoveralls.html
 
 This will open the Coverage Report (HTML) in your default Web Browser: <br />
 
-![coverage-80-percent](https://user-images.githubusercontent.com/17494745/216605436-45956f51-8bc1-41ce-b13e-8926364bd419.png)
+![coverage-80-percent](https://person-images.githubpersoncontent.com/17494745/216605436-45956f51-8bc1-41ce-b13e-8926364bd419.png)
 
 
 <!-- I think I'm at a point where I need to take a "Detour"
@@ -1222,8 +1222,8 @@ test ":after_join sends all existing messages", %{socket: socket} do
   payload = %{name: "Alex", message: "test"}
   Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert()
 
-  {:ok, _, socket2} = ChatWeb.UserSocket
-    |> socket("user_id", %{some: :assign})
+  {:ok, _, socket2} = ChatWeb.peopleocket
+    |> socket("person_id", %{some: :assign})
     |> subscribe_and_join(ChatWeb.RoomChannel, "room:lobby")
 
   assert socket2.join_ref != socket.join_ref
@@ -1338,7 +1338,7 @@ e.g:
 <br />
 
 
-![thats-all-folks](https://user-images.githubusercontent.com/194400/36492991-6bc5dd42-1726-11e8-9d7b-a11c44d786a0.jpg)
+![thats-all-folks](https://person-images.githubpersoncontent.com/194400/36492991-6bc5dd42-1726-11e8-9d7b-a11c44d786a0.jpg)
 
 <br />
 

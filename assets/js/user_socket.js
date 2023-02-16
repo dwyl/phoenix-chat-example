@@ -6,12 +6,12 @@ import {Socket} from "phoenix"
 
 // And connect to the path in "lib/chat_web/endpoint.ex". We pass the
 // token for authentication. Read below how it should be used.
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket("/socket", {params: {token: window.personToken}})
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
-// which authenticates the session and assigns a `:current_user`.
-// If the current user exists you can assign the user's token in
+// which authenticates the session and assigns a `:current_person`.
+// If the current person exists you can assign the person's token in
 // the connection for use in the layout.
 //
 // In your "lib/chat_web/router.ex":
@@ -19,13 +19,13 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 //     pipeline :browser do
 //       ...
 //       plug MyAuth
-//       plug :put_user_token
+//       plug :put_person_token
 //     end
 //
-//     defp put_user_token(conn, _) do
-//       if current_user = conn.assigns[:current_user] do
-//         token = Phoenix.Token.sign(conn, "user socket", current_user.id)
-//         assign(conn, :user_token, token)
+//     defp put_person_token(conn, _) do
+//       if current_person = conn.assigns[:current_person] do
+//         token = Phoenix.Token.sign(conn, "person socket", current_person.id)
+//         assign(conn, :person_token, token)
 //       else
 //         conn
 //       end
@@ -34,16 +34,16 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // Now you need to pass this token to JavaScript. You can do so
 // inside a script tag in "lib/chat_web/templates/layout/app.html.heex":
 //
-//     <script>window.userToken = "<%= assigns[:user_token] %>";</script>
+//     <script>window.personToken = "<%= assigns[:person_token] %>";</script>
 //
-// You will need to verify the user token in the "connect/3" function
-// in "lib/chat_web/channels/user_socket.ex":
+// You will need to verify the person token in the "connect/3" function
+// in "lib/chat_web/channels/person_socket.ex":
 //
 //     def connect(%{"token" => token}, socket, _connect_info) do
 //       # max_age: 1209600 is equivalent to two weeks in seconds
-//       case Phoenix.Token.verify(socket, "user socket", token, max_age: 1_209_600) do
-//         {:ok, user_id} ->
-//           {:ok, assign(socket, :user, user_id)}
+//       case Phoenix.Token.verify(socket, "person socket", token, max_age: 1_209_600) do
+//         {:ok, person_id} ->
+//           {:ok, assign(socket, :person, person_id)}
 //
 //         {:error, reason} ->
 //           :error

@@ -86,7 +86,7 @@ defmodule ChatWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {ChatWeb, :count_users, []}
+      # {ChatWeb, :count_people, []}
     ]
   end
 end

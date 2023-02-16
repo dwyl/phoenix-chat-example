@@ -173,9 +173,9 @@ defmodule ChatWeb.CoreComponents do
 
   ## Examples
 
-      <.simple_form :let={f} for={:user} phx-change="validate" phx-submit="save">
+      <.simple_form :let={f} for={:person} phx-change="validate" phx-submit="save">
         <.input field={{f, :email}} label="Email"/>
-        <.input field={{f, :username}} label="Username" />
+        <.input field={{f, :name}} label="name" />
         <:actions>
           <.button>Save</.button>
         </:actions>
@@ -425,9 +425,9 @@ defmodule ChatWeb.CoreComponents do
 
   ## Examples
 
-      <.table id="users" rows={@users}>
-        <:col :let={user} label="id"><%= user.id %></:col>
-        <:col :let={user} label="username"><%= user.username %></:col>
+      <.table id="people" rows={@people}>
+        <:col :let={person} label="id"><%= person.id %></:col>
+        <:col :let={person} label="name"><%= person.name %></:col>
       </.table>
   """
   attr :id, :string, required: true
@@ -438,7 +438,7 @@ defmodule ChatWeb.CoreComponents do
     attr :label, :string
   end
 
-  slot :action, doc: "the slot for showing user actions in the last table column"
+  slot :action, doc: "the slot for showing person actions in the last table column"
 
   def table(assigns) do
     ~H"""
