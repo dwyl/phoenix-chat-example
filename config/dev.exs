@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :chat, Chat.Repo,
-  name: "postgres",
+  username: "postgres",
   password: "postgres",
   hostname: "localhost",
   database: "chat_dev",

@@ -296,12 +296,12 @@ will be appended to both lists dynamically.
 Your page should now look like this
 on your desktop.
 
-<img width="1200" alt="desktop" src="https://person-images.githubpersoncontent.com/17494745/218724815-67a2d8c4-7ce1-41cd-adee-7e48b1d6cae5.png">
+<img width="1200" alt="desktop" src="https://user-images.githubusercontent.com/17494745/218724815-67a2d8c4-7ce1-41cd-adee-7e48b1d6cae5.png">
 
 In a mobile device, 
 the list gets "pushed" to the top of the page.
 
-<img width="800" alt="mobile" src="https://person-images.githubpersoncontent.com/17494745/218725316-68bba28e-8230-4e67-9e81-4b467709d5f6.png">
+<img width="800" alt="mobile" src="https://user-images.githubusercontent.com/17494745/218725316-68bba28e-8230-4e67-9e81-4b467709d5f6.png">
 
 
 ### 3.2 Adding/removing people to online people list
@@ -530,7 +530,7 @@ This also works for *authenticated people*.
 
 Check the gif below for a quick demo!
 
-![final_demo](https://person-images.githubpersoncontent.com/17494745/218738594-b1b8f853-f9cd-4bed-a301-ea68479386f0.gif)
+![final_demo](https://user-images.githubusercontent.com/17494745/218738594-b1b8f853-f9cd-4bed-a301-ea68479386f0.gif)
 
 Notice how the anonymonus person
 goes under two different names.

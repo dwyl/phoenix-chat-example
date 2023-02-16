@@ -61,13 +61,13 @@ Visit [authdemo.fly.dev](https://authdemo.fly.dev/apps/new),
 sign in with your `GitHub` or `Google` account,
 and create your app with `localhost:4000` as the `URL`:
 
-<img width="1089" alt="image" src="https://person-images.githubpersoncontent.com/194400/202419197-80e082d0-1ab0-497c-a095-6764e6df9b64.png">
+<img width="1089" alt="image" src="https://user-images.githubusercontent.com/194400/202419197-80e082d0-1ab0-497c-a095-6764e6df9b64.png">
 
 When you click "**Save**" 
 you will be see a screen 
 similar to the following:
 
-<img width="1162" alt="image" src="https://person-images.githubpersoncontent.com/194400/202419365-e06c43d6-c537-4646-a1a3-90320fb3aa59.png">
+<img width="1162" alt="image" src="https://user-images.githubusercontent.com/194400/202419365-e06c43d6-c537-4646-a1a3-90320fb3aa59.png">
 
 > **Note**: don't worry this is **not** a **valid** key,
 > it's just for illustration purposes. 
@@ -371,7 +371,7 @@ Awesome job! 👏
 We've just added authentication to our app.
 It should look like this.
 
-![auth_demo](https://person-images.githubpersoncontent.com/17494745/216612794-9064f4a5-2a31-4068-b82d-4d8ad45d6e3c.gif)
+![auth_demo](https://user-images.githubusercontent.com/17494745/216612794-9064f4a5-2a31-4068-b82d-4d8ad45d6e3c.gif)
 
 
 [![HitCount](https://hits.dwyl.com/dwyl/phoenix-chat-example-auth.svg)](https://github.com/dwyl/phoenix-chat-example)
