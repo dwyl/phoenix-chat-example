@@ -601,13 +601,13 @@ Open the `test/chat_web/controllers/page_controller_test.exs` file
 and replace the line:
 
 ```elixir
-assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    assert html_response(conn, 200) =~ "Peace of mind from prototype to production"
 ```
 
 With:
 
 ```elixir
-assert html_response(conn, 200) =~ "Phoenix Chat Example"
+    assert html_response(conn, 200) =~ "Phoenix Chat Example"
 ```
 
 Now if you run the tests again, they will pass:
