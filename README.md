@@ -699,7 +699,7 @@ function render_message(payload) {
 
 // Listen for the [Enter] keypress event to send a message:
 msg.addEventListener('keypress', function (event) {
-  if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
+  if (event.key === `Enter` && msg.value.length > 0) { // don't sent empty msg.
     sendMessage()
   }
 });
@@ -840,6 +840,10 @@ In your terminal run the following command to create the `messages` table:
 ```sh
 mix ecto.migrate
 ```
+
+> For _context_  we recommend reading:
+[hexdocs.pm/ecto_sql/**Ecto.Migration**.html](https://hexdocs.pm/ecto_sql/Ecto.Migration.html)
+
 You should see the following in your terminal:
 ```sh
 11:42:10.130 [info] == Running 20230203114114 Chat.Repo.Migrations.CreateMessages.change/0 forward
@@ -1169,6 +1173,10 @@ into your terminal:
 ```elixir
 MIX_ENV=test mix do coveralls.json
 ```
+> For windows use:
+> ```elixir
+> $env:MIX_ENV="test"; mix do coveralls.json
+> ```
 
 You should see: <br />
 
