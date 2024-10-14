@@ -840,8 +840,9 @@ In your terminal run the following command to create the `messages` table:
 ```sh
 mix ecto.migrate
 ```
-> For a bit of _context_  we recommend reading:
-[https://hexdocs.pm/phoenix/**testing_channels**.html](https://hexdocs.pm/ecto_sql/Ecto.Migration.html)
+
+> For _context_  we recommend reading:
+[hexdocs.pm/ecto_sql/**Ecto.Migration**.html](https://hexdocs.pm/ecto_sql/Ecto.Migration.html)
 
 You should see the following in your terminal:
 ```sh
@@ -1172,7 +1173,10 @@ into your terminal:
 ```elixir
 MIX_ENV=test mix do coveralls.json
 ```
-> For windows use: `$env:MIX_ENV="test"; mix do coveralls.json`
+> For windows use:
+> ```elixir
+> $env:MIX_ENV="test"; mix do coveralls.json
+> ```
 
 You should see: <br />
 
