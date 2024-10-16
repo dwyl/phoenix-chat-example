@@ -868,7 +868,16 @@ on the `messages` table and selecting "properties":
 
 ![pgadmin-messages-schema-columns-view](https://user-images.githubusercontent.com/194400/35623295-c3a4df5c-0693-11e8-8484-199c2bcab458.png)
 
-> _**Note**: For sections 7, 8, and 9 we will be fleshing out how our code "handles" the different events that can occur in our chat app. Phoenix abstracts away much of the underlying message-passing logic in Elixir's process communication (for more info on how Elixir processes communicate, read [here](https://hexdocs.pm/elixir/processes.html)). In Phoenix, events/messages sent from the client are automatically routed to the corresponding handler functions based on the event name, making message handling seamless and straightforward!._
+> _**Note**: For sections 7, 8, and 9 we will be fleshing out how our code
+> "handles" the different events that can occur in our chat app._
+>
+> _Phoenix abstracts away much of the underlying message-passing logic in
+> Elixir's process communication (for more info on how Elixir processes
+> communicate, read [here](https://hexdocs.pm/elixir/processes.html))._
+>
+> _In Phoenix, events/messages sent from the client are automatically
+> routed to the corresponding handler functions based on the event name,
+> making message handling seamless and straightforward!._
 
 <br />
 
@@ -890,7 +899,15 @@ def handle_in("shout", payload, socket) do
 end
 ```
 
-If you noticed earlier, in our `assets/js/app.js` file, we used the function `sendMessage()` to *push* our message to the server on the "shout" event. Phoenix routes the message to the server-side `handle_in("shout", payload, socket)` function because the event name matches 'shout'. In this function, we handle the payload (which is the message text and any other data) and insert it into our database. Neat!
+If you noticed earlier, in our `assets/js/app.js` file, we used the function 
+`sendMessage()` to *push* our message to the server on the "shout" event. 
+
+Phoenix routes the message to the server-side
+`handle_in("shout", payload, socket)` function because the event name 
+matches 'shout'. 
+
+In this function, we handle the payload (which is the message text and
+any other data) and insert it into our database. _Neat!_
 
 <br />
 
@@ -955,7 +972,12 @@ def join("room:lobby", payload, socket) do
 end
 ```
 
-> _**Note**: like section 7, Phoenix knows to call this function when the server sends the internal message `:after_join` via the channel process. Our `join/3` function in `lib/chat_web/channels/room_channel.ex` sends that `:after_join message` to the channel process when the client successfully connects to the `"room:lobby"` topic._
+> _**Note**: like section 7, Phoenix knows to call this function when the server
+> sends the internal message `:after_join` via the channel process._
+>
+> _Our `join/3` function in `lib/chat_web/channels/room_channel.ex` sends
+> that `:after_join message` to the channel process when the client successfully
+> connects to the `"room:lobby"` topic._
 
 <br />
 
