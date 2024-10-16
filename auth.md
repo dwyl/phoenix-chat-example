@@ -90,7 +90,36 @@ Then run:
 source .env
 ```
 
-This will make the `AUTH_API_KEY` environment variable available.
+This will make the `AUTH_API_KEY` environment variable 
+available.
+
+<br>
+
+### **If** you are using windows, please note you'll have to use the following steps:
+> _**Note**: if you know a better way, let us know!_
+
+Save your `API KEY` from the Auth App somewhere in your 
+project directory that can be easily found.
+> (we will be copying and pasting this into our command
+> prompt).
+
+Please ensure this is still in .gitignore file still!
+
+Next, if you have you phx.server running, close / abort 
+it (`ctrl c` then `a` then `y` in terminal / cmd).
+
+Now, in **command promt** in our project directory we're 
+going to set the environment variable manually with:
+
+```set AUTH_API_KEY=<YOUR_KEY>```
+
+where `<YOUR_KEY>` is the `API KEY` we just saved from 
+the Auth App.  
+
+Once you make the following changes in the remaing sections,
+launch `mix phx.server` from the **same** command prompt 
+where we just set the `AUTH_API_KEY` environment variable 
+so our application will have access to it.
 
 ## 3. Create the _Optional_ Auth Pipeline in `router.ex`
 
