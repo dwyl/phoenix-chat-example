@@ -98,7 +98,7 @@ available.
 ### **If** you are using windows, please note you'll have to use the following steps:
 > _**Note**: if you know a better way, let us know!_
 
-Save your `API KEY` from the Auth App somewhere in your 
+Save your `AUTH_API_KEY` from the Auth App somewhere in your 
 project directory that can be easily found.
 > (we will be copying and pasting this into our command
 > prompt).
