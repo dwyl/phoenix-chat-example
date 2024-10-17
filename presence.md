@@ -321,28 +321,28 @@ const peopleListDesktop = document.getElementById('people_online-list-desktop');
 // This function will be probably caught when the person first enters the page
 channel.on('presence_state', function (payload) {
   // Array of objects with id and name
-  const currentlyOnlinepeople = Object.entries(payload).map(elem => ({name: elem[0], id: elem[1].metas[0].phx_ref}))
+  const currentlyOnlinePeople = Object.entries(payload).map(elem => ({name: elem[0], id: elem[1].metas[0].phx_ref}))
     
-  updateOnlinePeopleList(currentlyOnlinepeople)
+  updateOnlinePeopleList(currentlyOnlinePeople)
 })
 
 // Listening to presence events whenever a person leaves or joins
 channel.on('presence_diff', function (payload) {
   if(payload.joins && payload.leaves) {
     // Array of objects with id and name
-    const currentlyOnlinepeople = Object.entries(payload.joins).map(elem => ({name: elem[0], id: elem[1].metas[0].phx_ref}))
+    const currentlyOnlinePeople = Object.entries(payload.joins).map(elem => ({name: elem[0], id: elem[1].metas[0].phx_ref}))
     const peopleThatLeft = Object.entries(payload.leaves).map(elem => ({name: elem[0], id: elem[1].metas[0].phx_ref}))
 
-    updateOnlinePeopleList(currentlyOnlinepeople)
+    updateOnlinePeopleList(currentlyOnlinePeople)
     removePeopleThatLeft(peopleThatLeft)
   }
 });
 
-function updateOnlinePeopleList(currentlyOnlinepeople) {
+function updateOnlinePeopleList(currentlyOnlinePeople) {
     // Add joined people
-    for (var i = currentlyOnlinepeople.length - 1; i >= 0; i--) {
-      const name = currentlyOnlinepeople[i].name
-      const id = name + "-" + currentlyOnlinepeople[i].id
+    for (var i = currentlyOnlinePeople.length - 1; i >= 0; i--) {
+      const name = currentlyOnlinePeople[i].name
+      const id = name + "-" + currentlyOnlinePeople[i].id
   
       if (document.getElementById(name) == null) {
         var liMobile = document.createElement("li"); // create new person list item DOM element for mobile
@@ -368,29 +368,12 @@ function removePeopleThatLeft(peopleThatLeft) {
     const personThatLeftMobile = document.getElementById(id + '_mobile')
     const personThatLeftDesktop = document.getElementById(id +  '_desktop')
 
-
-
     if (personThatLeftMobile != null && personThatLeftDesktop != null) {
       peopleListMobile.removeChild(personThatLeftMobile);         // remove the person from list mobile
       peopleListDesktop.removeChild(personThatLeftDesktop);        // remove the person from list desktop
     }
   }
 }
-
-function removePeopleThatLeft(peopleThatLeft) {
-  // Remove people that left
-  for (var i = peopleThatLeft.length - 1; i >= 0; i--) {
-    const name = peopleThatLeft[i]
-
-    const personThatLeftMobile = document.getElementById(name + '_mobile')
-    const personThatLeftDesktop = document.getElementById(name +  '_desktop')
-    if (personThatLeftMobile != null && personThatLeftDesktop != null) {
-      peopleListMobile.removeChild(personThatLeftMobile);         // remove the person from list mobile
-      peopleListDesktop.removeChild(personThatLeftDesktop);        // remove the person from list desktop
-    }
-  }
-}
-
 
 function sanitizeString(str){
   str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
