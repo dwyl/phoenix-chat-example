@@ -3,7 +3,7 @@ updates:
 - package-ecosystem: mix
   directory: "/"
   schedule:
-    interval: weekly
+    interval: monthly
     time: "17:00"
     timezone: Europe/London
   ignore:
