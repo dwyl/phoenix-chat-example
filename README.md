@@ -1302,7 +1302,7 @@ COV    FILE                                        LINES RELEVANT   MISSED
 
 This test just creates a message before
 the `subscribe_and_join` so there is a message in the database
-to send out to any clien that joins the chat.
+to send out to any client that joins the chat.
 
 That way the `:after_join` has at least one message
 and the `Enum.each` will be invoked at least once.
