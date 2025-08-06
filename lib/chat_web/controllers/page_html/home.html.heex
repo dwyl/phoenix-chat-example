@@ -2,14 +2,14 @@
 <div class="mt-[5rem] p-4 ml-4 mr-4 mb-4 border-2 radius rounded-md lg:hidden">
   <div class="flex justify-start flex-col overflow-hidden whitespace-nowrap">
     <h5 class="text-md leading-tight font-medium mb-2 text-green-700">people online</h5>
-    <ul id="people_online-list-mobile" phx-update="append" class="pa-1"></ul>
+    <ul id="people_online-list-mobile" phx-update="stream" class="pa-1"></ul>
   </div>
 </div>
 
 <div id="chat-container" class="max-h-screen flex flex-col lg:flex-row lg:min-h-screen ">
   <div class="flex flex-col lg:flex-grow">
     <!-- The list of messages will appear here: -->
-    <ul id="msg-list" phx-update="append" class="pa-1 lg:mt-[4rem] overflow-y-auto"></ul>
+    <ul id="msg-list" phx-update="stream" class="pa-1 lg:mt-[4rem] overflow-y-auto"></ul>
 
     <footer class="bg-slate-800 p-2 h-[3rem] bottom-0 w-full flex justify-center sticky mt-[auto]">
       <div class="w-full flex flex-row items-center text-gray-700 focus:outline-none font-normal">
@@ -55,7 +55,7 @@
     <div class="mt-[5rem] p-4 ml-4 mr-4 mb-4 border-2 radius rounded-md max-w-[20vw]">
       <div class="flex justify-start flex-col overflow-hidden whitespace-nowrap">
         <h5 class="text-md leading-tight font-medium mb-2 text-green-700">people online</h5>
-        <ul id="people_online-list-desktop" phx-update="append" class="pa-1"></ul>
+        <ul id="people_online-list-desktop" phx-update="stream" class="pa-1"></ul>
       </div>
     </div>
   </div>
