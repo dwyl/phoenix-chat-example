@@ -83,12 +83,15 @@ which are all part of the "***Real World***"
 of building and running apps;
 so those are topics we **_will_ cover** to "_fill in the gaps_".
 
-We wrote _this_ tutorial to be **_easiest_ way to learn `Phoenix`**,
-`Ecto` and `Channels` with a **_practical_ example _anyone_ can follow**.
+We wrote _this_ tutorial
+to be **_easiest_ way to learn `Phoenix`**,
+`Ecto` and `Channels` with a **_practical_ example
+_anyone_ can follow**. 🔰
 
 This is the example/tutorial we _wished_ we had 
 when we were learning `Elixir`, `Phoenix` ...
-If you find it useful, please ⭐ 🙏 Thanks!
+If you find it useful, 
+**_please_ star** on **`GitHub`** ⭐ 🙏 Thanks!
 
 
 ## What?
@@ -214,31 +217,13 @@ mix phx.new -v
 You should see:
 
 ```sh
-Phoenix installer v1.7.0-rc.2
+Phoenix installer v1.8.5
 ```
 
 > **Note**: if your `Phoenix` version is _newer_,
 > Please feel free to update this doc! 📝
 > We try our best to keep it updated ...
 > but _your_ contributions are always welcome!
-
-> In this tutorial, 
-> we are using 
-> [Phoenix 1.7-rc2](https://github.com/phoenixframework/phoenix/blob/master/CHANGELOG.md#170-rc2-2023-01-13),
-> the second release candidate 
-> for `Phoenix 1.7`.
-> At the time of writing, 
-> if you install Phoenix,
-> the *latest stable version* is not `v1.7`.
-> To use this version,
-> follow the official guide (don't worry, it's just running one command!)
-> -> https://www.phoenixframework.org/blog/phoenix-1.7-released
-> 
-> However, if you are reading this after its release,
-> `v1.7` will be installed for you, 
-> and you should see
-> `Phoenix installer v1.7.0`
-> in your terminal.
 
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -252,11 +237,12 @@ You should see output _similar_ to the following:
 
 ```sh
 COMMAND  PID  USER   FD  TYPE DEVICE                  SIZE/OFF NODE NAME
-postgres 529 Nelson  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
-postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
+postgres 529 Alex  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
+postgres 529 Alex  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
 ```
 
-This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
+This tells us that PostgreSQL 
+is "_listening_" on TCP Port `5432`
 (_the default port_)
 
 If the `lsof` command does not yield any result
