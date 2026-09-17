@@ -282,7 +282,7 @@ In your terminal run the following command to clone the repo:
 git clone git@github.com:dwyl/phoenix-chat-example.git
 ```
 
-### Install the Dependencies
+### Install the Dependencies 
 
 Change into the `phoenix-chat-example` directory
 and install both the `Elixir` and `Node.js` dependencies
@@ -383,7 +383,7 @@ in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 
-![welcome-to-phoenix](https://user-images.githubusercontent.com/17494745/216576178-a227a6ef-ad12-4b74-9b29-4913b5e298bc.png)
+![welcome-to-phoenix](https://github.com/user-attachments/assets/39da24da-62df-4c24-a1ae-5165d7bba754)
 
 Shut down the Phoenix server in your terminal
 with the
