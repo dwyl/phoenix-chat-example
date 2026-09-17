@@ -1,7 +1,5 @@
 <div align="center">
 
-# Phoenix Chat Example
-
 ![phoenix-chat-logo](https://user-images.githubusercontent.com/194400/39481553-c448aa1c-4d63-11e8-9389-47789833a96e.png)
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/phoenix-chat-example/ci.yml?label=build&style=flat-square&branch=main)
@@ -21,15 +19,17 @@ and _deploying_ a Chat app in Phoenix!
 
 </div>
 
-- [Phoenix Chat Example](#phoenix-chat-example)
-  - [Why?](#why)
-  - [What?](#what)
-  - [Who?](#who)
-- [_How_?](#how)
+<details>
+  <summary>Contents [click to expand]</summary>
+
+- [Why? 🤷‍♀️](#why-️)
+- [What? 💭](#what-)
+- [Who? 👥](#who-)
+- [_How_? 💻](#how-)
   - [0. Pre-requisites (_Before you Start_)](#0-pre-requisites-before-you-start)
     - [_Check_ You Have Everything _Before_ Starting](#check-you-have-everything-before-starting)
   - [First _Run_ the _Finished_ App](#first-run-the-finished-app)
-    - [Clone the Project:](#clone-the-project)
+    - [Clone the Project: ⬇️](#clone-the-project-️)
     - [Install the Dependencies](#install-the-dependencies)
     - [Run the App](#run-the-app)
   - [1. _Create_ The _App_](#1-create-the-app)
@@ -65,7 +65,10 @@ and _deploying_ a Chat app in Phoenix!
   - [Inspiration](#inspiration)
   - [Recommended Reading / Learning](#recommended-reading--learning)
 
-## Why?
+<br />
+</details>
+
+# Why? 🤷‍♀️
 
 Chat apps are the 
 [`"Hello World"`](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) 
@@ -94,7 +97,7 @@ If you find it useful,
 **_please_ star** on **`GitHub`** ⭐ 🙏 Thanks!
 
 
-## What?
+# What? 💭
 
 A simple step-by-step tutorial showing you how to:
 
@@ -121,7 +124,7 @@ as it's _immediately_ obvious and _practical_ ***why***
 we are learning something.
 
 
-## Who?
+# Who? 👥
 
 This example is for ***complete beginners***
 as a "***My First Phoenix***" App. <br />
@@ -141,7 +144,7 @@ that is or might be stuck with the _same_ thing!
 [dwyl/learn-**phoenix-framework**/issues](https://github.com/dwyl/learn-phoenix-framework/issues)
 
 
-# _How_?
+# _How_? 💻
 
 These instructions show you how to _create_ the Chat app
 _from scratch_.
@@ -191,7 +194,7 @@ see:
 [dwyl/Javascript-the-Good-Parts-notes](https://github.com/dwyl/Javascript-the-Good-Parts-notes)
 
 
-### _Check_ You Have Everything _Before_ Starting
+### _Check_ You Have Everything _Before_ Starting 
 
 Check you have the _latest version_ of **Elixir**
 (_run the following command in your terminal_):
@@ -265,13 +268,13 @@ performed, let's _fly_! 🚀
 
 <br />
 
-## First _Run_ the _Finished_ App
+## First _Run_ the _Finished_ App 
 
 _Before_ you attempt to build the Chat App from scratch,
 clone and run the _finished_ working version
 to get an idea of what to expect.
 
-### Clone the Project:
+### Clone the Project: ⬇️
 
 In your terminal run the following command to clone the repo:
 
