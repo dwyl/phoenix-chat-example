@@ -292,16 +292,15 @@ mix setup
 
 <!-- ### TODO: Add auth step? -->
 
-
 ### Run the App
 
 Run the Phoenix app with the command:
 
 ```sh
 mix phx.server
-```
+``` 
 
-If you open the app
+Open the app
 [localhost:4000](http://localhost:4000)
 in two more web browsers,
 you can see the chat messages
@@ -309,6 +308,12 @@ displayed in all of them
 as soon as you hit the <kbd>Enter</kbd> key:
 
 ![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
+
+> **Note**: if you want to use 
+the **_optional_ authentication** (login),
+you wil need to follow the instructions in:
+
+
 
 <br />
 
