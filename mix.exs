@@ -11,7 +11,8 @@ defmodule Chat.MixProject do
       aliases: aliases(),
       deps: deps(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
-      listeners: [Phoenix.CodeReloader]
+      listeners: [Phoenix.CodeReloader],
+      test_coverage: [tool: ExCoveralls],
     ]
   end
 
@@ -27,7 +28,17 @@ defmodule Chat.MixProject do
 
   def cli do
     [
-      preferred_envs: [precommit: :test]
+      preferred_envs: [
+        c: :test,
+        ci: :test,
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.json": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        precommit: :test,
+        t: :test
+      ]
     ]
   end
 
@@ -68,7 +79,12 @@ defmodule Chat.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+
+      # Test coverage: github.com/parroty/excoveralls
+      {:excoveralls, "~> 0.18.0", only: [:test, :dev]},
+      # Auth: github.com/dwyl/auth_plug
+      {:auth_plug, "~> 1.6"}
     ]
   end
 
@@ -91,7 +107,11 @@ defmodule Chat.MixProject do
         "esbuild chat --minify",
         "phx.digest"
       ],
-      precommit: ["compile --warnings-as-errors", "deps.unlock --unused", "format", "test"]
+      precommit: ["compile --warnings-as-errors", "deps.unlock --unused", "format", "test"],
+      c: ["coveralls.html"],
+      ci: ["coveralls.json"],
+      s: ["phx.server"],
+      t: ["test"]
     ]
   end
 end
