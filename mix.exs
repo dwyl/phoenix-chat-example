@@ -82,7 +82,6 @@ defmodule Chat.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       # Auth: github.com/dwyl/auth_plug
       {:auth_plug, "~> 1.6"}
-
     ]
   end
 
