@@ -11,13 +11,13 @@ config :chat, Chat.Repo,
   hostname: "localhost",
   database: "chat_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: 10
+  pool_size: System.schedulers_online() * 2
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :chat, ChatWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "Q1WJjPpcI6Vs2ieJQMcs1DjL4JPZ0HafQ3afIzEUMx7fN/K0HO0+85e02OhUQS9n",
+  secret_key_base: "b+FYYBCGuwnx/aVjMe4OU60HfnrmUDbnEJc6T0q+qS5B9EgwFBXQXoH/2ssauMHU",
   server: false
 
 # Print only warnings and errors during test
@@ -25,3 +25,11 @@ config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Enable helpful, but potentially expensive runtime checks
+config :phoenix_live_view,
+  enable_expensive_runtime_checks: true
+
+# Sort query params output of verified routes for robust url comparisons
+config :phoenix,
+  sort_verified_routes_query_params: true

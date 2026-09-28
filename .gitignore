@@ -19,12 +19,14 @@ erl_crash.dump
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
 
+# Temporary files, for example, from tests.
+/tmp/
+
 # Ignore package tarball (built via "mix hex.build").
 chat-*.tar
 
 # Ignore assets that are produced by build tools.
 /priv/static/assets/
-/priv/static
 
 # Ignore digested assets cache.
 /priv/static/cache_manifest.json
@@ -33,8 +35,3 @@ chat-*.tar
 npm-debug.log
 /assets/node_modules/
 
-.vscode/
-.env
-.DS_Store
-
-.elixir_ls

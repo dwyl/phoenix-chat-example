@@ -1,7 +1,5 @@
 <div align="center">
 
-# Phoenix Chat Example
-
 ![phoenix-chat-logo](https://user-images.githubusercontent.com/194400/39481553-c448aa1c-4d63-11e8-9389-47789833a96e.png)
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/phoenix-chat-example/ci.yml?label=build&style=flat-square&branch=main)
@@ -21,15 +19,17 @@ and _deploying_ a Chat app in Phoenix!
 
 </div>
 
-- [Phoenix Chat Example](#phoenix-chat-example)
-  - [Why?](#why)
-  - [What?](#what)
-  - [Who?](#who)
-- [_How_?](#how)
+<details>
+  <summary>Contents [click to expand]</summary>
+
+- [Why? 🤷‍♀️](#why-️)
+- [What? 💭](#what-)
+- [Who? 👥](#who-)
+- [_How_? 💻](#how-)
   - [0. Pre-requisites (_Before you Start_)](#0-pre-requisites-before-you-start)
     - [_Check_ You Have Everything _Before_ Starting](#check-you-have-everything-before-starting)
   - [First _Run_ the _Finished_ App](#first-run-the-finished-app)
-    - [Clone the Project:](#clone-the-project)
+    - [Clone the Project: ⬇️](#clone-the-project-️)
     - [Install the Dependencies](#install-the-dependencies)
     - [Run the App](#run-the-app)
   - [1. _Create_ The _App_](#1-create-the-app)
@@ -65,7 +65,10 @@ and _deploying_ a Chat app in Phoenix!
   - [Inspiration](#inspiration)
   - [Recommended Reading / Learning](#recommended-reading--learning)
 
-## Why?
+<br />
+</details>
+
+# Why? 🤷‍♀️
 
 Chat apps are the 
 [`"Hello World"`](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) 
@@ -83,15 +86,18 @@ which are all part of the "***Real World***"
 of building and running apps;
 so those are topics we **_will_ cover** to "_fill in the gaps_".
 
-We wrote _this_ tutorial to be **_easiest_ way to learn `Phoenix`**,
-`Ecto` and `Channels` with a **_practical_ example _anyone_ can follow**.
+We wrote _this_ tutorial
+to be **_easiest_ way to learn `Phoenix`**,
+`Ecto` and `Channels` with a **_practical_ example
+_anyone_ can follow**. 🔰
 
 This is the example/tutorial we _wished_ we had 
 when we were learning `Elixir`, `Phoenix` ...
-If you find it useful, please ⭐ 🙏 Thanks!
+If you find it useful, 
+**_please_ star** on **`GitHub`** ⭐ 🙏 Thanks!
 
 
-## What?
+# What? 💭
 
 A simple step-by-step tutorial showing you how to:
 
@@ -118,7 +124,7 @@ as it's _immediately_ obvious and _practical_ ***why***
 we are learning something.
 
 
-## Who?
+# Who? 👥
 
 This example is for ***complete beginners***
 as a "***My First Phoenix***" App. <br />
@@ -138,7 +144,7 @@ that is or might be stuck with the _same_ thing!
 [dwyl/learn-**phoenix-framework**/issues](https://github.com/dwyl/learn-phoenix-framework/issues)
 
 
-# _How_?
+# _How_? 💻
 
 These instructions show you how to _create_ the Chat app
 _from scratch_.
@@ -188,7 +194,7 @@ see:
 [dwyl/Javascript-the-Good-Parts-notes](https://github.com/dwyl/Javascript-the-Good-Parts-notes)
 
 
-### _Check_ You Have Everything _Before_ Starting
+### _Check_ You Have Everything _Before_ Starting 
 
 Check you have the _latest version_ of **Elixir**
 (_run the following command in your terminal_):
@@ -214,31 +220,13 @@ mix phx.new -v
 You should see:
 
 ```sh
-Phoenix installer v1.7.0-rc.2
+Phoenix installer v1.8.5
 ```
 
 > **Note**: if your `Phoenix` version is _newer_,
 > Please feel free to update this doc! 📝
 > We try our best to keep it updated ...
 > but _your_ contributions are always welcome!
-
-> In this tutorial, 
-> we are using 
-> [Phoenix 1.7-rc2](https://github.com/phoenixframework/phoenix/blob/master/CHANGELOG.md#170-rc2-2023-01-13),
-> the second release candidate 
-> for `Phoenix 1.7`.
-> At the time of writing, 
-> if you install Phoenix,
-> the *latest stable version* is not `v1.7`.
-> To use this version,
-> follow the official guide (don't worry, it's just running one command!)
-> -> https://www.phoenixframework.org/blog/phoenix-1.7-released
-> 
-> However, if you are reading this after its release,
-> `v1.7` will be installed for you, 
-> and you should see
-> `Phoenix installer v1.7.0`
-> in your terminal.
 
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -252,11 +240,12 @@ You should see output _similar_ to the following:
 
 ```sh
 COMMAND  PID  USER   FD  TYPE DEVICE                  SIZE/OFF NODE NAME
-postgres 529 Nelson  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
-postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
+postgres 529 Alex  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
+postgres 529 Alex  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
 ```
 
-This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
+This tells us that PostgreSQL 
+is "_listening_" on TCP Port `5432`
 (_the default port_)
 
 If the `lsof` command does not yield any result
@@ -279,13 +268,13 @@ performed, let's _fly_! 🚀
 
 <br />
 
-## First _Run_ the _Finished_ App
+## First _Run_ the _Finished_ App 
 
 _Before_ you attempt to build the Chat App from scratch,
 clone and run the _finished_ working version
 to get an idea of what to expect.
 
-### Clone the Project:
+### Clone the Project: ⬇️
 
 In your terminal run the following command to clone the repo:
 
@@ -293,7 +282,7 @@ In your terminal run the following command to clone the repo:
 git clone git@github.com:dwyl/phoenix-chat-example.git
 ```
 
-### Install the Dependencies
+### Install the Dependencies 
 
 Change into the `phoenix-chat-example` directory
 and install both the `Elixir` and `Node.js` dependencies
@@ -306,16 +295,15 @@ mix setup
 
 <!-- ### TODO: Add auth step? -->
 
-
 ### Run the App
 
 Run the Phoenix app with the command:
 
 ```sh
 mix phx.server
-```
+``` 
 
-If you open the app
+Open the app
 [localhost:4000](http://localhost:4000)
 in two more web browsers,
 you can see the chat messages
@@ -323,6 +311,12 @@ displayed in all of them
 as soon as you hit the <kbd>Enter</kbd> key:
 
 ![phoenix-chat-example-tailwind-ui-with-auth](https://user-images.githubusercontent.com/194400/204945771-fa4f4c2a-b055-4ef2-93f0-fe0c6b8f4466.gif)
+
+> **Note**: if you want to use 
+the **_optional_ authentication** (login),
+you wil need to follow the instructions in:
+
+
 
 <br />
 
@@ -389,7 +383,11 @@ in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 
-![welcome-to-phoenix](https://user-images.githubusercontent.com/17494745/216576178-a227a6ef-ad12-4b74-9b29-4913b5e298bc.png)
+<div align="center">
+
+![welcome-to-phoenix](https://github.com/user-attachments/assets/39da24da-62df-4c24-a1ae-5165d7bba754)
+
+</div>
 
 Shut down the Phoenix server in your terminal
 with the
