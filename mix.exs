@@ -12,7 +12,7 @@ defmodule Chat.MixProject do
       deps: deps(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
       listeners: [Phoenix.CodeReloader],
-      test_coverage: [tool: ExCoveralls],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -78,8 +78,11 @@ defmodule Chat.MixProject do
 
       # Test coverage: github.com/parroty/excoveralls
       {:excoveralls, "~> 0.18.0", only: [:test, :dev]},
+      # Tidy Code: credo.hexdocs.pm
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       # Auth: github.com/dwyl/auth_plug
       {:auth_plug, "~> 1.6"}
+
     ]
   end
 

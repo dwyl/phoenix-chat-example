@@ -383,7 +383,11 @@ in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 
+<div align="center">
+
 ![welcome-to-phoenix](https://github.com/user-attachments/assets/39da24da-62df-4c24-a1ae-5165d7bba754)
+
+</div>
 
 Shut down the Phoenix server in your terminal
 with the
