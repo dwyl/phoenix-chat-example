@@ -4,7 +4,7 @@ defmodule Chat.MixProject do
   def project do
     [
       app: :chat,
-      version: "0.1.0",
+      version: "1.8.16",
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -51,7 +51,7 @@ defmodule Chat.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.8.14"},
+      {:phoenix, "~> 1.8.16"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.13"},
       {:postgrex, ">= 0.0.0"},
