@@ -63,7 +63,8 @@ defmodule Chat.MixProject do
       {:tailwind, "~> 0.5", runtime: Mix.env() == :dev},
       {:heroicons, "~> 0.5"},
       {
-        :daisyui, github: "saadeghi/daisyui",
+        :daisyui,
+        github: "saadeghi/daisyui",
         tag: "v5.7.50",
         sparse: "packages/bundle",
         app: false,
