@@ -370,7 +370,7 @@ in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 
-![welcome-to-phoenix](https://github.com/user-attachments/assets/39da24da-62df-4c24-a1ae-5165d7bba754)
+![welcome-to-phoenix](https://github.com/user-attachments/assets/c8165103-a564-44dd-9361-0b17549c7c6f)
 
 Shut down the Phoenix server in your terminal
 with the

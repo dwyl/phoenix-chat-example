@@ -32,6 +32,7 @@ defmodule Chat.MixProject do
         c: :test,
         ci: :test,
         coveralls: :test,
+        credoall: :test,
         "coveralls.detail": :test,
         "coveralls.json": :test,
         "coveralls.post": :test,
@@ -110,9 +111,16 @@ defmodule Chat.MixProject do
         "esbuild chat --minify",
         "phx.digest"
       ],
-      precommit: ["compile --warnings-as-errors", "deps.unlock --unused", "format", "test"],
+      precommit: [
+        "compile --warnings-as-errors",
+        "deps.unlock --unused",
+        "format",
+        "credoall",
+        "c"
+      ],
       c: ["coveralls.html"],
       ci: ["coveralls.json"],
+      credoall: ["credo --all --strict"],
       s: ["phx.server"],
       t: ["test"]
     ]
