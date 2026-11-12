@@ -35,3 +35,5 @@ chat-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore Credo Logs from Git
+credo.log
