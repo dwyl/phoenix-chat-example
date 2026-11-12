@@ -114,7 +114,7 @@ defmodule Chat.MixProject do
       precommit: [
         "compile --warnings-as-errors",
         "deps.unlock --unused",
-        "format",
+        "format --check-formatted",
         "credoall",
         "c"
       ],
