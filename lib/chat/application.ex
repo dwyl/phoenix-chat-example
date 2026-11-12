@@ -1,5 +1,5 @@
 defmodule Chat.Application do
-  # See https://hexdocs.pm/elixir/Application.html
+  # See https://elixir.hexdocs.pm/Application.html
   # for more information on OTP Applications
   @moduledoc false
 
@@ -8,20 +8,17 @@ defmodule Chat.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Telemetry supervisor
       ChatWeb.Telemetry,
-      # Start the Ecto repository
       Chat.Repo,
-      # Start the PubSub system
+      {DNSCluster, query: Application.get_env(:chat, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Chat.PubSub},
-      ChatWeb.Presence,
-      # Start the Endpoint (http/https)
-      ChatWeb.Endpoint
       # Start a worker by calling: Chat.Worker.start_link(arg)
-      # {Chat.Worker, arg}
+      # {Chat.Worker, arg},
+      # Start to serve requests, typically the last entry
+      ChatWeb.Endpoint
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
+    # See https://elixir.hexdocs.pm/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Chat.Supervisor]
     Supervisor.start_link(children, opts)
