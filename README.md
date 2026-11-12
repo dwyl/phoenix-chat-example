@@ -447,9 +447,12 @@ in your `assets/js/app.js` file:
 ```
 
 The generator asks us to import the client code in the frontend.
-Let's do that later. For now, open the `lib/chat_web/endpoint.ex` file and follow the instructions.
+Let's do that later. For now, open the
+`lib/chat_web/endpoint.ex`
+file and follow the instructions.
 
-After this, open the file called `/lib/chat_web/channels/user_socket.ex` <br >
+After this, open the file called 
+`/lib/chat_web/channels/user_socket.ex` <br >
 and change the line:
 
 ```elixir
@@ -464,10 +467,12 @@ channel "room:lobby", ChatWeb.RoomChannel
 
 Check the change [here](https://github.com/dwyl/phoenix-chat-example/blob/0faa7f18ea6d7790e027ace5147cd1740040a75e/lib/chat_web/channels/user_socket.ex#L11).
 
-This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
+This will ensure that whatever messages that are sent to 
+`"room:lobby"` are routed to our `RoomChannel`.
 
-The previous `"room.*` meant that any subtopic within `"room"` were routed. 
-But for now, let's narrow down to just one subtopic :smile:.
+The previous `"room.*` meant that
+any subtopic within `"room"` were routed. 
+But for now, let's narrow down to just one subtopic 😊.
 
 > For more detail on Phoenix Channels,
 (_we highly recommend you_) read:
