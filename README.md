@@ -200,9 +200,9 @@ elixir -v
 You should see something like:
 
 ```sh
-Erlang/OTP 25 [erts-13.1.1] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+Erlang/OTP 29 [erts-17.1.1] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
 
-Elixir 1.14.1 (compiled with Erlang/OTP 25)
+Elixir 1.20.4 (compiled with Erlang/OTP 29)
 ```
 
 Check you have the **latest** version of **Phoenix**:
@@ -214,31 +214,13 @@ mix phx.new -v
 You should see:
 
 ```sh
-Phoenix installer v1.7.0-rc.2
+Phoenix installer v1.8.16
 ```
 
 > **Note**: if your `Phoenix` version is _newer_,
 > Please feel free to update this doc! 📝
 > We try our best to keep it updated ...
 > but _your_ contributions are always welcome!
-
-> In this tutorial, 
-> we are using 
-> [Phoenix 1.7-rc2](https://github.com/phoenixframework/phoenix/blob/master/CHANGELOG.md#170-rc2-2023-01-13),
-> the second release candidate 
-> for `Phoenix 1.7`.
-> At the time of writing, 
-> if you install Phoenix,
-> the *latest stable version* is not `v1.7`.
-> To use this version,
-> follow the official guide (don't worry, it's just running one command!)
-> -> https://www.phoenixframework.org/blog/phoenix-1.7-released
-> 
-> However, if you are reading this after its release,
-> `v1.7` will be installed for you, 
-> and you should see
-> `Phoenix installer v1.7.0`
-> in your terminal.
 
 
 _Confirm_ **PostgreSQL** is running (_so the App can store chat messages_)
@@ -254,7 +236,7 @@ You should see output _similar_ to the following:
 COMMAND  PID  USER   FD  TYPE DEVICE                  SIZE/OFF NODE NAME
 postgres 529 Nelson  5u  IPv6 0xbc5d729e529f062b      0t0  TCP localhost:postgresql (LISTEN)
 postgres 529 Nelson  6u  IPv4 0xbc5d729e55a89a13      0t0  TCP localhost:postgresql (LISTEN)
-```
+``` 
 
 This tells us that PostgreSQL is "_listening_" on TCP Port `5432`
 (_the default port_)
@@ -296,8 +278,7 @@ git clone git@github.com:dwyl/phoenix-chat-example.git
 ### Install the Dependencies
 
 Change into the `phoenix-chat-example` directory
-and install both the `Elixir` and `Node.js` dependencies
-with this command:
+and install the dependencies with this command:
 
 ```sh
 cd phoenix-chat-example
@@ -389,7 +370,7 @@ in your browser <br />
 and you will see the `default`
 "Welcome to Phoenix" homepage:_ <br />
 
-![welcome-to-phoenix](https://user-images.githubusercontent.com/17494745/216576178-a227a6ef-ad12-4b74-9b29-4913b5e298bc.png)
+![welcome-to-phoenix](https://github.com/user-attachments/assets/c8165103-a564-44dd-9361-0b17549c7c6f)
 
 Shut down the Phoenix server in your terminal
 with the
@@ -466,9 +447,12 @@ in your `assets/js/app.js` file:
 ```
 
 The generator asks us to import the client code in the frontend.
-Let's do that later. For now, open the `lib/chat_web/endpoint.ex` file and follow the instructions.
+Let's do that later. For now, open the
+`lib/chat_web/endpoint.ex`
+file and follow the instructions.
 
-After this, open the file called `/lib/chat_web/channels/user_socket.ex` <br >
+After this, open the file called 
+`/lib/chat_web/channels/user_socket.ex` <br >
 and change the line:
 
 ```elixir
@@ -483,10 +467,12 @@ channel "room:lobby", ChatWeb.RoomChannel
 
 Check the change [here](https://github.com/dwyl/phoenix-chat-example/blob/0faa7f18ea6d7790e027ace5147cd1740040a75e/lib/chat_web/channels/user_socket.ex#L11).
 
-This will ensure that whatever messages that are sent to `"room:lobby"` are routed to our `RoomChannel`.
+This will ensure that whatever messages that are sent to 
+`"room:lobby"` are routed to our `RoomChannel`.
 
-The previous `"room.*` meant that any subtopic within `"room"` were routed. 
-But for now, let's narrow down to just one subtopic :smile:.
+The previous `"room.*` meant that
+any subtopic within `"room"` were routed. 
+But for now, let's narrow down to just one subtopic 😊.
 
 > For more detail on Phoenix Channels,
 (_we highly recommend you_) read:

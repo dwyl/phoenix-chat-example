@@ -1,40 +1,11 @@
 /**
  * @license MIT
- * topbar 1.0.0, 2021-01-06
- * Modifications:
- *   - add delayedShow(time) (2022-09-21)
+ * topbar 3.0.0
  * http://buunguyen.github.io/topbar
- * Copyright (c) 2021 Buu Nguyen
+ * Copyright (c) 2024 Buu Nguyen
  */
 (function (window, document) {
   "use strict";
-
-  // https://gist.github.com/paulirish/1579671
-  (function () {
-    var lastTime = 0;
-    var vendors = ["ms", "moz", "webkit", "o"];
-    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-      window.requestAnimationFrame =
-        window[vendors[x] + "RequestAnimationFrame"];
-      window.cancelAnimationFrame =
-        window[vendors[x] + "CancelAnimationFrame"] ||
-        window[vendors[x] + "CancelRequestAnimationFrame"];
-    }
-    if (!window.requestAnimationFrame)
-      window.requestAnimationFrame = function (callback, element) {
-        var currTime = new Date().getTime();
-        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-        var id = window.setTimeout(function () {
-          callback(currTime + timeToCall);
-        }, timeToCall);
-        lastTime = currTime + timeToCall;
-        return id;
-      };
-    if (!window.cancelAnimationFrame)
-      window.cancelAnimationFrame = function (id) {
-        clearTimeout(id);
-      };
-  })();
 
   var canvas,
     currentProgress,
@@ -90,7 +61,6 @@
       style.zIndex = 100001;
       style.display = "none";
       if (options.className) canvas.classList.add(options.className);
-      document.body.appendChild(canvas);
       addEvent(window, "resize", repaint);
     },
     topbar = {
@@ -98,26 +68,27 @@
         for (var key in opts)
           if (options.hasOwnProperty(key)) options[key] = opts[key];
       },
-      delayedShow: function(time) {
+      show: function (delay) {
         if (showing) return;
-        if (delayTimerId) return;
-        delayTimerId = setTimeout(() => topbar.show(), time);
-      },
-      show: function () {
-        if (showing) return;
-        showing = true;
-        if (fadeTimerId !== null) window.cancelAnimationFrame(fadeTimerId);
-        if (!canvas) createCanvas();
-        canvas.style.opacity = 1;
-        canvas.style.display = "block";
-        topbar.progress(0);
-        if (options.autoRun) {
-          (function loop() {
-            progressTimerId = window.requestAnimationFrame(loop);
-            topbar.progress(
-              "+" + 0.05 * Math.pow(1 - Math.sqrt(currentProgress), 2)
-            );
-          })();
+        if (delay) {
+          if (delayTimerId) return;
+          delayTimerId = setTimeout(() => topbar.show(), delay);
+        } else {
+          showing = true;
+          if (fadeTimerId !== null) window.cancelAnimationFrame(fadeTimerId);
+          if (!canvas) createCanvas();
+          if (!canvas.parentElement) document.body.appendChild(canvas);
+          canvas.style.opacity = 1;
+          canvas.style.display = "block";
+          topbar.progress(0);
+          if (options.autoRun) {
+            (function loop() {
+              progressTimerId = window.requestAnimationFrame(loop);
+              topbar.progress(
+                "+" + 0.05 * Math.pow(1 - Math.sqrt(currentProgress), 2)
+              );
+            })();
+          }
         }
       },
       progress: function (to) {

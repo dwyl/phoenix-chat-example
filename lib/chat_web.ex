@@ -38,9 +38,7 @@ defmodule ChatWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller,
-        formats: [:html, :json],
-        layouts: [html: ChatWeb.Layouts]
+      use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
 
@@ -50,8 +48,7 @@ defmodule ChatWeb do
 
   def live_view do
     quote do
-      use Phoenix.LiveView,
-        layout: {ChatWeb.Layouts, :app}
+      use Phoenix.LiveView
 
       unquote(html_helpers())
     end
@@ -82,10 +79,11 @@ defmodule ChatWeb do
     quote do
       # HTML escaping functionality
       import Phoenix.HTML
-      # Core UI components and translation
+      # Core UI components
       import ChatWeb.CoreComponents
 
-      # Shortcut for generating JS commands
+      # Common modules used in templates
+      alias ChatWeb.Layouts
       alias Phoenix.LiveView.JS
 
       # Routes generation with the ~p sigil
@@ -103,7 +101,7 @@ defmodule ChatWeb do
   end
 
   @doc """
-  When used, dispatch to the appropriate controller/view/etc.
+  When used, dispatch to the appropriate controller/live_view/etc.
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])

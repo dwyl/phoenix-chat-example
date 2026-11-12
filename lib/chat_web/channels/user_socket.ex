@@ -20,7 +20,7 @@ defmodule ChatWeb.UserSocket do
   # To deny connection, return `:error` or `{:error, term}`. To control the
   # response the client receives in that case, [define an error handler in the
   # websocket
-  # configuration](https://hexdocs.pm/phoenix/Phoenix.Endpoint.html#socket/3-websocket-configuration).
+  # configuration](https://phoenix.hexdocs.pm/Phoenix.Endpoint.html#socket/3-websocket-configuration).
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
@@ -29,7 +29,7 @@ defmodule ChatWeb.UserSocket do
     {:ok, socket}
   end
 
-  # Socket id's are topics that allow you to identify all sockets for a given user:
+  # Socket IDs are topics that allow you to identify all sockets for a given user:
   #
   #     def id(socket), do: "user_socket:#{socket.assigns.user_id}"
   #

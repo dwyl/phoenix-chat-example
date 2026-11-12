@@ -10,7 +10,7 @@ defmodule ChatWeb.Telemetry do
   def init(_arg) do
     children = [
       # Telemetry poller will execute the given period measurements
-      # every 10_000ms. Learn more here: https://hexdocs.pm/telemetry_metrics
+      # every 10_000ms. Learn more here: https://telemetry-metrics.hexdocs.pm
       {:telemetry_poller, measurements: periodic_measurements(), period: 10_000}
       # Add reporters as children of your supervision tree.
       # {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
@@ -43,7 +43,8 @@ defmodule ChatWeb.Telemetry do
       summary("phoenix.socket_connected.duration",
         unit: {:native, :millisecond}
       ),
-      summary("phoenix.channel_join.duration",
+      sum("phoenix.socket_drain.count"),
+      summary("phoenix.channel_joined.duration",
         unit: {:native, :millisecond}
       ),
       summary("phoenix.channel_handled_in.duration",
@@ -86,7 +87,7 @@ defmodule ChatWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {ChatWeb, :count_people, []}
+      # {ChatWeb, :count_users, []}
     ]
   end
 end
